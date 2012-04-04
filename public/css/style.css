@@ -187,3 +187,273 @@ padding-right: 160px;
 font-family: sans-serif;
 font-size: 10px;
 }
+body {
+        font-family:            Arial, Verdana, Geneva, Helvetica, sans-serif;
+        font-size:              100%;
+}
+
+a:link {
+	color:			#006699;
+}
+
+a:visited {
+	color:			#006699;
+}
+
+a:active {
+	color:			#006699;
+}
+/* sidenav */
+#sidenav  { padding: 10px; font-size: 85%; border: 0px solid #BBBBDD; margin-top: 0px; width: 178px; margin-left: 0px; margin-right: 0px}
+#sidenav p  {margin: 0px; padding-bottom: 1px; padding-left: 0px}
+#sidenav p a    { background: #efefef; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; color: #496daf; text-decoration: none; font-weight: bold;  display: block; margin: 1px;  width: 158px }
+#sidenav p a:hover      { background-color: #000080; color: #FFFFFF }
+.button    { color: #222; font-weight: bold; font-size:85%; background-image: url(/htdocs/button.gif); margin-left: 1px; border-width: 1px; padding-top: 2px; padding-bottom: 2px; border-color: #999 #191919 #191919 #999 }
+.button1    { color: #222; font-weight: bold; font-size:85%;border: 1px solid #ccc; background-image: url(/htdocs/button.gif); margin-left: 1px; border-width: 1px; padding-top: 2px; padding-bottom: 2px; border-color: #999 #191919 #191919 #999; padding-left: 2px; padding-right: 2px }
+#square  { background: url(/htdocs/square.gif) no-repeat left; border-right: 1px solid white; border-left: 1px solid white; padding-left: 15px; padding-right: 5px }
+#pil  { background: url(/htdocs/pil.gif) no-repeat right; border-right: 1px solid white; border-left: 1px solid white; padding-left: 1px; padding-right: 10px }
+
+
+.labelTable {empty-cells: show; font-size: 90%; }
+.labelTable th  {padding: 0px; text-align: center; background-color: #EEEEEE }
+.labelTable td {padding: 0px; }
+
+.formTable {empty-cells: show; font-size: 90%; }
+.formTable th  {padding:0px; text-align: center; background-color: #EEEEEE }
+.formTable td {padding: 4px; }
+
+.infoTable {empty-cells: show; font-size: 75%;  background-color: #F9F9F9; border: solid 1px #DDDDDD} 
+.infoTable th {padding: 2px; text-align: right; vertical-align: middle; }
+.infoTable td {padding: 2px;}
+
+.listTable {empty-cells: show; font-size: 80%; border-collapse: collapse; border:1px solid #CCCCCC;}
+.listTable th  {padding:2px; text-align: center; background-color: #EEEEEE }
+.listTable td {padding:2px;}
+
+.userTable {empty-cells: show; background-color: #FBFBFB; border-collapse: collapse; border:1px solid #CCCCCC;}
+.userTable th {padding: 2px; text-align: left; vertical-align: middle; background-color: #EEEEEE; font-size: 85% }
+.userTable td {padding: 2px; font-size: 75%}
+.userTable a {text-decoration: none}
+
+.multiTable {width: 100%; border: 1px solid #000000;}
+.multiTable td  { border: none;; font-size: 75%}
+
+#who {font-size: 50%;} 
+.info    { cursor: pointer; }
+
+
+.button { color: #222; font-weight: bold; font-size:80%;border: 1px solid #ccc; background-image: url(/htdocs/button_back.gif); margin-left: 1px; border-width: 1px; padding-top: 2px; padding-bottom: 2px; border-color: #999000 #191919 #191919 #999000; padding-left: 2px; padding-right: 2px }
+
+.footer {font-size:70%}
+
+
+p.infoText { 
+font-size: 80%;
+}
+
+h1 {
+   font-size: 120%;
+   color:#996633;
+   padding-top: 10px;
+   padding-left: 0px;
+   padding-bottom: 0px;
+   padding-right: 10px;
+}        
+    
+h2.windowHeading {
+font-size: 120%;
+}
+
+.contentTD {
+   width: 100%;
+   padding-right: 10px;
+}
+
+
+
+
+
+.formSection {
+width: 100%;
+background: #E3E3E3;
+border-top: 2px solid #333333;
+border-bottom: 2px solid #333333;
+border-left: 2px solid #333333;
+border-right: 2px solid #333333;
+padding-bottom: 0.2cm;
+}
+
+.sectionHeading {
+font-weight: bold;
+text-align: center;
+color: white;
+background: #333333;
+}
+
+.formSection th { 
+font-size: 90%;
+text-align: left;
+vertical-align: middle;
+font-weight: bold;
+}
+
+.formSection img {
+vertical-align: middle;
+}
+
+.tabnav {
+padding-bottom: 4px;
+padding-top: 4px;
+width: 100%;
+
+background: #555555;
+}
+
+
+.smallLabel { 
+font-size: 70%;
+font-weight: bold;
+}
+
+.fieldNumber {
+font-size: 90%;
+text-align: right;
+}
+
+
+.fieldGroup {
+border: 1px solid #AAAACC;
+padding-bottom:2px;
+}
+
+.rsubmit {
+background: #DDCCCC
+
+}
+
+#rmtable {
+width: 100%;
+margin-left: 0.5cm;
+margin-right: 0.5cm;
+}
+
+
+#rmtable th {
+background: #999999;
+}
+
+#rmtable td { 
+background: #F5F5F5;
+font-size: 90%;
+}
+
+#rmtable2 {
+width: 100%;
+font-size: 90%;
+}
+
+
+#rmtable2 th {
+background: #999999;
+}
+
+#rmtable2 td { 
+background: #F5F5F5;
+font-size: 90%;
+}
+
+
+
+#udTable {
+width: 90%;
+}
+
+#udtable th {
+background: #999999;
+}
+
+#udtable td { 
+background: #F5F5F5;
+font-size: 80%;
+}
+
+
+/* Change names */
+
+
+#docFormTabs{
+/*width: 870px;*/
+margin-left: auto;
+margin-right: auto;
+background: transparent;
+padding-left: 5px;
+}
+
+#docFormTabs ul{
+font: bold 70% Arial, Verdana, sans-serif;
+margin:0;
+padding:0;
+list-style:none;
+}
+
+#docFormTabs li{
+display:inline;
+margin:0 2px 0 0;
+padding:0;
+text-transform:uppercase;
+}
+
+
+#docFormTabs a{
+float:left;
+color: white;
+background: #344682 no-repeat left top;
+margin:0 2px 0 0;
+padding:0 0 1px 3px;
+text-decoration:none;
+letter-spacing: 1px;
+}
+
+#docFormTabs a span{
+float:left;
+display:block;
+background: transparent no-repeat right top;
+padding:4px 9px 3px 6px;
+}
+
+
+#docFormTabs a span{
+float:none;
+}
+
+
+#docFormTabs a:hover{
+background-color: #3562a6;
+}
+
+#docFormTabs a:hover span{
+background-color: #3562a6;
+}
+
+#docFormTabs #current a, #docFormTabs #current span{ /*currently selected tab*/
+background-color: #333333;
+padding-bottom: 4px;
+font-size: 110%;
+}
+
+
+#docFormTabsLine{
+clear: both;
+padding: 0px;
+margin: 0px;
+width: 100%;
+height: 2px;
+line-height: 1px;
+background: #AAAAAA;
+}
+
+
+.starMandatory { 
+color: red;
+}
+

@@ -3,7 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=<% settings.charset %>" />
-<title>CiteWiz</title>
+<meta http-equiv="content-language" content="sv,en" />
+<meta http-equiv="language" content="sv,en" />
+<meta name="language" content="svenska, sv, english, en" />
+<meta name="robots" content="noimageindex" />
+
+<title><% vars.page_title || settings.appname %></title>
 <link rel="stylesheet" href="<% request.uri_base %>/css/style.css" />
 
 <!-- Grab Google CDN's jQuery. fall back to local if necessary -->

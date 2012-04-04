@@ -1,11 +1,14 @@
 package CiteWiz;
 use Dancer ':syntax';
 
-get '/' => sub {
-    template 'index';
+get '/create' => sub {
+  var page_title => 'Embed Your Publication List in Your Homepage';
+
+  template 'embed_form';
 };
 
-post '/' => sub {
+get '/' => sub {
+  template 'index';
 };
 
 1;
