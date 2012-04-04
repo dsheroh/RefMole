@@ -17,10 +17,10 @@ function ComputeLink(link_form) {
 
   var chkZ = 1;
 
-  var result_str = "http://pub.uni-bielefeld.de/bup?func=plst" ;
+  var result_str = "<% request.uri_base %>/";
 
   if (link_form.bisid.value == ""){
-     alert('Please enter your personID!');
+     alert('Please enter your LUCAT or STiL ID!');
      link_form.bisid.focus();
      return false;
   }
@@ -32,7 +32,7 @@ function ComputeLink(link_form) {
         link_form.bisid.value.charAt(i) > "9")
       chkZ = -1;
   if (chkZ == -1) {
-    alert("Please enter a valid personID (numbers only)!");
+    alert("Please enter a valid LUCAT or STiL ID!");
     link_form.bisid.focus();
     link_form.bisid.value = "";
     return false;
@@ -174,7 +174,7 @@ function fNewiFrameWindow (url) {
 <h1>Embed Your Publication List in Your Homepage</h1>
 
 <ol class="listen3">
-<li>If the field personID wasn't filled automatically, search your name in the <a href="http://ekvv.uni-bielefeld.de/pers_publ/publ/Home.jsp" target="_blank">staff search</a> and copy your &quot;personID&quot;</li>
+<li>Enter your LUCAT or STiL ID</li>
 <li>Choose citation style, document types etc. if desired and click &quot;Submit&quot;</li>
 <li>You will see the codes for the different embedding methods</li>
 <li>Copy the code from the desired field.  By clicking on &quot;preview&quot; you can get a preview.</li>
@@ -184,12 +184,12 @@ function fNewiFrameWindow (url) {
 
 <h3>Enter data</h3>
 
-<form action="/bup" accept-charset="ISO-8859-1" name="create_link" class="Form">
+<form action="/create" accept-charset="ISO-8859-1" name="create_link" class="Form">
 <input type="hidden" name="func" value="cemb" />
 
 <div class="Field">
-<label for="id_bisid" class="Label">Your personID</label>
-<input name="bisid" value="[% bisid %]" size="12" class="Input3" maxlength="12" id="id_bisid" onchange="ComputeLink(this.form)" />
+<label for="id_bisid" class="Label">LUCAT or STiL ID</label>
+<input name="bisid" value="" size="12" class="Input3" maxlength="12" id="id_bisid" onchange="ComputeLink(this.form)" />
 </div>
 
 <div class="Field">
