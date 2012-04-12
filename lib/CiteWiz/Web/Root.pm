@@ -2,6 +2,8 @@ package CiteWiz::Web::Root;
 
 use Dancer ':syntax';
 
+use CiteWiz::CiteList;
+
 get '/' => sub {
   redirect '/create';
 };
@@ -9,7 +11,7 @@ get '/' => sub {
 get '/cite' => sub {
   var page_title => 'Citation List';
 
-  template 'cite';
+  template 'cite', { citations => CiteWiz::CiteList::get_citations(params) };
 };
 
 get '/create' => sub {
