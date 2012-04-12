@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
 use Dancer;
-use CiteWiz;
+use all 'CiteWiz::';
+
 dance;

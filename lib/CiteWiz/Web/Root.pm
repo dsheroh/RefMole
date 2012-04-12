@@ -1,4 +1,5 @@
-package CiteWiz;
+package CiteWiz::Web::Root;
+
 use Dancer ':syntax';
 
 get '/' => sub {
