@@ -17,7 +17,7 @@ function ComputeLink(link_form) {
 
   var chkZ = 1;
 
-  var result_str = "<% request.uri_base %>/";
+  var result_str = "<% request.uri_base %>/cite?";
 
   if (link_form.bisid.value == ""){
      alert('Please enter your LUCAT or STiL ID!');
@@ -41,28 +41,28 @@ function ComputeLink(link_form) {
 
   if (link_form.bisid.value){
 
-     result_str += '&amp;author=' + link_form.bisid.value;
+     result_str += ';author=' + link_form.bisid.value;
   }
 
   if (link_form.style.value){
 
-     result_str += '&amp;style=' + link_form.style.value ;
+     result_str += ';style=' + link_form.style.value ;
   }
 
   if (link_form.doctype.value){
 
-     result_str += '&amp;doctype=' + link_form.doctype.value ;
+     result_str += ';doctype=' + link_form.doctype.value ;
   }
 
   if (link_form.publyear.value){
 
-     result_str += '&amp;publyear=' + link_form.publyear.value ;
+     result_str += ';publyear=' + link_form.publyear.value ;
   }
 
   if (link_form.sort.value){
 
      if (link_form.sort.value == 'yearasc'){
-        result_str += '&amp;sorto=asc' ;
+        result_str += ';sorto=asc' ;
      }
   }
 
@@ -94,7 +94,7 @@ function ComputeLink(link_form) {
    iframe_str = result_str ;
    link_str = result_str ;
 
-   result_str = sourcecode1 + '<script type=\"text\/javascript\" charset=\"UTF-8\" src=\"' + result_str + '&amp;ftyp=js\"><\/script><noscript><a href=\"' + link_str + '\" target=\"_blank\">Pers&ouml;nliche Publikationsliste &gt;&gt; \/ My Publication List &gt;&gt;<\/a><\/noscript><\/div>' + sourcecode2 ;
+   result_str = sourcecode1 + '<script type=\"text\/javascript\" charset=\"UTF-8\" src=\"' + result_str + ';ftyp=js\"><\/script><noscript><a href=\"' + link_str + '\" target=\"_blank\">Pers&ouml;nliche Publikationsliste &gt;&gt; \/ My Publication List &gt;&gt;<\/a><\/noscript><\/div>' + sourcecode2 ;
    link_form.jstext.value = result_str ;
    iframe_str = '<iframe id=\"pubIFrame\" name=\"pubIFrame\" frameborder=\"0\" width=\"726\" height=\"300\" src=\"' + iframe_str + '\"><\/iframe>' ;
    link_form.iftext.value = iframe_str ; 

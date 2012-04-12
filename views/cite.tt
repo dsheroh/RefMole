@@ -1,0 +1,3 @@
+<% FOREACH pname = params.keys %>
+<p><% pname %>: <% params.$pname %></p>
+<% END %>
