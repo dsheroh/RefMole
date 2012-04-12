@@ -21,3 +21,5 @@ engines:
 #    start_tag: '[%'
 #    end_tag:   '%]'
 
+sbcat_path: /home/dsheroh/src/sbcat/
+
