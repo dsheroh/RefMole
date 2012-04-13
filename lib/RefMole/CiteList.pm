@@ -1,4 +1,4 @@
-package CiteWiz::CiteList;
+package RefMole::CiteList;
 
 use strict;
 use warnings;

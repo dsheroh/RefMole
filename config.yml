@@ -3,7 +3,7 @@
 # all the settings in this file will be loaded at Dancer's startup.
 
 # Your application's name
-appname: "CiteWiz"
+appname: RefMole
 
 # The default layout to use for your application (located in
 # views/layouts/main.tt)
@@ -22,4 +22,6 @@ engines:
 #    end_tag:   '%]'
 
 sbcat_path: /home/dsheroh/src/sbcat/
+
+sru_url: http://pub.lub.lu.se/sru?version=1.1&operation=searchRetrieve
 

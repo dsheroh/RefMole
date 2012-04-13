@@ -1,8 +1,8 @@
-package CiteWiz::Web::Root;
+package RefMole::Web::Root;
 
 use Dancer ':syntax';
 
-use CiteWiz::CiteList;
+use RefMole::CiteList;
 
 get '/' => sub {
   redirect '/create';
@@ -11,7 +11,7 @@ get '/' => sub {
 get '/cite' => sub {
   var page_title => 'Citation List';
 
-  template 'cite', { citations => CiteWiz::CiteList::get_citations(params) };
+  template 'cite', { citations => RefMole::CiteList::get_citations(params) };
 };
 
 get '/create' => sub {
