@@ -6,9 +6,6 @@ use 5.010;
 
 use Dancer qw( config debug );
 
-use LWP::UserAgent;
-use XML::Simple;
-
 ### BEGIN ORMS LIFE-SUPPORT ###
 use lib config->{sbcat_path} . '/lib/extension';
 use lib config->{sbcat_path} . '/lib/default';
@@ -25,15 +22,46 @@ BEGIN {
 }
 ### END ORMS LIFE-SUPPORT ###
 
+use CSL;
+use LWP::UserAgent;
+use XML::Simple;
+
+sub apply_csl {
+  my ($results) = @_;
+
+  my $csl = CSL->new(cfg => config);
+  my $citations = $csl->process($results->{style}, $results);
+
+  my $i;
+  my %ref_map;
+  $ref_map{$_->{id}} = $i++ for @$citations;
+
+  for my $rec (@{$results->{records}}) {
+    my $sort_nr = $ref_map{$rec->{recordid}} || 0;
+    $rec->{sort_nr}  = $sort_nr;
+    $rec->{citation} = $citations->[$sort_nr]{citation} if $sort_nr;
+  }
+
+  @{$results->{records}} =
+    sort { $a->{sort_nr} <=> $b->{sort_nr} } @{$results->{records}};
+
+  # Return nothing because $results was modified in-place
+  return;
+}
+
 sub get_citations {
   my %param = @_;
 
   my $conditions;
-  my ($style, $sort_order, $hiddenlist);
+  my ($author_style, $author_sort_order, $hiddenlist);
 
   if ($param{author}) {
     $conditions = "_basic%20exact%20%22$param{author}%22";
 
+### TODO: Enable following code after new attributes have been added to our
+### ORMS db
+
+=pod
     my $luur = Orms->new($cfg->{ormsCfg});
     my $o;
     $o->{$_} = $luur->getObject($_) for qw( luAuthor luLdapId );
@@ -45,16 +73,18 @@ sub get_citations {
     };
 
     if ($luAuthorOId) {
-      $style = $luur->getAttributeValue(
+      $author_style = lc $luur->getAttributeValue(
         object  => $luAuthorOId,  attribute => 'citationStyle'
       );
-      $sort_order = $luur->getAttributeValue(
+      $author_sort_order = lc $luur->getAttributeValue(
         object  => $luAuthorOId,  attribute => 'sortDirection'
       );
       $hiddenlist = $luur->getRelatedObjects(
         object2  => $luAuthorOId, relation  => 'isHiddenFor'
       );
     }
+=cut
+
   } elsif ($param{dept}) {
     $conditions = "department=$param{department}";
   } else {
@@ -69,16 +99,13 @@ sub get_citations {
 
   my $query_url = config->{cite}{sru_url}
     . "&query=$conditions&sortKeys=publishingYear,,0";
-  debug $query_url;
 
   ### TODO: If unlimited result set sizes are needed, adapt "paging the result"
   ### loop from lines 520-559 of bup_sru.pl
   my $remaining = $param{limit} || config->{cite}{result_limit};
   $query_url .= "&maximumRecords=$remaining";
   my $sru_response = _get_sru_result($query_url);
-  debug $sru_response;
   my $result = _extract_mods($sru_response);
-  debug $result;
 
   if ($param{author}) {
     $result->{norm_author} = _switch_author($param{author});
@@ -96,18 +123,139 @@ sub get_citations {
     }
   }
 
-  ### Continue here
+  $result->{style} = lc $param{style} || $author_style || 'apa';
 
-  return {
-    %param,
-    conditions => $conditions,
-    query_url  => $query_url,
-  };
+  $result->{list_dept} = $param{dept} if defined $param{dept};
+
+  $result->{records} = _sort_records($result->{records}, \%param)
+    if $result->{numrecs} > 1;
+
+  return $result;
 }
 
 sub _add_record_fields {
-  ### TODO: Implement based on buo_sru sub add_record_fields
-  return @_;
+  my $rec = shift;
+  my %result;
+
+  my $mods = $rec->{mods};
+
+  $result{recordid} = $mods->{recordInfo}{recordIdentifier};
+
+  if (ref $mods->{genre}) {
+    $result{type} = $mods->{genre}{content};
+  } else {
+    $result{type} = $mods->{genre};
+  }
+
+  push @{$result{title}}, $_->{title} for @{$mods->{titleInfo}};
+
+  $result{publ_year} = $mods->{originInfo}{dateIssued}{content};
+  $result{publisher} = $mods->{originInfo}{publisher};
+  $result{language}  = $mods->{language}{languageTerm}{content};
+
+  $result{place} = $mods->{originInfo}{place}{placeTerm}{content}
+    if $mods->{originInfo}{place}{placeTerm}{content};
+
+  for my $note (@{$mods->{note}}) {
+    if ($note->{type} eq 'publicationStatus') {
+      $result{publstatus} = $note->{content};
+    } elsif ($note->{type} eq 'reviewedWorks' && $note->{content}) {
+      my $tmp = $note->{content};
+      $tmp =~ s/au://;
+      $tmp =~ s/ti//;
+      $tmp =~ tr/\n//d;
+      $result{reviewedwork} = $tmp;
+    }
+  }
+
+  for (@{$mods->{abstract}}) {
+    push @{$result{abstract}}, $_->{content} if $_->{content};
+  }
+
+  for my $entity (@{$mods->{name}}) {
+    my $role = $entity->{role}[0]{roleTerm}{content};
+    next unless $role;
+
+    $role = 'author' if $role eq 'reviewer';
+
+    if (ref $entity->{namePart} eq 'ARRAY') {
+      my $person;
+      for my $name_part(@{$entity->{namePart}}) {
+        $person->{given}  = $name_part->{content}
+          if $name_part->{type} eq 'given';
+        $person->{family} = $name_part->{content}
+          if $name_part->{type} eq 'family';
+      }
+      $person->{full} = trim($person->{family} . ', ' . $person->{given});
+      push @{$result{$role}}, $person;
+    } elsif ($role eq 'department') {
+      push @{$result{affiliation}}, $entity->{namePart};
+    } elsif ($role eq 'project') {
+      push @{$result{project}}, $entity->{namePart};
+    } elsif ($role eq 'research group') {
+      push @{$result{researchgroup}}, $entity->{namePart};
+    }
+  }
+
+  for my $subj (@{$mods->{subject}}) {
+    next unless ref $subj->{topic} eq 'ARRAY';
+
+    push @{$result{subject}}, $_ for @{$subj->{topic}};
+  }
+
+  for my $related (@{$mods->{relatedItem}}) {
+    my $entry;
+
+    for (@{$related->{titleInfo}}) {
+      $entry->{title} = $_->{title} if $_->{title};
+    }
+
+    if ($related->{location}{url}) {
+      if (ref $related->{location}{url}) {
+        if ($related->{type} eq 'constituent') {
+          push @{$entry->{label}}, $related->{location}{url}{displayLabel};
+        }
+        if ($related->{location}{url}{content}) {
+          push @{$entry->{url}}, $related->{location}{url}{content};
+        }
+      } else {
+        if ($related->{type} eq 'constituent') {
+          $entry->{label} = $related->{location}{url};
+        } else {
+          $entry->{url} = $related->{location}{url};
+        }
+      }
+    }
+
+    for (@{$related->{identifier}}) {
+      if ($_->{type} eq 'other') {
+        if ($_->{content} =~ /(\w+):(.*)/) {
+          push @{$entry->{lc $1}}, $2;
+        }
+      } else {
+        push @{$entry->{$_->{type}}}, $_->{content};
+      }
+    }
+
+    for (@{$related->{part}{extent}}) {
+      $entry->{pages} = $_->{content} if $_->{content};
+      $entry->{prange} = $_->{start} if $_->{start};
+      $entry->{prange} .= ' - ' . $_->{end} unless ref $_->{end};
+    }
+
+    if ($related->{part}{detail}) {
+      for my $part (@{$related->{part}{detail}}) {
+        if ($part->{number}) {
+          $entry->{volume} = $part->{number} if $part->{type} eq 'volume';
+          $entry->{issue}  = $part->{number} if $part->{type} eq 'issue';
+        }
+      }
+    }
+
+    push @{$result{$related->{type}}}, $entry if $entry;
+  }
+
+  return \%result;
 }
 
 sub _extract_mods {
@@ -119,7 +267,7 @@ sub _extract_mods {
   ### Uncomment if there are encoding issues.
   #utf8::upgrade($mods_xml);
 
-  my $xml = $parser->XMLin( $mods_xml,
+  my $xml = $parser->XMLin($mods_xml,
     forcearray => [
       'record', 'subject', 'relatedItem', 'detail', 'note', 'abstract',
       'name', 'role', 'titleInfo', 'extent', 'identifier'
@@ -130,8 +278,8 @@ sub _extract_mods {
   $result{numrecs} = $xml->{numberOfRecords};
 
   for (@{$xml->{records}->{record}}) {
-    my $fields = _add_record_fields(\$_->{recordData});
-    push(@{$result{records}}, $_);
+    my $fields = _add_record_fields($_->{recordData});
+    push(@{$result{records}}, $fields);
   }
 
   return \%result;
@@ -150,9 +298,25 @@ sub _get_sru_result {
   return $ua->request($req)->content;
 }
 
+sub _sort_records {
+  my ($records, $param) = @_;
+  ### TODO: Adapt from sorting routine @ bup_sru 625-670
+
+  return $records;
+}
+
 sub _switch_author {
-  ### TODO: Implement based on bup_sru.pl sub switch_author
-  return @_;
+  my $author = shift;
+
+  $author = "$2 $1" if $author =~ /(.*?),(.*)/;
+  return $author;
+}
+
+sub trim {
+  my $s = shift;
+  $s =~ s/^\s+//;
+  $s =~ s/\s+$//;
+  return $s;
 }
 
 1;

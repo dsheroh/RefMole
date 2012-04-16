@@ -27,3 +27,29 @@ cite:
   sru_url: http://pub.lub.lu.se/sru?version=1.1&operation=searchRetrieve
   result_limit: 250
 
+csl_engine:
+  url: http://ubcsl.ub.uni-bielefeld.de/citenode.php
+  format: html
+  default_style: plos
+  recs: 100
+  type_map:
+    article: article
+    book chapter: chapter
+    book editor: book
+    book: book
+    conference abstract: chapter
+    conference paper: chapter
+    conference publication: book
+    encyclopedia article: article
+    journal editor: article
+    newspaper article: article
+    patent: article
+    preprint: preprint
+    report: book
+    review: article
+    thesis: thesis
+    working Paper: chapter
+    Bi BachelorThesis: thesis
+    Bi Dissertation: thesis
+    Bi MasterThesis: thesis
+    Bi PostdocThesis: thesis
