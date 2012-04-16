@@ -27,29 +27,32 @@ use LWP::UserAgent;
 use XML::Simple;
 
 sub apply_csl {
-  my ($results) = @_;
+  my ($publications) = @_;
 
   my $csl = CSL->new(cfg => config);
-  my $citations = $csl->process($results->{style}, $results);
+  my $citations = $csl->process($publications->{style}, $publications);
 
   my $i;
   my %ref_map;
   $ref_map{$_->{id}} = $i++ for @$citations;
 
-  for my $rec (@{$results->{records}}) {
-    my $sort_nr = $ref_map{$rec->{recordid}} || 0;
+  for my $rec (@{$publications->{records}}) {
+    my $sort_nr = $ref_map{$rec->{recordid}};
+    next unless defined $sort_nr;
+
     $rec->{sort_nr}  = $sort_nr;
-    $rec->{citation} = $citations->[$sort_nr]{citation} if $sort_nr;
+    $rec->{citation} = $citations->[$sort_nr]{citation};
   }
 
-  @{$results->{records}} =
-    sort { $a->{sort_nr} <=> $b->{sort_nr} } @{$results->{records}};
+  @{$publications->{records}} =
+    sort { ($a->{sort_nr} || 0) <=> ($b->{sort_nr} || 0) }
+    @{$publications->{records}};
 
-  # Return nothing because $results was modified in-place
+  # Return nothing because $publications was modified in-place
   return;
 }
 
-sub get_citations {
+sub get_publications {
   my %param = @_;
 
   my $conditions;
@@ -262,10 +265,6 @@ sub _extract_mods {
   my ($mods_xml) = @_;
 
   my $parser = XML::Simple->new;
-
-  ### Probably not needed thanks to Dancer, but it's in bup_sru.pl.
-  ### Uncomment if there are encoding issues.
-  #utf8::upgrade($mods_xml);
 
   my $xml = $parser->XMLin($mods_xml,
     forcearray => [

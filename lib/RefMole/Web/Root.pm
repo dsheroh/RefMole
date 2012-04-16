@@ -11,14 +11,12 @@ get '/' => sub {
 get '/cite' => sub {
   var page_title => 'Citation List';
 
-  my $citations = RefMole::CiteList::get_citations(params);
+  my $citations = RefMole::CiteList::get_publications(params);
   RefMole::CiteList::apply_csl($citations);
 
   ### TODO: Adapt template selection and ftype=js handling @ bup_sru 674-703
-  use Data::Dumper;
-  $citations->{records} = Dumper($citations->{records});
 
-  template 'cite', { citations => $citations };
+  template 'cite', { records => $citations->{records}, citations => $citations };
 };
 
 get '/create' => sub {
