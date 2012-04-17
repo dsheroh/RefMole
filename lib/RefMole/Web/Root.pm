@@ -12,7 +12,7 @@ get '/cite' => sub {
   var page_title => 'Citation List';
 
   my $citations = RefMole::CiteList::get_publications(params);
-  RefMole::CiteList::apply_csl($citations);
+  RefMole::CiteList::apply_csl($citations) if $citations->{numrecs};
 
   ### TODO: Adapt template selection and ftype=js handling @ bup_sru 674-703
 

@@ -1,6 +1,4 @@
 
-- UTF-8 issues on pub (not seen on hactar)
-
 - 500 error on citation list for user with no publications
 
 - Add support for "ftyp" parameter to select template type and provide
