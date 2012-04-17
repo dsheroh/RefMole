@@ -25,4 +25,10 @@ get '/create' => sub {
   template 'create';
 };
 
+get '/detail/:id' => sub {
+  return redirect '/create' unless params->{id};
+
+  template 'detail';
+};
+
 1;

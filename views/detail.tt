@@ -1,0 +1,682 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+
+<!-- BEGIN bup_record.tmpl -->
+
+<head>
+<title><% FOREACH entry IN records %><% entry.title.0 %><% END %> (PUB - Publications at Bielefeld University)</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="content-language" content="de,en" />
+<meta http-equiv="language" content="de,en" />
+<meta name="language" content="deutsch, de, english, en" />
+<meta name="robots" content="noimageindex" />
+
+<!-- Google Scholar Inclusion, see http://scholar.google.com/intl/en/scholar/inclusion.html -->
+
+<% FOREACH entry IN records %>
+<meta name="citation_title" content="<% entry.title.0 %>" />
+<% END %>
+<% FOREACH author_entry IN entry.author %>
+<meta name="citation_author" content="<% author_entry.full %>" />
+<% END %>
+<meta name="citation_date" content="<% entry.publ_year %>" />
+<% FOREACH rel_entry IN entry.constituent %>
+<% IF rel_entry.label.0 %><meta name="citation_pdf_url" content="<% rel_entry.url.0 %>" /><% END %>
+<% END %>
+<% FOREACH rel_entry IN entry.host %>
+<% IF rel_entry.doi.0 %><meta name="citation_pdf_url" content="http://dx.doi.org/<% rel_entry.doi.0 %>" />
+<% ELSE %>
+<% IF rel_entry.url %><meta name="citation_pdf_url" content="<% rel_entry.url %>" /><% END %>
+<% END %>
+<% IF rel_entry.issn %><meta name="citation_issn" content="<% rel_entry.issn.0 %>" /><% END %>
+<% IF rel_entry.isbn %><meta name="citation_isbn" content="<% rel_entry.isbn.0 %>" /><% END %>
+<% END %>
+
+<link rel="icon" href="http://www.uni-bielefeld.de/icons/uni-logo-icon-16.png" type="image/png" />
+<link rel="search" href="http://search.uni-bielefeld.de/cgi-bin/search.cgi" type="text/html" />
+<link rel="help" href="http://www.uni-bielefeld.de/help.html" type="text/html" />
+<link href="http://www.uni-bielefeld.de/Universitaet/impressum.html" rel="copyright" type="text/html" />
+<link rel="stylesheet" type="text/css" media="screen" href="http://www.uni-bielefeld.de/css/unistandard_2009.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/nav.css" />
+<link rel="stylesheet" type="text/css" media="print" href="/print.css" />
+<link rel="shortcut icon" type="image/x-icon" href="http://www.ub.uni-bielefeld.de/favicon.ico" />
+<script type="text/javascript" src="http://www.uni-bielefeld.de/javascript/CrossPlatform.js"></script>
+<script type="text/javascript" src="http://www.uni-bielefeld.de/javascript/Popup.js"></script>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+
+<script type="text/javascript" src="/csl.js"></script>
+
+<style type="text/css">
+<!--
+/* don't display link in suggested citation */
+.frontdoor_hidden { display:none; }
+-->
+</style>
+</head>
+
+<body onload="sndReqCit ('ama', <% entry.id %>);">
+
+<script type="text/javascript">
+
+function ReduceAuthors (){
+document.getElementById('showJs').innerHTML= '<br /><a href="#" onclick="ShowAuthors();"><img src="/bullet_pluszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />All</a>' ;
+}
+
+function ShowAuthors (){
+var str = "" ;
+<% FOREACH author_entry IN entry.author -%>
+<% IF loop.count > 12 %>
+str +=  " ; <% author_entry.full -%>" ; 
+<% END -%>
+<% END %>
+str += '<br /><a href="#" onclick="ReduceAuthors();"><img src="/bullet_minuszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />Less</a>' ;
+document.getElementById('showJs').innerHTML= str ;
+}
+
+function ReduceGenBankIDs (){
+document.getElementById('showJs').innerHTML= '<br /><a href="#" onclick="ShowGenBankIDs();"><img src="/bullet_pluszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />All</a>' ;
+}
+
+function ShowGenBankIDs (){
+var str = "" ;
+<% FOREACH id_entry IN rel_entry.GenBank -%>
+<% IF loop.count > 15 %>
+str +=  '<a href="http://www.ncbi.nlm.nih.gov/nuccore/<% id_entry %>" style="margin-right:2px;"><% id_entry %></a> ' ;
+<% END -%>
+<% END %>
+str += '<br /><a href="#" onclick="ReduceGenBankIDs();"><img src="/bullet_minuszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />Less</a>' ;
+document.getElementById('showJs').innerHTML= str ;
+}
+
+function ReduceFiles (){
+document.getElementById('showJs').innerHTML= '<a href="#" onclick="ShowFiles();"><img src="/bullet_pluszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />All</a>' ;
+}
+
+function ShowFiles (){
+var str = "" ;
+<% FOREACH rel_entry IN entry.constituent %>
+<% IF loop.count > 3 %>
+str +=  '<a href="<% rel_entry.url.0 %>" title="<% rel_entry.label.0 %>" class="BlockLink2"><% rel_entry.label.0 %></a>' ; 
+<% END -%>
+<% END %>
+str += '<a href="#" onclick="ReduceFiles();"><img src="/bullet_minuszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />Less</a>' ;
+document.getElementById('showJs').innerHTML= str ;
+}
+
+</script>
+
+<a name="top"></a>
+
+<h1 class="underline"><% entry.title.0 %></h1>
+
+<% IF numrecs == 0 %>
+<h3>No record found!</h3>
+<% STOP %>
+<% END %>
+
+<% FOREACH entry IN records %>
+<% IF entry.citation %>
+<% entry.citation %> 
+<% END %>
+<% END %>
+
+<!-- Volltext -->
+<% FOREACH rel_entry IN entry.constituent %>
+<% IF rel_entry.label.0 %>
+<% IF loop.first %>
+<div class="frontdoor">
+<div class="frontdoor_left">Download:</div>
+<div class="frontdoor_right">
+<a href="<% rel_entry.url.0 %>" title="<% rel_entry.label.0 %>"><% rel_entry.label.0 %></a>
+<% END %>
+<% IF loop.count > 1 %>
+<a href="<% rel_entry.url.0 %>" title="<% rel_entry.label.0 %>" class="BlockLink2"><% rel_entry.label.0 %></a>
+<% END %>
+<% IF loop.count > 2 %>
+<div style="clear:both;"></div>
+<span id="showJs"><a href="#" onclick="ShowFiles();"><img src="/bullet_pluszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />All</a></span>
+</div>
+</div>
+<% LAST %>
+<% END %>
+<% FOREACH rel_entry IN entry.isConfirmationOf %>
+(<% IF rel_entry.title %><a href="<% rel_entry.url %>">Letter of Confirmation</a><% END %>)
+<% END %>
+<% IF loop.last %>
+</div>
+</div>
+<% END %>
+<% END %>
+<% END %>
+
+<% FOREACH rel_entry IN entry.host %>
+<!-- DOI -->
+<% IF rel_entry.doi.0 %>
+<div class="frontdoor">
+<div class="frontdoor_left">DOI:</div>
+<div class="frontdoor_right"><a href="http://dx.doi.org/<% rel_entry.doi.0 %>" title="<% rel_entry.doi.0 %>"><% rel_entry.doi.0 %></a></div>
+</div>
+<% ELSE %>
+<% IF rel_entry.url %>
+<div class="frontdoor">
+<div class="frontdoor_left">URL:</div>
+<div class="frontdoor_right"><a href="<% rel_entry.url %>" title="<% rel_entry.url %>"><% rel_entry.url %></a></div>
+</div>
+<% END %>
+
+<!-- URN -->
+<% IF rel_entry.urn.0 %>
+<div class="frontdoor">
+<div class="frontdoor_left">URN:</div>
+<div class="frontdoor_right"><a href="http://nbn-resolving.de/<% rel_entry.urn.0 %>"><% rel_entry.urn.0 %></a></div>
+</div>
+<% END %>
+<% END %>
+
+
+
+<% END %>
+
+<% FOREACH entry IN records %>
+
+<div class="margin1">
+<!-- Pubtyp, -status und -quali -->
+<% IF entry.type %>
+<em>
+<% SWITCH entry.type %>
+<% CASE 'book' %>
+Book
+<% CASE 'book editor' %>
+Book: Editor
+<% CASE 'book chapter' %>
+Book Chapter
+<% CASE 'review' %>
+Book Review
+<% CASE 'case study' %>
+Case Study
+<% CASE 'conference abstract' %>
+Conference Abstract
+<% CASE 'conference publication' %>
+Conference: Editor
+<% CASE 'conference paper' %>
+Conference Proceeding/Paper
+<% CASE 'thesis' %>
+Dissertation / Thesis
+<% CASE 'licentiateThesis' %>
+Dissertation / Thesis
+<% CASE 'encyclopedia article' %>
+Encyclopedia Article
+<% CASE 'article' %>
+Journal Article
+<% CASE 'journal editor' %>
+Journal: Editor
+<% CASE 'newspaper article' %>
+Newspaper Article
+<% CASE 'patent' %>
+Patent
+<% CASE 'preprint' %>
+Preprint
+<% CASE 'report' %>
+Report
+<% CASE 'translation' %>
+Translation
+<% CASE 'working Paper' %>
+Working Paper
+<% CASE 'Bi Dissertation' %>
+Bielefeld Doctoral Thesis
+<% CASE 'Bi PostdocThesis' %>
+Bielefeld Postdoctoral Thesis / Habilitation
+<% CASE 'Bi BachelorThesis' %>
+Bielefeld Bachelor Thesis
+<% CASE 'Bi MasterThesis' %>
+Bielefeld Master Thesis
+<% END %>
+</em>
+<% END %>
+
+<% IF entry.publstatus %>
+| <em>
+<% SWITCH entry.publstatus %>
+<% CASE 'published' %>
+Published
+<% CASE 'unpublished' %>
+Unpublished
+<% CASE 'submitted' %>
+Submitted
+<% CASE 'inpress' %>
+In Press
+<% END %>
+</em>
+<% END %>
+
+<% IF entry.qualitystatus %>
+<% SWITCH entry.qualitystatus %>
+<% CASE 'yes' %>
+| <em>Quality Controlled</em>
+<% END %>
+<% END %>
+
+<% IF entry.language %>
+| <em>
+<% SWITCH entry.language %>
+<% CASE 'eng' %>
+English
+<% CASE 'ger' %>
+German
+<% CASE 'ara' %>
+Arabian
+<% CASE 'chi' %>
+Chinese
+<% CASE 'dan' %>
+Danish
+<% CASE 'nld' %>
+Dutch
+<% CASE 'fre' %>
+French
+<% CASE 'gre' %>
+Greek
+<% CASE 'heb' %>
+Hebrew
+<% CASE 'hun' %>
+Hungarian
+<% CASE 'ita' %>
+Italian
+<% CASE 'jpn' %>
+Japanese
+<% CASE 'kor' %>
+Korean
+<% CASE 'lav' %>
+Latvian
+<% CASE 'mis' %>
+Unknown
+<% CASE 'mon' %>
+Mongolian
+<% CASE 'pol' %>
+Polish
+<% CASE 'por' %>
+Portuguese
+<% CASE 'rum' %>
+Romanian
+<% CASE 'rus' %>
+Russian
+<% CASE 'spa' %>
+Spanish
+<% CASE 'srp' %>
+Serbian
+<% END %>
+</em>
+<% END %>
+
+</div>
+
+<% END %>
+
+<div style="float:left; margin-top:10px; padding-top:10px; border-top:1px solid #ccc; width:600px;">
+
+<% FOREACH entry IN records %>
+
+<% IF entry.reviewedwork  %>
+<div class="frontdoor">
+<div class="frontdoor_left">Reviewed Work:</div>
+<div class="frontdoor_right">
+<% entry.reviewedwork %>
+</div>
+</div>
+<% END %>
+
+<% first_author = '' %>
+<% FOREACH author_entry IN entry.author %>
+<% IF loop.first %>
+<div class="frontdoor">
+<div class="frontdoor_left">Authors:</div>
+<div class="frontdoor_right">
+<% author_entry.full %>
+<% first_author = author_entry.full -%>
+<% ELSE %>
+;
+<% author_entry.full %>
+<% END %>
+<% IF loop.count > 11 %>
+<span id="showJs">
+<br /><a href="#" onclick="ShowAuthors();"><img src="/bullet_pluszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />All</a>
+</span>
+</div>
+</div>
+<% LAST %>
+<% END %>
+<% IF loop.last %>
+</div>
+</div>
+<% END %>
+<% END %>
+
+<% FOREACH editor_entry IN entry.editor %>
+<% IF loop.first %>
+<div class="frontdoor">
+<div class="frontdoor_left">Editors:</div>
+<div class="frontdoor_right">
+<% ELSE %>
+;
+<% END %>
+<% editor_entry.full %>
+<% IF loop.last %>
+</div>
+</div>
+<% END %>
+<% END %>
+
+<% FOREACH aff_entry IN entry.affiliation %>
+<% IF loop.first %>
+<div class="frontdoor">
+<div class="frontdoor_left">Department:</div>
+<div class="frontdoor_right">
+<% ELSE %>
+<br />
+<% END %>
+<% aff_entry %>
+<% IF loop.last %>
+</div>
+</div>
+<% END %>
+<% END %>
+
+<% FOREACH proj_entry IN entry.project %>
+<% IF loop.first %>
+<div class="frontdoor">
+<div class="frontdoor_left">Project:</div>
+<div class="frontdoor_right">
+<% ELSE %>
+<br />
+<% END %>
+<% proj_entry %>
+<% IF loop.last %>
+</div>
+</div>
+<% END %>
+<% END %>
+
+<% FOREACH group_entry IN entry.researchgroup %>
+<% IF loop.first %>
+<div class="frontdoor">
+<div class="frontdoor_left">Research Group:</div>
+<div class="frontdoor_right">
+<% ELSE %>
+<br />
+<% END %>
+<% group_entry %>
+<% IF loop.last %>
+</div>
+</div>
+<% END %>
+<% END %>
+
+<% FOREACH corp_entry IN entry.corporate %>
+<% IF loop.first %>
+<div class="frontdoor">
+<div class="frontdoor_left">Corporate Editor:</div>
+<div class="frontdoor_right">
+<% ELSE %>
+<br />
+<% END %>
+<% corp_entry %>
+<% IF loop.last %>
+</div>
+</div>
+<% END %>
+<% END %>
+
+<% IF entry.title.1 %>
+<div class="frontdoor">
+<div class="frontdoor_left">Alternative Title:</div>
+<div class="frontdoor_right">
+<% entry.title.1 %>
+</div>
+</div>
+<% END %>
+
+<% IF entry.edition %>
+<div class="frontdoor">
+<div class="frontdoor_left">Edition:</div>
+<div class="frontdoor_right">
+<% entry.edition %>
+</div>
+</div>
+<% END %>
+
+<% IF entry.abstract %>
+<div class="frontdoor">
+Abstract:<br />
+<% FOREACH abstract_entry IN entry.abstract %>
+<% UNLESS loop.first %>
+<br /><br />
+<% END %>
+<% abstract_entry %>
+<% END %>
+</div>
+<% END %>
+
+<% IF entry.subject %>
+<div class="frontdoor">
+<div class="frontdoor_left">Keywords:</div>
+<div class="frontdoor_right">
+<% FOREACH subj_entry IN entry.subject %>
+<% IF loop.last %>
+<% subj_entry %>
+<% ELSE %>
+<% subj_entry %> ;
+<% END %>
+<% END %>
+</div>
+</div>
+<% END %>
+
+<% FOREACH rel_entry IN entry.host %>
+
+<% IF rel_entry.isbn %>
+<div class="frontdoor">
+<div class="frontdoor_left">ISBN:</div>
+<div class="frontdoor_right">
+<% rel_entry.isbn.0 %>
+</div>
+</div>
+<% END %>
+
+<% IF rel_entry.issn %>
+<div class="frontdoor">
+<div class="frontdoor_left">ISSN:</div>
+<div class="frontdoor_right">
+<% rel_entry.issn.0 %>
+</div>
+</div>
+<% END %>
+
+<% IF rel_entry.ipn %>
+<div class="frontdoor">
+<div class="frontdoor_left">Int. Patent Number:</div>
+<div class="frontdoor_right">
+<% rel_entry.ipn.0 %>
+</div>
+</div>
+<% END %>
+
+<% IF rel_entry.ipc %>
+<div class="frontdoor">
+<div class="frontdoor_left">Int. Patent Classification:</div>
+<div class="frontdoor_right">
+<% rel_entry.ipc.0 %>
+</div>
+</div>
+<% END %>
+
+<% END %>
+
+<div class="frontdoor">
+<div class="frontdoor_left">PUB-ID:</div>
+<div class="frontdoor_right">
+<% entry.id %> | Link: <a href="http://bup-dev.ub.uni-bielefeld.de/publication/<% entry.id %>">http://bup-dev.ub.uni-bielefeld.de/publication/<% entry.id %></a>
+</div>
+</div>
+
+<% END %>
+
+<% coins_str %>
+
+
+<div style="border-top:1px solid #ccc; margin:10px 0;"></div>
+
+<a name="cite"></a>
+<h3>Cite this</h3>
+
+<ul class="tabs">
+<!-- Give href an ID value of corresponding "tabs-content" <li>'s -->
+<li><a href="#" onclick="sndReqCit ('ama', <% entry.id %>);" id="tab_ama">AMA</a></li>
+<li><a href="#" onclick="sndReqCit ('apa', <% entry.id %>);" id="tab_apa">APA</a></li>
+<li><a href="#" onclick="sndReqCit ('aps', <% entry.id %>);" id="tab_aps">APS</a></li>
+<li><a href="#" onclick="sndReqCit ('harvard1', <% entry.id %>);" id="tab_harvard1">Harvard</a></li>
+<li><a href="#" onclick="sndReqCit ('ieee', <% entry.id %>);" id="tab_ieee">IEEE</a></li>
+<li><a href="#" onclick="sndReqCit ('mla', <% entry.id %>);" id="tab_mla">MLA</a></li>
+</ul>
+
+<div id="preloader" style="display:none;"><img src="/preloader_circle.gif" /></div>
+<div id="dcit">
+	
+</div>
+
+</div>
+
+</div>
+<div style="float:right; width:212px;">
+
+<!-- metrics -->
+
+<!--
+<script type="text/javascript" src="/metr_if.js"></script>
+<div id="metr_1">
+<script type="text/javascript">
+<span class='meld2'><img src="/ajax-loader.gif" alt="Citations" /></span>
+sndReqMet (1, <% entry.id -%> );
+</script>
+</div>
+-->
+
+<!-- Sources -->
+
+<% IF rel_entry.medline.0 OR rel_entry.inspire.0 OR rel_entry.arxiv.0 %>
+<h2 class="overline">Sources</h2>
+<% END %>
+
+<% IF rel_entry.medline.0 %>
+<p><img src="/icon_pubmed.png" class="textright" alt="" />PMID: <% rel_entry.medline.0 %><br />
+<a href="http://www.ncbi.nlm.nih.gov/pubmed/<% rel_entry.medline.0 %>">PubMed</a> | <a href="http://ukpmc.ac.uk/abstract/MED/<% rel_entry.medline.0 %>">UK PMC</a></p>
+<% END %>
+
+<% IF rel_entry.arxiv.0 %>
+<p><img src="/icon_arxiv.png" class="textright" alt="" />arXiv <a href="http://arxiv.org/abs/<% rel_entry.arxiv.0 %>"><% rel_entry.arxiv.0 %></a></p>
+<% END %>
+
+<% IF rel_entry.inspire.0 %>
+<p><img src="/icon_inspire.png" class="textright" alt="" />Inspire <a href="http://inspirebeta.net/record/<% rel_entry.inspire.0 %>"><% rel_entry.inspire.0 %></a></p>
+<% END %>
+
+<!-- Supplements -->
+
+<% IF rel_entry.GenBank OR rel_entry.NASC OR entry.supplementaryMaterial OR entry.isPart %>
+<h2 class="overline">Supplements</h2>
+<% END %>
+
+<div class="margin1">
+<% FOREACH id_entry IN rel_entry.GenBank %>
+<% IF loop.first %>
+<strong><img src="/icon_genbank.gif" class="textright" alt="" />GenBank:</strong><br />
+<% END %>
+<a href="http://www.ncbi.nlm.nih.gov/nuccore/<% id_entry %>" style="margin-right:2px;"><% id_entry %></a>
+<% IF loop.count > 14 %>
+<span id="showJs">
+<br /><a href="#" onclick="ShowGenBankIDs();"><img src="/bullet_pluszeichen.jpg" alt="" style="vertical-align:middle; margin-right:5px;" />All</a>
+</span>
+<% LAST %>
+<% END %>
+<% END %>
+</div>
+
+
+<div class="margin1">
+<% FOREACH id_entry IN rel_entry.NASC %>
+<% IF loop.first %>
+<img src="/icon_nasc.png" alt="" class="textright" />NASC<br />
+<% END %>
+<a href="http://arabidopsis.info/StockInfo?NASC_id=<% id_entry %>" style="margin-right:10px;"><% id_entry %></a>
+<% END %>
+</div>
+
+<% FOREACH rel_entry IN entry.supplementaryMaterial %>
+<% IF rel_entry.title %>
+<div class="margin1">
+<a href="<% rel_entry.url %>" title="<% rel_entry.title %>"><img src="/icon_weblink2.gif" alt="" class="textright" />Supplementary Material</a>
+</div>
+<% END %>
+<% END %>
+
+<% FOREACH rel_entry IN entry.isPart %>
+<% IF rel_entry.title %>
+<div class="margin1">
+<a href="<% rel_entry.url %>" title="<% rel_entry.title %>"><img src="/icon_weblink2.gif" alt="" class="textright" />Related Material</a>
+</div>
+<% END %>
+<% END %>
+
+<h2 class="overline">Search this title in</h2>
+
+<p>
+<a href="http://scholar.google.com/scholar?q=allintitle%3A<% entry.title.0 %>"><img src="/icon_gs.png" alt="" class="textright" />Google Scholar</a><br />
+<a href="http://www.base-search.net/Search/Results?lookfor=tit%3A&quot;<% entry.title.0 %>&quot;&amp;lem=1&amp;type=all&amp;refid=pub"><img src="/icon_base.png" alt="" class="textright" />BASE</a><br />
+<a href="http://www.google.com/search?q=%22<% entry.title.0 %>%22"><img src="/icon_google.gif" alt="" class="textright" />Google</a><br />
+<% SWITCH entry.type %>
+<% CASE 'book' %>
+<% IF localuser %>
+<a href="http://katalog.ub.uni-bielefeld.de/cgi-bin/search.cgi?fsubmit=1&amp;kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=<% entry.title.0 %>&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;sprache=ENG&amp;art=f&amp;opt=&amp;pagesize=10&amp;sort=0&amp;vr=on"><img src="/icon_ub.png" alt="" class="textright" />Library Catalogue</a><br />
+<a href="http://www.digibib.net/opensearch?LOCATION=361&amp;SG1.SG.361:SGKatalogeBielefeld=on&amp;SG2.SG.361:SGKatalogeDeutschland=on&amp;SG3.SG.361:SGKatalogeInternational=on&amp;QUERY_azTI=<% entry.title.0 %>"><img src="/icon_digibib.png" alt="" class="textright" />Digibib</a>
+<% END %>
+<% IF NOT localuser %>
+<a href="http://kvk.ubka.uni-karlsruhe.de/hylib-bin/kvk/nph-kvk2.cgi?maske=kvk-last&amp;lang=de&amp;title=KIT-Bibliothek%3A+Karlsruher+Virtueller+Katalog+KVK+%3A+Ergebnisanzeige&amp;head=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-head-de-2010-11-08.html&amp;header=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-header-de-2010-11-08.html&amp;spacer=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-spacer-de-2010-11-08.html&amp;footer=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-footer-de-2010-11-08.html&amp;css=none&amp;input-charset=utf-8&amp;Timeout=120&amp;TI=<% entry.title.0 %>&amp;kataloge=SWB&amp;kataloge=BVB&amp;kataloge=NRW&amp;kataloge=HEBIS&amp;kataloge=HEBIS_RETRO&amp;kataloge=KOBV_SOLR&amp;kataloge=GBV&amp;kataloge=DDB&amp;kataloge=STABI_BERLIN&amp;kataloge=BIBOPAC&amp;kataloge=SWISSBIB&amp;kataloge=LOC_DIREKT&amp;kataloge=WORLDCAT&amp;kataloge=AMAZON_DE&amp;kataloge=AMAZON_US"><img src="/icon_kvk.png" alt="" class="textright" />KVK</a><br />
+<% END %>
+<% CASE 'book chapter' %>
+<% IF localuser %>
+<a href="http://katalog.ub.uni-bielefeld.de/cgi-bin/search.cgi?fsubmit=1&amp;kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=<% FOREACH rel_entry IN entry.host %><% rel_entry.title %><% END %>&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;sprache=ENG&amp;art=f&amp;opt=&amp;pagesize=10&amp;sort=0&amp;vr=on"><img src="/icon_ub.png" alt="" class="textright" />Library Catalogue</a><br />
+<a href="http://www.digibib.net/opensearch?LOCATION=361&amp;SG1.SG.361:SGKatalogeBielefeld=on&amp;SG2.SG.361:SGKatalogeDeutschland=on&amp;SG3.SG.361:SGKatalogeInternational=on&amp;QUERY_azTI=<% FOREACH rel_entry IN entry.host %><% rel_entry.title %><% END %>"><img src="/icon_digibib.png" alt="" class="textright" />Digibib</a>
+<% END %>
+<% IF NOT localuser %>
+<a href="http://kvk.ubka.uni-karlsruhe.de/hylib-bin/kvk/nph-kvk2.cgi?maske=kvk-last&amp;lang=de&amp;title=KIT-Bibliothek%3A+Karlsruher+Virtueller+Katalog+KVK+%3A+Ergebnisanzeige&amp;head=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-head-de-2010-11-08.html&amp;header=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-header-de-2010-11-08.html&amp;spacer=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-spacer-de-2010-11-08.html&amp;footer=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-footer-de-2010-11-08.html&amp;css=none&amp;input-charset=utf-8&amp;Timeout=120&amp;TI=<% FOREACH rel_entry IN entry.host %><% rel_entry.title %><% END %>&amp;kataloge=SWB&amp;kataloge=BVB&amp;kataloge=NRW&amp;kataloge=HEBIS&amp;kataloge=HEBIS_RETRO&amp;kataloge=KOBV_SOLR&amp;kataloge=GBV&amp;kataloge=DDB&amp;kataloge=STABI_BERLIN&amp;kataloge=BIBOPAC&amp;kataloge=SWISSBIB&amp;kataloge=LOC_DIREKT&amp;kataloge=WORLDCAT&amp;kataloge=AMAZON_DE&amp;kataloge=AMAZON_US"><img src="/icon_kvk.png" alt="" class="textright" />KVK</a>
+<% END %>
+<% END %>
+</p>
+
+<h2 class="overline">Bookmark / Share</h2>
+
+<p><a href="http://bup-dev.ub.uni-bielefeld.de/publication/<% entry.id %>"><img src="/icon_bookmark.png" alt="" class="textright" />Bookmark</a></p>
+
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style ">
+<a href="http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4d5bc1db25c3489a" class="addthis_button_compact">Share</a>
+<a class="addthis_button_preferred_1"></a>
+<a class="addthis_button_preferred_2"></a>
+<a class="addthis_button_preferred_3"></a>
+<!-- <a class="addthis_button_preferred_4"></a> -->
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4d5bc1db25c3489a"></script>
+<!-- extra -->
+<a href="http://www.researchgate.net/go.Share.html?u=http%3A%2F%2Fpub.uni-bielefeld.de%2Fpublication%2F<% entry.id %>&amp;t=<% entry.title.0 %>&amp;a=<% FOREACH author_entry IN entry.author %><% IF loop.first %><% author_entry.full %><% first_author = author_entry.full %><% ELSE %>;<% author_entry.full %><% END %><% END %>&amp;d=<% entry.publ_year %>"><img src="/researchgate.png" alt="" /></a>
+<g:plusone size="small" count="false"></g:plusone>
+<!-- /extra -->
+<!-- AddThis Button END -->
+</div>
+
+</div>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.js"></script>
+<script type="text/javascript" src="/js/tabs.js"></script>
+
+</body>
+
+<!-- END bup_record.tmpl -->
+
+</html>
