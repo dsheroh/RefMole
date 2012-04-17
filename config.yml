@@ -12,15 +12,7 @@ layout: "main"
 # when the charset is set to UTF-8 Dancer will handle for you
 # all the magic of encoding and decoding. You should not care
 # about unicode within your app when this setting is set (recommended).
-
-# Unfortunately, turning on Dancer's automatic UTF-8 support seems to
-# cause, rather than resolve, character set issues.  Disabling it was the 
-# first way I found to fix them, so it's disabled for now.
-#
-# TODO: Figure out why it's causing problems and fix RefMole so that it
-# works properly with this setting enabled.
-
-#charset: "UTF-8"
+charset: "UTF-8"
 
 template: "template_toolkit"
 engines:
