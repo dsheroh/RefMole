@@ -52,6 +52,22 @@ sub apply_csl {
   return;
 }
 
+sub get_detail {
+  my %param = @_;
+
+  return unless $param{id};
+
+  my $query_url = config->{sru}{url}
+    . "&query=id%20exact%20%22$param{id}%22";
+  my $sru_response = _get_sru_result($query_url);
+  my $result = _extract_mods($sru_response);
+
+  $result->{records}[0]{id} = $param{id};
+  $result->{style} = $param{style} || config->{csl_engine}{default_style};
+
+  return $result;
+}
+
 sub get_publications {
   my %param = @_;
 
@@ -100,12 +116,12 @@ sub get_publications {
   $conditions .= "AND%20documentType%3D%22$param{doctype}%22"
     if $param{doctype};
 
-  my $query_url = config->{cite}{sru_url}
+  my $query_url = config->{sru}{url}
     . "&query=$conditions&sortKeys=publishingYear,,0";
 
   ### TODO: If unlimited result set sizes are needed, adapt "paging the result"
   ### loop from lines 520-559 of bup_sru.pl
-  my $remaining = $param{limit} || config->{cite}{result_limit};
+  my $remaining = $param{limit} || config->{sru}{result_limit};
   $query_url .= "&maximumRecords=$remaining";
   my $sru_response = _get_sru_result($query_url);
   my $result = _extract_mods($sru_response);

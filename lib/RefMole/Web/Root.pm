@@ -26,9 +26,12 @@ get '/create' => sub {
 };
 
 get '/detail/:id' => sub {
-  return redirect '/create' unless params->{id};
+  my $rec = RefMole::CiteList::get_detail(params);
+  RefMole::CiteList::apply_csl($rec) if $rec->{numrecs};
 
-  template 'detail';
+  var page_title => $rec->{records}[0]{title}[0] || 'No record found';
+
+  template 'detail', { entry => $rec->{records}[0], records => $rec };
 };
 
 1;
