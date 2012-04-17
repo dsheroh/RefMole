@@ -1,6 +1,7 @@
 
-- Fix UTF-8 handling
-  - Problems are likely due to CSL.pm calling encode_utf8 explicitly
+- UTF-8 issues on pub (not seen on hactar)
+
+- 500 error on citation list for user with no publications
 
 - Add support for "ftyp" parameter to select template type and provide
   special handling for javascript requests
@@ -38,14 +39,12 @@
 
 - Clean up the leading ; in generated URLs
 
-- Push to github
-
 - Remove Dancer dependencies from non-Web modules
 
 - RefMole::CiteList module is a bit of a god class.  Break it up into sensible
   groups of related functions.
 
-- Implement "coins_str" if needed
-
 - Add distinction between local and non-local users in /detail route?
+
+- Contact Friedrich regarding "first record encoding" issue with citenode.php
 

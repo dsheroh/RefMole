@@ -21,7 +21,7 @@ engines:
 #    start_tag: '[%'
 #    end_tag:   '%]'
 
-sbcat_path: /home/dsheroh/src/sbcat/
+sbcat_path: /usr/local/sbcat/
 
 sru:
   url: http://pub.lub.lu.se/sru?version=1.1&operation=searchRetrieve

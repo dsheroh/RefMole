@@ -2,4 +2,6 @@ logs/
 sessions/
 .*.swp
 *~
+config.yml
+environments/*.yml
 
