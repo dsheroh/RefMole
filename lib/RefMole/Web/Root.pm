@@ -36,7 +36,7 @@ get '/detail/:id' => sub {
 
 hook 'before_template_render' => sub {
   my $tokens = shift;
-  $tokens->{uri_base} = request->base->path;
+  $tokens->{uri_base} = request->base->path eq '/' ? '' : request->base->path;
 };
 
 1;
