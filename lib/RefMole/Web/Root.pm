@@ -34,4 +34,9 @@ get '/detail/:id' => sub {
   template 'detail', { entry => $rec->{records}[0], records => $rec };
 };
 
+hook 'before_template_render' => sub {
+  my $tokens = shift;
+  $tokens->{uri_base} = request->base->path;
+};
+
 1;
