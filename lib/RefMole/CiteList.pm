@@ -262,8 +262,12 @@ sub _add_record_fields {
 
     for (@{$related->{part}{extent}}) {
       $entry->{pages} = $_->{content} if $_->{content};
-      $entry->{prange} = $_->{start} if $_->{start};
-      $entry->{prange} .= ' - ' . $_->{end} unless ref $_->{end};
+      if ($_->{start}) {
+        $entry->{prange} = $_->{start};
+        $entry->{prange} .= ' - ' . $_->{end} unless ref $_->{end};
+      } else {
+        $entry->{prange} = $_->{end} unless ref $_->{end};
+      }
     }
 
     if ($related->{part}{detail}) {
