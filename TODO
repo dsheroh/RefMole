@@ -1,12 +1,12 @@
 
-- 500 error on citation list for user with no publications
+- Fix 'Cite this' links at bottom of /detail page
+  - APS and IEEE styles return "read timeout" from citeproc
+  - Harvard returns empty citations
 
 - Add support for "ftyp" parameter to select template type and provide
   special handling for javascript requests
   - Only used value appears to be ftyp=js and it returns as text/plain, so
     this seems likely to be a hacky form of AJAX handling
-
-- Fix 'Cite this' links at bottom of /detail page
 
 - Implement result set sorting
 
@@ -20,9 +20,6 @@
 - Add support for new search types/features per Jorgen's emailed documents
 
 - Add CSL bypass for 'std' citation style
-
-- Is it possible to validate in javascript that a string looks likely to be
-  a valid LUCAT/STiL id prior to form submission?  Do we care?
 
 - Add support for unlimited result set sizes if needed (currently capped at
   250 results)
@@ -44,5 +41,5 @@
 
 - Add distinction between local and non-local users in /detail route?
 
-- Contact Friedrich regarding "first record encoding" issue with citenode.php
+- Clean cruft out of template files
 

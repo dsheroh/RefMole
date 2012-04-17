@@ -410,13 +410,12 @@ Abstract:<br />
 <h3>Cite this</h3>
 
 <ul class="tabs">
-<!-- Give href an ID value of corresponding "tabs-content" <li>'s -->
-<li><a href="#" onclick="sndReqCit ('ama', <% entry.id %>);" id="tab_ama">AMA</a></li>
-<li><a href="#" onclick="sndReqCit ('apa', <% entry.id %>);" id="tab_apa">APA</a></li>
-<li><a href="#" onclick="sndReqCit ('aps', <% entry.id %>);" id="tab_aps">APS</a></li>
-<li><a href="#" onclick="sndReqCit ('harvard1', <% entry.id %>);" id="tab_harvard1">Harvard</a></li>
-<li><a href="#" onclick="sndReqCit ('ieee', <% entry.id %>);" id="tab_ieee">IEEE</a></li>
-<li><a href="#" onclick="sndReqCit ('mla', <% entry.id %>);" id="tab_mla">MLA</a></li>
+<li><a href="<% uri_base %>/detail/<% params.id %>?style=ama">AMA</a></li>
+<li><a href="<% uri_base %>/detail/<% params.id %>?style=apa">APA</a></li>
+<li><a href="<% uri_base %>/detail/<% params.id %>?style=aps">APS</a></li>
+<li><a href="<% uri_base %>/detail/<% params.id %>?style=harvard">Harvard</a></li>
+<li><a href="<% uri_base %>/detail/<% params.id %>?style=ieee">IEEE</a></li>
+<li><a href="<% uri_base %>/detail/<% params.id %>?style=mla">MLA</a></li>
 </ul>
 
 <div id="preloader" style="display:none;"><img src="/preloader_circle.gif" /></div>
