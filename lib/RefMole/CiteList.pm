@@ -171,7 +171,11 @@ sub _add_record_fields {
 
   $result{publ_year} = $mods->{originInfo}{dateIssued}{content};
   $result{publisher} = $mods->{originInfo}{publisher};
-  $result{language}  = $mods->{language}{languageTerm}{content};
+  if (ref $mods->{language} eq 'ARRAY') {
+    $result{language}  = $mods->{language}[0]{languageTerm}{content};
+  } else {
+    $result{language}  = $mods->{language}{languageTerm}{content};
+  }
 
   $result{place} = $mods->{originInfo}{place}{placeTerm}{content}
     if $mods->{originInfo}{place}{placeTerm}{content};

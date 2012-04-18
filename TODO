@@ -43,3 +43,5 @@
 
 - Clean cruft out of template files
 
+- Tests for non-Web module functionality
+
