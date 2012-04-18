@@ -1,8 +1,4 @@
 
-- Fix 'Cite this' links at bottom of /detail page
-  - APS and IEEE styles return "read timeout" from citeproc
-  - Harvard returns empty citations
-
 - Add support for "ftyp" parameter to select template type and provide
   special handling for javascript requests
   - Only used value appears to be ftyp=js and it returns as text/plain, so

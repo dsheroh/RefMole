@@ -410,11 +410,12 @@ Abstract:<br />
 <h3>Cite this</h3>
 
 <ul class="tabs">
+<!-- Hide citation styles which the citeproc service fails to provide -->
 <li><a href="<% uri_base %>/detail/<% params.id %>?style=ama">AMA</a></li>
 <li><a href="<% uri_base %>/detail/<% params.id %>?style=apa">APA</a></li>
-<li><a href="<% uri_base %>/detail/<% params.id %>?style=aps">APS</a></li>
-<li><a href="<% uri_base %>/detail/<% params.id %>?style=harvard">Harvard</a></li>
-<li><a href="<% uri_base %>/detail/<% params.id %>?style=ieee">IEEE</a></li>
+<!-- <li><a href="<% uri_base %>/detail/<% params.id %>?style=aps">APS</a></li> -->
+<li><a href="<% uri_base %>/detail/<% params.id %>?style=harvard1">Harvard</a></li>
+<!-- <li><a href="<% uri_base %>/detail/<% params.id %>?style=ieee">IEEE</a></li> -->
 <li><a href="<% uri_base %>/detail/<% params.id %>?style=mla">MLA</a></li>
 </ul>
 
