@@ -397,7 +397,7 @@ Abstract:<br />
 <div class="frontdoor">
 <div class="frontdoor_left">PUB-ID:</div>
 <div class="frontdoor_right">
-<% entry.id %> | Link: <a href="http://bup-dev.ub.uni-bielefeld.de/publication/<% entry.id %>">http://bup-dev.ub.uni-bielefeld.de/publication/<% entry.id %></a>
+<% entry.id %> | Link: <a href="https://lup.lub.lu.se/record/<% entry.id %>">https://lup.lub.lu.se/record/<% entry.id %></a>
 </div>
 </div>
 

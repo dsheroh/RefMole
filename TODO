@@ -41,3 +41,5 @@
 
 - Tests for non-Web module functionality
 
+- Make hostname for PUB-ID on /detail page configurable
+
