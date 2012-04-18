@@ -205,8 +205,10 @@ sub _add_record_fields {
     if (ref $entity->{namePart} eq 'ARRAY') {
       my $person;
       for my $name_part (@{$entity->{namePart}}) {
-        $name_part->{content} = decode('iso-8859-1', $name_part->{content})
-          unless utf8::decode($name_part->{content});
+        eval {
+          $name_part->{content} = decode('iso-8859-1', $name_part->{content})
+            unless utf8::decode($name_part->{content});
+        };
 
         $person->{given}  = $name_part->{content}
           if $name_part->{type} eq 'given';
