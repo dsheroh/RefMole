@@ -17,7 +17,7 @@ BEGIN {
   $ENV{HOSTNAME} //= `hostname --fqdn`;
   my $original_path = getcwd;
   chdir config->{sbcat_path};
-  $cfg = new luurCfg;
+  $cfg = luurCfg->new;
   chdir $original_path;
 }
 ### END ORMS LIFE-SUPPORT ###
