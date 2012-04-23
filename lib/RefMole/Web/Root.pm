@@ -14,9 +14,29 @@ get '/cite' => sub {
   my $citations = RefMole::CiteList::get_publications(params);
   RefMole::CiteList::apply_csl($citations) if $citations->{numrecs};
 
-  ### TODO: Adapt template selection and ftype=js handling @ bup_sru 674-703
+  if (params->{ftyp}) {
+    for my $cite (@{$citations->{records}}) {
+      chomp $cite->{citation};
 
-  template 'cite', { records => $citations->{records}, citations => $citations };
+      $cite->{title} =~ s/'/\\'/g;
+      $cite->{title} =~ s/"/\\"/g;
+
+      for my $rel (@{$cite->{relation}}) {
+        if ($rel->{title}) {
+          $rel->{title} =~ s/'/\\'/g;
+          $rel->{title} =~ s/"/\\"/g;
+        }
+      }
+    }
+
+    content_type 'application/javascript';
+    template 'js_citewriter',
+      { records => $citations->{records}, citations => $citations },
+      { layout => undef };
+  } else {
+    template 'cite',
+      { records => $citations->{records}, citations => $citations };
+  }
 };
 
 get '/create' => sub {

@@ -1,8 +1,9 @@
 
-- Add support for "ftyp" parameter to select template type and provide
-  special handling for javascript requests
-  - Only used value appears to be ftyp=js and it returns as text/plain, so
-    this seems likely to be a hacky form of AJAX handling
+- Add CSL bypass for 'std' citation style
+  - Proof-of-concept for formatting citations locally instead of via citeproc
+
+- Add support for unlimited result set sizes if needed (currently capped at
+  250 results)
 
 - Implement result set sorting
 
@@ -14,11 +15,6 @@
 - Get proper LU favicon to replace default Dancer icon
 
 - Add support for new search types/features per Jorgen's emailed documents
-
-- Add CSL bypass for 'std' citation style
-
-- Add support for unlimited result set sizes if needed (currently capped at
-  250 results)
 
 - Enable author preference options (citation style, sort direction, hidden
   publications list) after they've been added to our ORMS db
@@ -42,4 +38,6 @@
 - Tests for non-Web module functionality
 
 - Make hostname for PUB-ID on /detail page configurable
+
+- Change javascript embedding into proper AJAX?
 
