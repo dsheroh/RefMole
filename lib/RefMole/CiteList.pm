@@ -170,7 +170,8 @@ sub get_publications {
     }
   }
 
-  $result->{style} = lc $param{style} || $author_style || 'apa';
+  $result->{style} = lc $param{style} || $author_style
+    || config->{csl_engine}{default_style};
 
   $result->{list_dept} = $param{dept} if defined $param{dept};
 

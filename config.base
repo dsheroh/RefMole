@@ -30,7 +30,7 @@ sru:
 csl_engine:
   url: http://ubcsl.ub.uni-bielefeld.de/citenode.php
   format: html
-  default_style: plos
+  default_style: std
   recs: 100
   type_map:
     article: article
