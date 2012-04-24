@@ -103,7 +103,9 @@ sub get_publications {
   my ($author_style, $author_sort_order, $hiddenlist);
 
   if ($param{author}) {
-    $conditions = "_basic%20exact%20%22$param{author}%22";
+    my $lucat = $param{author};
+    $conditions = qq{(author exact "$lucat" or (editor exact "$lucat" }
+      . qq{and (documentType exact "bookEditor or conferenceEditor")))};
 
 ### TODO: Enable following code after new attributes have been added to our
 ### ORMS db
