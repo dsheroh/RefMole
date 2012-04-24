@@ -1,10 +1,4 @@
 
-- Add CSL bypass for 'std' citation style
-  - Proof-of-concept for formatting citations locally instead of via citeproc
-
-- Add support for unlimited result set sizes if needed (currently capped at
-  250 results)
-
 - Implement result set sorting
 
 - Improve CSS

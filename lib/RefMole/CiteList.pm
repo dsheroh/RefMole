@@ -89,8 +89,7 @@ sub get_detail {
 
   my $query_url = config->{sru}{url}
     . "&query=id%20exact%20%22$param{id}%22";
-  my $sru_response = _get_sru_result($query_url);
-  my $result = _extract_mods($sru_response);
+  my $result = _get_records($query_url, limit => 1);
 
   $result->{records}[0]{id} = $param{id};
   $result->{style} = $param{style} || config->{csl_engine}{default_style};
@@ -151,12 +150,7 @@ sub get_publications {
   my $query_url = config->{sru}{url}
     . "&query=$conditions&sortKeys=publishingYear,,0";
 
-  ### TODO: If unlimited result set sizes are needed, adapt "paging the result"
-  ### loop from lines 520-559 of bup_sru.pl
-  my $remaining = $param{limit} || config->{sru}{result_limit};
-  $query_url .= "&maximumRecords=$remaining";
-  my $sru_response = _get_sru_result($query_url);
-  my $result = _extract_mods($sru_response);
+  my $result = _get_records($query_url, limit => $param{limit});
 
   if ($param{author}) {
     $result->{norm_author} = _switch_author($param{author});
@@ -346,14 +340,59 @@ sub _extract_mods {
   return \%result;
 }
 
-sub _get_sru_result {
-  my ($query_url) = @_;
+sub _get_records {
+  my ($query_url, %param) = @_;
 
   my $ua = LWP::UserAgent->new();
   $ua->agent('Netscape/4.75');
   $ua->from('bd-tech@lub.lu.se');
   $ua->timeout(60);
   $ua->max_size(5000000);
+
+  my $start = 1;
+  my $limit = $param{limit};
+  my $chunk_limit = $limit || config->{sru}{result_limit};
+
+  my $result;
+  my $remaining = -1;
+  while ($remaining != 0) {
+    my $window = '';
+    $window = "&startRecord=$start" if $start > 1;
+    $window .= "&maximumRecords=$chunk_limit";
+
+    my $sru_response = _get_sru_result($query_url . $window, $ua);
+    my $chunk = _extract_mods($sru_response);
+
+    if ($result) {
+      push @{$result->{records}}, @{$chunk->{records}} if $chunk->{records};
+    } else {
+      $result = $chunk;
+      $remaining = $result->{numrecs};
+      $remaining = $limit if $limit && $remaining > $limit;
+    }
+
+    if ($chunk->{records}) {
+      my $chunk_size = @{$chunk->{records}};
+      $remaining -= $chunk_size;
+      $start += $chunk_size;
+    } else {
+      $remaining = 0;
+      say STDERR "WARNING: No records returned in "
+        . "RefMole::CiteList::_get_records for query\n$query_url\n";
+    }
+
+    if ($remaining < 0) {
+      say STDERR "WARNING: $remaining remaining records in "
+        . "RefMole::CiteList::_get_records for query\n$query_url\n";
+      $remaining = 0;
+    }
+  }
+
+  return $result;
+}
+
+sub _get_sru_result {
+  my ($query_url, $ua) = @_;
 
   my $req = HTTP::Request->new('GET', $query_url);
   return $ua->request($req)->content;
