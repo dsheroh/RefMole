@@ -24,6 +24,7 @@ BEGIN {
 
 use CSL;
 use Encode;
+use FindBin '$RealBin';
 use LWP::UserAgent;
 use Template;
 use XML::Simple;
@@ -62,8 +63,10 @@ sub format_citations {
   my $style = $publications->{style};
   return apply_csl(@_) unless $internal_style{$style};
 
+  my $template_path = "$RealBin/views/cite_style/";
+  $template_path =~ s{public/}{};
   my $formatter = Template->new(
-    INCLUDE_PATH => 'views/cite_style/',
+    INCLUDE_PATH => $template_path,
     DEFAULT      => 'std.tt',
     START_TAG    => '<%',
     END_TAG      => '%>',
