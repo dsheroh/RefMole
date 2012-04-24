@@ -25,7 +25,10 @@ BEGIN {
 use CSL;
 use Encode;
 use LWP::UserAgent;
+use Template;
 use XML::Simple;
+
+my %internal_style = map { $_ => 1 } qw( std );
 
 sub apply_csl {
   my ($publications) = @_;
@@ -48,6 +51,30 @@ sub apply_csl {
   @{$publications->{records}} =
     sort { ($a->{sort_nr} || 0) <=> ($b->{sort_nr} || 0) }
     @{$publications->{records}};
+
+  # Return nothing because $publications was modified in-place
+  return;
+}
+
+sub format_citations {
+  my ($publications) = @_;
+
+  my $style = $publications->{style};
+  return apply_csl(@_) unless $internal_style{$style};
+
+  my $formatter = Template->new(
+    INCLUDE_PATH => 'views/cite_style/',
+    DEFAULT      => 'std.tt',
+    START_TAG    => '<%',
+    END_TAG      => '%>',
+    TRIM         => 1,
+  );
+  my $template = $style . '.tt';
+  for my $rec (@{$publications->{records}}) {
+    my $citation;
+    $formatter->process($template, $rec, \$citation) or die $formatter->error;
+    $rec->{citation} = $citation;
+  }
 
   # Return nothing because $publications was modified in-place
   return;
