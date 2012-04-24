@@ -63,8 +63,7 @@ sub format_citations {
   my $style = $publications->{style};
   return apply_csl(@_) unless $internal_style{$style};
 
-  my $template_path = "$RealBin/views/cite_style/";
-  $template_path =~ s{public/}{};
+  my $template_path = "$RealBin/../views/cite_style/";
   my $formatter = Template->new(
     INCLUDE_PATH => $template_path,
     DEFAULT      => 'std.tt',
