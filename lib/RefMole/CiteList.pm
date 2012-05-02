@@ -5,6 +5,7 @@ use warnings;
 use 5.010;
 
 use Dancer qw( config debug );
+use POSIX qw( ceil );
 
 ### BEGIN ORMS LIFE-SUPPORT ###
 use lib config->{sbcat_path} . '/lib/extension';
@@ -353,9 +354,10 @@ sub _get_records {
   $ua->max_size(5000000);
 
   my $page = $param->{page} || 1;
-  my $limit = $param->{limit};
-  my $start = $limit ? (($page - 1) * $limit + 1) : 1;
-  my $chunk_limit = $limit || config->{sru}{result_limit};
+  my $page_size = $param->{limit};
+  my $start = $page_size ? (($page - 1) * $page_size + 1) : 1;
+  my $chunk_limit = $page_size || config->{sru}{result_limit};
+  my $total_hits;
 
   my $result;
   my $remaining = -1;
@@ -367,12 +369,14 @@ sub _get_records {
     my $sru_response = _get_sru_result($query_url . $window, $ua);
     my $chunk = _extract_mods($sru_response);
 
+    $total_hits //= $chunk->{numrecs} || 0;
+
     if ($result) {
       push @{$result->{records}}, @{$chunk->{records}} if $chunk->{records};
     } else {
       $result = $chunk;
       $remaining = $result->{numrecs};
-      $remaining = $limit if $limit && $remaining > $limit;
+      $remaining = $page_size if $page_size && $remaining > $page_size;
     }
 
     if ($chunk->{records}) {
@@ -391,6 +395,9 @@ sub _get_records {
       $remaining = 0;
     }
   }
+
+  $param->{total_hits} = $total_hits;
+  $param->{max_page} = ceil($total_hits / $page_size) if $page_size;
 
   return $result;
 }
