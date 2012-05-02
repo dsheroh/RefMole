@@ -155,7 +155,7 @@ sub get_publications {
   my $query_url = config->{sru}{url}
     . "&query=$conditions&sortKeys=publishingYear,,$sort_dir";
 
-  my $result = _get_records($query_url, limit => $param{limit});
+  my $result = _get_records($query_url, %param);
 
   if ($param{author}) {
     $result->{norm_author} = _switch_author($param{author});
@@ -351,8 +351,9 @@ sub _get_records {
   $ua->timeout(60);
   $ua->max_size(5000000);
 
-  my $start = 1;
+  my $page = $param{page} || 1;
   my $limit = $param{limit};
+  my $start = $limit ? (($page - 1) * $limit + 1) : 1;
   my $chunk_limit = $limit || config->{sru}{result_limit};
 
   my $result;
