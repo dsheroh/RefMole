@@ -135,8 +135,8 @@ sub get_publications {
     }
 =cut
 
-  } elsif ($param{dept}) {
-    $conditions = "department=$param{department}";
+  } elsif ($param{department}) {
+    $conditions = "department exact $param{department}";
   } else {
     return {};
   }

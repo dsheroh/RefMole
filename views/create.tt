@@ -17,14 +17,14 @@ function ComputeLink(link_form) {
   var chkZ = 1;
   var result_str = "<% request.uri_base %>/cite?";
 
-  if (link_form.pubid.value == ""){
-    alert('Please enter your LUCAT or STiL ID!');
-    link_form.pubid.focus();
+  if (link_form.searchid.value == ""){
+    alert('Please enter your LUCAT/STiL ID or a department ID.');
+    link_form.searchid.focus();
     return false;
   }
 
-  if (link_form.pubid.value){
-    result_str += ';author=' + link_form.pubid.value;
+  if (link_form.searchid.value){
+    result_str += link_form.searchtype.value + '=' + link_form.searchid.value;
   }
 
   if (link_form.style.value){
@@ -74,7 +74,7 @@ function ComputeLink(link_form) {
   link_str = '<a href=\"' + link_str + '\">My Publication List<\/a>';
   link_form.link.value = link_str;
 
-  show('step2');
+  show('embedcodes');
 }
 
 var xmlhttp = false;
@@ -137,7 +137,7 @@ function fNewiFrameWindow (url) {
 <h1>Embed Your Publication List in Your Homepage</h1>
 
 <ol class="instructions">
-<li>Enter your LUCAT or STiL ID</li>
+<li>Enter your LUCAT/STiL ID or department ID</li>
 <li>Choose citation style, document types etc. if desired and click &quot;Submit&quot;</li>
 <li>You will see the codes for the different embedding methods</li>
 <li>Copy the code from the desired field.  By clicking on &quot;preview&quot; you can get a preview.</li>
@@ -151,8 +151,11 @@ function fNewiFrameWindow (url) {
 <form action="/create" accept-charset="ISO-8859-1" name='form'>
 
 <div class="field">
-<label for="id_pubid">LUCAT or STiL ID</label>
-<input name="pubid" value="" size="12" maxlength="12" id="id_pubid" onchange="ComputeLink(this.form)" />
+<select size=1 name=searchtype onchange="hide('embedcodes')">
+<option value=author selected=selected1>LUCAT or STiL ID</option>
+<option value=department>Department ID</option>
+</select>
+<input name="searchid" value="" size="12" maxlength="12" onchange="ComputeLink(this.form)" />
 </div>
 
 <!-- TODO: Provide list of citation styles as data to the template -->
@@ -286,7 +289,7 @@ function fNewiFrameWindow (url) {
 <input type="reset" value="Reset" onclick="window.location.reload()" />
 </div>
 
-<div id="step2" style="display:none;">
+<div id="embedcodes" style="display:none;">
 
 <h3>Embed as Javascript</h3>
 
