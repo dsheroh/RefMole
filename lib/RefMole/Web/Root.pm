@@ -8,11 +8,20 @@ get '/' => sub {
   redirect '/create';
 };
 
+my %dirty_param = map { $_ => 1 } qw( page max_page total_hits );
+
 get '/cite' => sub {
   var page_title => 'Citation List';
 
   my $citations = RefMole::CiteList::get_publications(scalar params);
   RefMole::CiteList::format_citations($citations) if $citations->{numrecs};
+
+  if (params->{max_page} > 1) {
+    my %params = params;
+    my $clean_params = join ';', map { $_ . '=' . $params{$_} }
+      grep { !$dirty_param{$_} } sort keys %params;
+    var clean_params => $clean_params;
+  }
 
   if (params->{ftyp}) {
     for my $cite (@{$citations->{records}}) {

@@ -397,7 +397,7 @@ sub _get_records {
   }
 
   $param->{total_hits} = $total_hits;
-  $param->{max_page} = ceil($total_hits / $page_size) if $page_size;
+  $param->{max_page} = $page_size ? ceil($total_hits / $page_size) : 1;
 
   return $result;
 }
