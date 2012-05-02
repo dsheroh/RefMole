@@ -17,30 +17,34 @@ function ComputeLink(link_form) {
   var chkZ = 1;
   var result_str = "<% request.uri_base %>/cite?";
 
-  if (link_form.searchid.value == ""){
+  if (link_form.searchid.value == "") {
     alert('Please enter your LUCAT/STiL ID or a department ID.');
     link_form.searchid.focus();
     return false;
   }
 
-  if (link_form.searchid.value){
+  if (link_form.searchid.value) {
     result_str += link_form.searchtype.value + '=' + link_form.searchid.value;
   }
 
-  if (link_form.style.value){
+  if (link_form.style.value) {
     result_str += ';style=' + link_form.style.value;
   }
 
-  if (link_form.doctype.value){
+  if (link_form.doctype.value) {
     result_str += ';doctype=' + link_form.doctype.value;
   }
 
-  if (link_form.publyear.value){
+  if (link_form.publyear.value) {
     result_str += ';publyear=' + link_form.publyear.value;
   }
 
-  if (link_form.sort.value){
-    if (link_form.sort.value == 'yearasc'){
+  if (link_form.pagesize.value) {
+    result_str += ';limit=' + link_form.pagesize.value;
+  }
+
+  if (link_form.sort.value) {
+    if (link_form.sort.value == 'yearasc') {
       result_str += ';sortdir=asc';
     }
   }
@@ -49,8 +53,8 @@ function ComputeLink(link_form) {
   var sourcecode2 = "";
 
 // Preloader not implemented
-//  if (link_form.preload.value){
-//    if (link_form.preload.value == 'yes'){
+//  if (link_form.preload.value) {
+//    if (link_form.preload.value == 'yes') {
 //      sourcecode1 = '<div id=\"preloader-0\" name=\"preloader\[\]\"><script type=\"text\/javascript\" src=\"http:\/\/pub.uni-bielefeld.de\/js\/preload.js\"><\/script><img src=\"http:\/\/pub.uni-bielefeld.de\/loading.gif\" \/> Publikationsliste wird geladen &hellip; \/ Loading publication list &hellip;<\/div><!--\[if IE\]><div style=\"margin-top:25px;\"><!\[endif\]--><div class=\"publ\" style=\"margin-top:-25px;\">';
 //      sourcecode2 = '<!--\[if IE\]><\/div><!\[endif\]-->';
 //      show('preloader_msg');
@@ -205,7 +209,7 @@ function fNewiFrameWindow (url) {
 <!-- TODO: Generate list of years dynamically -->
 <!-- TODO: Allow for year ranges rather than just "single year" or "all years"? -->
 <div class="field">
-<label for="id_publyear">Publication Year</label>
+<label for="id_publyear">Publication year</label>
 <select size="1" name="publyear" id="id_publyear" onchange="ComputeLink(this.form)">
 <option value="" selected="selected">All Publication Years</option>
 <option value="2012">2012</option>
@@ -261,6 +265,18 @@ function fNewiFrameWindow (url) {
 <option value="1962">1962</option>
 <option value="1961">1961</option>
 <option value="1960">1960</option>
+</select>
+</div>
+
+<div class="field">
+<label for="id_pagesize">Citations per page</label>
+<select size="1" name="pagesize" id="id_pagesize" onchange="ComputeLink(this.form)">
+<option value="" selected="selected">All Citations</option>
+<option value=10>10</option>
+<option value=20>20</option>
+<option value=50>50</option>
+<option value=100>100</option>
+<option value=200>200</option>
 </select>
 </div>
 
