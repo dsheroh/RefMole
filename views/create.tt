@@ -3,177 +3,140 @@
 
 <script type="text/javascript">
 
-function anzeigen(das) {
- if (document.getElementById(das).style.display=='none') {
-  document.getElementById(das).style.display='inline';
- }
+function show(section) {
+  if (document.getElementById(section).style.display=='none') {
+   document.getElementById(section).style.display='inline';
+  }
 }
 
-function ausblenden(das) {
- document.getElementById(das).style.display='none';
+function hide(section) {
+  document.getElementById(section).style.display='none';
 }
 
 function ComputeLink(link_form) {
-
   var chkZ = 1;
-
   var result_str = "<% request.uri_base %>/cite?";
 
-  if (link_form.bisid.value == ""){
-     alert('Please enter your LUCAT or STiL ID!');
-     link_form.bisid.focus();
-     return false;
-  }
-
-  /*
-  TODO: Insert Lund-appropriate ID validator (LUCAT, STiL?)
-  for (i = 0; i < link_form.bisid.value.length; ++i)
-    if (link_form.bisid.value.charAt(i) < "0" ||
-        link_form.bisid.value.charAt(i) > "9")
-      chkZ = -1;
-  if (chkZ == -1) {
-    alert("Please enter a valid LUCAT or STiL ID!");
-    link_form.bisid.focus();
-    link_form.bisid.value = "";
+  if (link_form.pubid.value == ""){
+    alert('Please enter your LUCAT or STiL ID!');
+    link_form.pubid.focus();
     return false;
   }
-  */
 
-  if (link_form.bisid.value){
-
-     result_str += ';author=' + link_form.bisid.value;
+  if (link_form.pubid.value){
+    result_str += ';author=' + link_form.pubid.value;
   }
 
   if (link_form.style.value){
-
-     result_str += ';style=' + link_form.style.value ;
+    result_str += ';style=' + link_form.style.value;
   }
 
   if (link_form.doctype.value){
-
-     result_str += ';doctype=' + link_form.doctype.value ;
+    result_str += ';doctype=' + link_form.doctype.value;
   }
 
   if (link_form.publyear.value){
-
-     result_str += ';publyear=' + link_form.publyear.value ;
+    result_str += ';publyear=' + link_form.publyear.value;
   }
 
   if (link_form.sort.value){
-
-     if (link_form.sort.value == 'yearasc'){
-        result_str += ';sortdir=asc' ;
-     }
+    if (link_form.sort.value == 'yearasc'){
+      result_str += ';sortdir=asc';
+    }
   }
 
   var sourcecode1 = "<div class=\"publ\">";
   var sourcecode2 = "";
 
-  if (link_form.preload.value){
-
-     if (link_form.preload.value == 'yes'){
-
-        sourcecode1 = '<div id=\"preloader-0\" name=\"preloader\[\]\"><script type=\"text\/javascript\" src=\"http:\/\/pub.uni-bielefeld.de\/js\/preload.js\"><\/script><img src=\"http:\/\/pub.uni-bielefeld.de\/loading.gif\" \/> Publikationsliste wird geladen &hellip; \/ Loading publication list &hellip;<\/div><!--\[if IE\]><div style=\"margin-top:25px;\"><!\[endif\]--><div class=\"publ\" style=\"margin-top:-25px;\">' ;
-
-        sourcecode2 = '<!--\[if IE\]><\/div><!\[endif\]-->' ;
-        
-        anzeigen('preloader_msg');
-
-
-     } else {
-     	ausblenden('preloader_msg');
-     }
-
-  } else {
-   	ausblenden('preloader_msg');
-  }
+// Preloader not implemented
+//  if (link_form.preload.value){
+//    if (link_form.preload.value == 'yes'){
+//      sourcecode1 = '<div id=\"preloader-0\" name=\"preloader\[\]\"><script type=\"text\/javascript\" src=\"http:\/\/pub.uni-bielefeld.de\/js\/preload.js\"><\/script><img src=\"http:\/\/pub.uni-bielefeld.de\/loading.gif\" \/> Publikationsliste wird geladen &hellip; \/ Loading publication list &hellip;<\/div><!--\[if IE\]><div style=\"margin-top:25px;\"><!\[endif\]--><div class=\"publ\" style=\"margin-top:-25px;\">';
+//      sourcecode2 = '<!--\[if IE\]><\/div><!\[endif\]-->';
+//      show('preloader_msg');
+//    } else {
+//      hide('preloader_msg');
+//    }
+//  } else {
+//    hide('preloader_msg');
+//  }
 
   var position = result_str.lastIndexOf("/");
   link = result_str.slice(position +1);
 
-   iframe_str = result_str ;
-   link_str = result_str ;
+  iframe_str = result_str;
+  link_str = result_str;
 
-   result_str = sourcecode1 + '<script type=\"text\/javascript\" charset=\"UTF-8\" src=\"' + result_str + ';ftyp=js\"><\/script><noscript><a href=\"' + link_str + '\" target=\"_blank\">My Publication List &gt;&gt;<\/a><\/noscript><\/div>' + sourcecode2 ;
-   link_form.jstext.value = result_str ;
-   iframe_str = '<iframe id=\"pubIFrame\" name=\"pubIFrame\" frameborder=\"0\" width=\"726\" height=\"300\" src=\"' + iframe_str + '\"><\/iframe>' ;
-   link_form.iftext.value = iframe_str ; 
-   link_str = '<a href=\"' + link_str + '\">My Publication List<\/a>' ;
-   link_form.link.value = link_str ;
+  result_str = sourcecode1 + '<script type=\"text\/javascript\" charset=\"UTF-8\" src=\"' + result_str + ';ftyp=js\"><\/script><noscript><a href=\"' + link_str + '\" target=\"_blank\">My Publication List &gt;&gt;<\/a><\/noscript><\/div>' + sourcecode2;
+  link_form.jstext.value = result_str;
+  iframe_str = '<iframe id=\"pubIFrame\" name=\"pubIFrame\" frameborder=\"0\" width=\"726\" height=\"300\" src=\"' + iframe_str + '\"><\/iframe>';
+  link_form.iftext.value = iframe_str;
+  link_str = '<a href=\"' + link_str + '\">My Publication List<\/a>';
+  link_form.link.value = link_str;
 
-   anzeigen('step2');
-   
-
-   // document.create_link.link.value = 'Result' ; 
+  show('step2');
 }
 
 var xmlhttp = false;
-var link ; // = document.create_link.jstext.value ;
+var link;
 
 function fDoRequest () {
+  if (link) {
+    xmlhttp = false;
 
-      //  link = link_form.jstext.value ;
+    if (window.XMLHttpRequest) { // Mozilla, Safari,...
+      xmlhttp = new XMLHttpRequest();
+      if (xmlhttp.overrideMimeType) {
+        xmlhttp.overrideMimeType('text/xml');
+      }
+    } else if (window.ActiveXObject) { // IE
+      try {
+        xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+      } catch (e) {
+        try {
+          xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        } catch (e) {
+        }
+      }
+    }
 
-	if (link) {
-	    xmlhttp = false;
-	
-	    if (window.XMLHttpRequest) { // Mozilla, Safari,...
-	        xmlhttp = new XMLHttpRequest();
-	        if (xmlhttp.overrideMimeType) {
-	            xmlhttp.overrideMimeType('text/xml');
-	        }
-	    } else if (window.ActiveXObject) { // IE
-	        try {
-	            xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-	        } catch (e) {
-	            try {
-	                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	            } catch (e) {}
-	        }
-	    }
-	
-	    if (!xmlhttp) {
-	        alert('Kann keine XMLHTTP-Instanz erzeugen.\nÜbernahme der Daten nicht möglich!');
-	        return false;
-	    }
-	
-	    xmlhttp.open('GET', link, true);
-	    xmlhttp.send(null);
-		xmlhttp.onreadystatechange = fLoadPage;
-	}
+    if (!xmlhttp) {
+      alert('Failed to create XMLHTTP instance!\nCannot retrieve data for Javascript embedding.');
+      return false;
+    }
+
+    xmlhttp.open('GET', link, true);
+    xmlhttp.send(null);
+    xmlhttp.onreadystatechange = fLoadPage;
+  }
 }
 
 function fLoadPage() {
-    if (xmlhttp.readyState == 4) {
-    	if (xmlhttp.status == 200) {
-        	document.getElementById('showJs').innerHTML=xmlhttp.responseText;
-        //    link = '';
-        }
+  if (xmlhttp.readyState == 4) {
+    if (xmlhttp.status == 200) {
+      document.getElementById('showJs').innerHTML=xmlhttp.responseText;
     }
+  }
 }
-
 
 function fNewWindow (url) {
-   fenster = window.open(url, "fenster1",
-   "width=600,height=400,status=yes,scrollbars=yes,resizable=yes");
-   fenster.focus();
+  newWindow = window.open(url, "My Publication List",
+  "width=600,height=400,status=yes,scrollbars=yes,resizable=yes");
+  newWindow.focus();
 }
-
 
 function fNewiFrameWindow (url) {
-   document.getElementById("IframeId").setAttribute("src",link) ;
-   document.getElementById("IframeId").setAttribute("height","300")
-   document.getElementById("IframeId").setAttribute("width","470")
-   document.getElementById("IframeId").setAttribute("style","border:1px solid #000; margin-top:20px;")
+  document.getElementById("IframeId").setAttribute("src",link);
+  document.getElementById("IframeId").setAttribute("height","300")
+  document.getElementById("IframeId").setAttribute("width","470")
+  document.getElementById("IframeId").setAttribute("style","border:1px solid #000; margin-top:20px;")
 }
-
-
 
 </script>
 
 <h1>Embed Your Publication List in Your Homepage</h1>
 
-<ol class="listen3">
+<ol class="instructions">
 <li>Enter your LUCAT or STiL ID</li>
 <li>Choose citation style, document types etc. if desired and click &quot;Submit&quot;</li>
 <li>You will see the codes for the different embedding methods</li>
@@ -184,17 +147,18 @@ function fNewiFrameWindow (url) {
 
 <h3>Enter data</h3>
 
-<form action="/create" accept-charset="ISO-8859-1" name="create_link" class="Form">
-<input type="hidden" name="func" value="cemb" />
+<!-- TODO: Get this accept-charset switched over to UTF-8! -->
+<form action="/create" accept-charset="ISO-8859-1" name='form'>
 
-<div class="Field">
-<label for="id_bisid" class="Label">LUCAT or STiL ID</label>
-<input name="bisid" value="" size="12" class="Input3" maxlength="12" id="id_bisid" onchange="ComputeLink(this.form)" />
+<div class="field">
+<label for="id_pubid">LUCAT or STiL ID</label>
+<input name="pubid" value="" size="12" maxlength="12" id="id_pubid" onchange="ComputeLink(this.form)" />
 </div>
 
-<div class="Field">
-<label for="id_style" class="Label">Citation style</label>
-<select size="1" name="style" id="id_style" onchange="ComputeLink(this.form)" class="Select2">
+<!-- TODO: Provide list of citation styles as data to the template -->
+<div class="field">
+<label for="id_style">Citation style</label>
+<select size="1" name="style" id="id_style" onchange="ComputeLink(this.form)">
 <!-- Hide citation styles which the citeproc service fails to provide -->
 <option value="" selected="selected">Standard</option>
 <option value="ama">AMA</option>
@@ -210,9 +174,10 @@ function fNewiFrameWindow (url) {
 </select>
 </div>
 
-<div class="Field">
-<label for="id_doctype" class="Label">Document types</label>
-<select size="1" name="doctype" id="id_doctype" onchange="ComputeLink(this.form)" class="Select2">
+<!-- TODO: Provide list as data to the template -->
+<div class="field">
+<label for="id_doctype">Document types</label>
+<select size="1" name="doctype" id="id_doctype" onchange="ComputeLink(this.form)">
 <option value="" selected="selected">All Document types</option>
 <option value="book">Book</option>
 <option value="bookChapter">Book Chapter</option>
@@ -234,9 +199,11 @@ function fNewiFrameWindow (url) {
 </select>
 </div>
 
-<div class="Field">
-<label for="id_publyear" class="Label">Publication Year</label>
-<select size="1" name="publyear" id="id_publyear" onchange="ComputeLink(this.form)" class="Select2">
+<!-- TODO: Generate list of years dynamically -->
+<!-- TODO: Allow for year ranges rather than just "single year" or "all years"? -->
+<div class="field">
+<label for="id_publyear">Publication Year</label>
+<select size="1" name="publyear" id="id_publyear" onchange="ComputeLink(this.form)">
 <option value="" selected="selected">All Publication Years</option>
 <option value="2012">2012</option>
 <option value="2011">2011</option>
@@ -294,27 +261,28 @@ function fNewiFrameWindow (url) {
 </select>
 </div>
 
-<div class="Field">
-<label for="id_sorttype" class="Label">Sorting direction</label>
-<select size="1" name="sort" id="id_sorttype" onchange="ComputeLink(this.form)" class="Select2">
+<div class="field">
+<label for="id_sorttype">Sort direction</label>
+<select size="1" name="sort" id="id_sorttype" onchange="ComputeLink(this.form)">
 <option value="" selected="selected">Standard (Descending by Publication Year)</option>
 <option value="yearasc">Ascending by Publication Year</option>
 <option value="yeardsc">Descending by Publication Year</option>
 </select>
 </div>
 
-<div class="Field">
-<label for="id_preloader" class="Label">Preloader (Javascript)</label>
-<select size="1" name="preload" id="id_preloader" onchange="ComputeLink(this.form)" class="Select2">
+<!-- Preloader not implemented
+<div class="field">
+<label for="id_preloader">Preloader (Javascript)</label>
+<select size="1" name="preload" id="id_preloader" onchange="ComputeLink(this.form)">
 <option value="" selected="selected">Standard (Don't show Preloader)</option>
 <option value="yes">Show Preloader</option>
 <option value="no">Don't show Preloader</option>
 </select>
 </div>
+-->
 
-<div class="Field">
+<div class="field">
 <input type="button" value="Submit" onclick="ComputeLink(this.form)" class="Submit" />
-<!-- <input type="reset" value="Clear all fields" /> -->
 <input type="reset" value="Reset" onclick="window.location.reload()" />
 </div>
 
@@ -322,19 +290,21 @@ function fNewiFrameWindow (url) {
 
 <h3>Embed as Javascript</h3>
 
+<!-- Preloader not implemented
 <div id="preloader_msg" style='display:none;'><p>The preloader is an animated icon, which is displayed while the publication list is loading. If you want to use more than one javascript embeddings with preloader on a page (e.g. for journal articles, book chapters), please change the number after <em>preload-</em> in the source code. 0 is for the first javascript, 1 for the second, 2 for the third and so on.</p></div>
+-->
 
-<input name="jstext" value="" size="60" class="Input" id="id_jstext" onclick="this.focus();this.select()" readonly="readonly" />
+<input name="jstext" value="" size="60" id="id_jstext" onclick="this.focus();this.select()" readonly="readonly" />
 <a href="#" onclick="fDoRequest();">Preview</a>
 <div id="showJs" style="margin-top:20px;"></div>
 
 <h3>Embed as iFrame</h3>
-<input name="iftext" value="" size="60" class="Input" id="id_iframe" onclick="this.focus();this.select()" readonly="readonly" />
+<input name="iftext" value="" size="60" id="id_iframe" onclick="this.focus();this.select()" readonly="readonly" />
 <a href="javascript:fNewiFrameWindow(link);">Preview</a>
 <iframe src="#" name="Fensterlein" width="0" height="0" id="IframeId" style="border:0;"></iframe>
 
 <h3>Embed as Link</h3>
-<input name="link" value="" size="60" class="Input" id="id_link" onclick="this.focus();this.select()" readonly="readonly" />
+<input name="link" value="" size="60" id="id_link" onclick="this.focus();this.select()" readonly="readonly" />
 <a href="javascript:fNewWindow(link);">Preview</a>
 
 </div>
