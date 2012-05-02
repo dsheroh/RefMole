@@ -173,9 +173,6 @@ sub get_publications {
 
   $result->{list_dept} = $param{dept} if defined $param{dept};
 
-  $result->{records} = _sort_records($result->{records}, \%param)
-    if $result->{numrecs} > 1;
-
   return $result;
 }
 
@@ -396,13 +393,6 @@ sub _get_sru_result {
 
   my $req = HTTP::Request->new('GET', $query_url);
   return $ua->request($req)->content;
-}
-
-sub _sort_records {
-  my ($records, $param) = @_;
-  ### TODO: Adapt from sorting routine @ bup_sru 625-670
-
-  return $records;
 }
 
 sub _switch_author {
