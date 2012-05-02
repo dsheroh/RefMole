@@ -147,8 +147,13 @@ sub get_publications {
   $conditions .= "AND%20documentType%3D%22$param{doctype}%22"
     if $param{doctype};
 
+  my $sort_dir = 0;
+  if (lc ($param{sortdir} || $author_sort_order || '') eq 'asc') {
+    $sort_dir = 1;
+  }
+
   my $query_url = config->{sru}{url}
-    . "&query=$conditions&sortKeys=publishingYear,,0";
+    . "&query=$conditions&sortKeys=publishingYear,,$sort_dir";
 
   my $result = _get_records($query_url, limit => $param{limit});
 

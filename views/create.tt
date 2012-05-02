@@ -62,7 +62,7 @@ function ComputeLink(link_form) {
   if (link_form.sort.value){
 
      if (link_form.sort.value == 'yearasc'){
-        result_str += ';sorto=asc' ;
+        result_str += ';sortdir=asc' ;
      }
   }
 
