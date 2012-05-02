@@ -83,28 +83,29 @@ sub format_citations {
 }
 
 sub get_detail {
-  my %param = @_;
+  my ($param) = @_;
 
-  return unless $param{id};
+  return unless $param->{id};
+  $param->{limit} = 1;
 
   my $query_url = config->{sru}{url}
-    . "&query=id%20exact%20%22$param{id}%22";
-  my $result = _get_records($query_url, limit => 1);
+    . "&query=id%20exact%20%22$param->{id}%22";
+  my $result = _get_records($query_url, $param);
 
-  $result->{records}[0]{id} = $param{id};
-  $result->{style} = $param{style} || config->{csl_engine}{default_style};
+  $result->{records}[0]{id} = $param->{id};
+  $result->{style} = $param->{style} || config->{csl_engine}{default_style};
 
   return $result;
 }
 
 sub get_publications {
-  my %param = @_;
+  my ($param) = @_;
 
   my $conditions;
   my ($author_style, $author_sort_order, $hiddenlist);
 
-  if ($param{author}) {
-    my $lucat = $param{author};
+  if ($param->{author}) {
+    my $lucat = $param->{author};
     $conditions = qq{(author exact "$lucat" or (editor exact "$lucat" }
       . qq{and (documentType exact "bookEditor or conferenceEditor")))};
 
@@ -118,7 +119,7 @@ sub get_publications {
     my ($luAuthorOId) = @{
       $luur->getObjectsByAttributeValues(
         type            => $o->{'luAuthor'},
-        attributeValues => {$o->{'luLdapId'} => $param{author}}
+        attributeValues => {$o->{'luLdapId'} => $param->{author}}
       )
     };
 
@@ -135,31 +136,31 @@ sub get_publications {
     }
 =cut
 
-  } elsif ($param{department}) {
-    $conditions = "department exact $param{department}";
+  } elsif ($param->{department}) {
+    $conditions = "department exact $param->{department}";
   } else {
     return {};
   }
 
-  $conditions .= "AND%20PublishingYear%3D%22$param{publyear}%22"
-    if $param{publyear};
+  $conditions .= "AND%20PublishingYear%3D%22$param->{publyear}%22"
+    if $param->{publyear};
 
-  $conditions .= "AND%20documentType%3D%22$param{doctype}%22"
-    if $param{doctype};
+  $conditions .= "AND%20documentType%3D%22$param->{doctype}%22"
+    if $param->{doctype};
 
   my $sort_dir = 0;
-  if (lc ($param{sortdir} || $author_sort_order || '') eq 'asc') {
+  if (lc ($param->{sortdir} || $author_sort_order || '') eq 'asc') {
     $sort_dir = 1;
   }
 
   my $query_url = config->{sru}{url}
     . "&query=$conditions&sortKeys=publishingYear,,$sort_dir";
 
-  my $result = _get_records($query_url, %param);
+  my $result = _get_records($query_url, $param);
 
-  if ($param{author}) {
-    $result->{norm_author} = _switch_author($param{author});
-    $result->{list_author} = $param{author};
+  if ($param->{author}) {
+    $result->{norm_author} = _switch_author($param->{author});
+    $result->{list_author} = $param->{author};
 
     ### TODO: Compare results against "delete hidden publications" loop @
     ### bup_sru.pl 568-584
@@ -173,10 +174,10 @@ sub get_publications {
     }
   }
 
-  $result->{style} = lc $param{style} || $author_style
+  $result->{style} = lc $param->{style} || $author_style
     || config->{csl_engine}{default_style};
 
-  $result->{list_dept} = $param{dept} if defined $param{dept};
+  $result->{list_dept} = $param->{dept} if defined $param->{dept};
 
   return $result;
 }
@@ -343,7 +344,7 @@ sub _extract_mods {
 }
 
 sub _get_records {
-  my ($query_url, %param) = @_;
+  my ($query_url, $param) = @_;
 
   my $ua = LWP::UserAgent->new();
   $ua->agent('Netscape/4.75');
@@ -351,8 +352,8 @@ sub _get_records {
   $ua->timeout(60);
   $ua->max_size(5000000);
 
-  my $page = $param{page} || 1;
-  my $limit = $param{limit};
+  my $page = $param->{page} || 1;
+  my $limit = $param->{limit};
   my $start = $limit ? (($page - 1) * $limit + 1) : 1;
   my $chunk_limit = $limit || config->{sru}{result_limit};
 

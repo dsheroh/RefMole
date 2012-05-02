@@ -11,7 +11,7 @@ get '/' => sub {
 get '/cite' => sub {
   var page_title => 'Citation List';
 
-  my $citations = RefMole::CiteList::get_publications(params);
+  my $citations = RefMole::CiteList::get_publications(scalar params);
   RefMole::CiteList::format_citations($citations) if $citations->{numrecs};
 
   if (params->{ftyp}) {
@@ -46,7 +46,7 @@ get '/create' => sub {
 };
 
 get '/detail/:id' => sub {
-  my $rec = RefMole::CiteList::get_detail(params);
+  my $rec = RefMole::CiteList::get_detail(scalar params);
   RefMole::CiteList::format_citations($rec) if $rec->{numrecs};
 
   var page_title => $rec->{records}[0]{title}[0] || 'No record found';
