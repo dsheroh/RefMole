@@ -141,7 +141,7 @@ function fNewiFrameWindow (url) {
 <h1>Embed Your Publication List in Your Homepage</h1>
 
 <ol class="instructions">
-<li>Enter your LUCAT/STiL ID or department, project, or research group ID</li>
+<li>Enter your LUCAT/STiL ID or a department, project, or research group ID</li>
 <li>Choose citation style, document types etc. if desired and click &quot;Submit&quot;</li>
 <li>You will see the codes for the different embedding methods</li>
 <li>Copy the code from the desired field.  By clicking on &quot;preview&quot; you can get a preview.</li>
@@ -161,7 +161,7 @@ function fNewiFrameWindow (url) {
 <option value=project>Project ID</option>
 <option value=researchgroup>Research Group ID</option>
 </select>
-<input name="searchid" value="" size="12" maxlength="12" onchange="ComputeLink(this.form)" />
+<input name="searchid" value="" onchange="ComputeLink(this.form)" />
 </div>
 
 <!-- TODO: Provide list of citation styles as data to the template -->

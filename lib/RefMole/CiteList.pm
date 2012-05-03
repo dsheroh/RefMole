@@ -139,6 +139,10 @@ sub get_publications {
 
   } elsif ($param->{department}) {
     $conditions = "department exact $param->{department}";
+  } elsif ($param->{project}) {
+    $conditions = qq(project exact "$param->{project}");
+  } elsif ($param->{researchgroup}) {
+    $conditions = qq(researchGroup exact "$param->{researchgroup}");
   } else {
     return {};
   }
