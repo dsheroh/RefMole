@@ -317,7 +317,7 @@ function fNewiFrameWindow (url) {
 
 <input name="jstext" value="" size="60" id="id_jstext" onclick="this.focus();this.select()" readonly="readonly" />
 <a href="#" onclick="fDoRequest();">Preview</a>
-<div id="showJs" style="margin-top:20px;"></div>
+<div id="showJs" class=publ style="margin-top:20px;"></div>
 
 <h3>Embed as iFrame</h3>
 <input name="iftext" value="" size="60" id="id_iframe" onclick="this.focus();this.select()" readonly="readonly" />

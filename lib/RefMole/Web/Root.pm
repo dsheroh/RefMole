@@ -8,7 +8,7 @@ get '/' => sub {
   redirect '/create';
 };
 
-my %dirty_param = map { $_ => 1 } qw( page max_page total_hits );
+my %dirty_param = map { $_ => 1 } qw( ftyp page max_page total_hits );
 
 get '/cite' => sub {
   var page_title => 'Citation List';
