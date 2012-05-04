@@ -389,8 +389,6 @@ sub _get_records {
       $start += $chunk_size;
     } else {
       $remaining = 0;
-      say STDERR "WARNING: No records returned in "
-        . "RefMole::CiteList::_get_records for query\n$query_url\n";
     }
 
     if ($remaining < 0) {
