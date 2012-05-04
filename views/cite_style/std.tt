@@ -1,9 +1,7 @@
 <div class="csl-entry">
 <%- FOREACH author_entry IN author -%>
 <%- author_entry.full %><% IF !loop.last %>; <% END %>
-<%- END %>
-<strong>(<% publ_year %>)</strong>.
-<% title.0 -%>
+<%- END %> <strong>(<% publ_year %>)</strong>. <% title.0 -%>
 <%- SWITCH type -%>
 <%- CASE 'book chapter' -%>
 In
