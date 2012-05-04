@@ -109,7 +109,7 @@ function fDoRequest () {
       return false;
     }
 
-    xmlhttp.open('GET', link, true);
+    xmlhttp.open('GET', link + ';ftyp=preview', true);
     xmlhttp.send(null);
     xmlhttp.onreadystatechange = fLoadPage;
   }

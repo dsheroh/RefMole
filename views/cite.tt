@@ -17,11 +17,17 @@
 </ul>
 
 <% IF params.max_page > 1 %>
+<% IF params.ftyp == 'preview' %>
+  <p>
+  <i><a href="cite?<% vars.clean_params %>">See more citations</a></i>
+  </p>
+<% ELSE %>
   <p>
   <% page = params.page || 1 %>
   <% IF page > 1 %><a href='cite?<% vars.clean_params %>;page=<% page - 1%>'>previous</a><% END %>
   Page <% page %> of <% params.max_page %>
   <% IF page < params.max_page %><a href='cite?<% vars.clean_params %>;page=<% page + 1%>'>next</a><% END %>
   </p>
+<% END %>
 <% END %>
 

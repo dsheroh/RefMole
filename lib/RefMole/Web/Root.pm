@@ -23,7 +23,7 @@ get '/cite' => sub {
     var clean_params => $clean_params;
   }
 
-  if (params->{ftyp}) {
+  if ((params->{ftyp} // '') eq 'js') {
     for my $cite (@{$citations->{records}}) {
       chomp $cite->{citation};
 
