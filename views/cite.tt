@@ -1,3 +1,4 @@
+<div class=citation-list>
 <ul>
 <% FOREACH entry IN records %>
   <li>
@@ -30,4 +31,4 @@
   </p>
 <% END %>
 <% END %>
-
+</div>

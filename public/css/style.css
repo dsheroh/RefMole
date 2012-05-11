@@ -453,3 +453,9 @@ background: #AAAAAA;
 color: red;
 }
 
+div.citation-list ul li {
+  list-style-type: none;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+}
+
