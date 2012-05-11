@@ -191,7 +191,7 @@ function fNewiFrameWindow (url) {
 <option value="book">Book</option>
 <option value="bookChapter">Book Chapter</option>
 <option value="bookEditor">Book: Editor</option>
-<option value="review">Book Review</option>
+<option value="review">Review of Book, Exhibition, Performance</option>
 <option value="caseStudy">Case study</option>
 <option value="conferenceAbstract">Conference Abstract</option>
 <option value="conferenceEditor">Conference: Editor</option>
@@ -199,10 +199,13 @@ function fNewiFrameWindow (url) {
 <option value="dissertation">Dissertation</option>
 <option value="encyclopediaArticle">Encyclopedia Article</option>
 <option value="journalArticle">Journal Article</option>
-<option value="journalEditor">Journal: Editor</option>
+<option value='licentiateThesis'>Licentiate Thesis</option>
+<option value='miscellaneous'>Miscellaneous</option>
 <option value="newspaperArticle">Newspaper Article</option>
+<option value='patent'>Patent</option>
 <option value="preprint">Preprint</option>
 <option value="report">Report</option>
+<option value='studentPaper'>Student Paper</option>
 <option value="translation">Translation</option>
 <option value="workingPaper">Working Paper</option>
 </select>
