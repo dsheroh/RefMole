@@ -395,7 +395,7 @@ Abstract:<br />
 <% END %>
 
 <div class="frontdoor">
-<div class="frontdoor_left">PUB-ID:</div>
+<div class="frontdoor_left">LUP-ID:</div>
 <div class="frontdoor_right">
 <% entry.id %> | Link: <a href="https://lup.lub.lu.se/record/<% entry.id %>">https://lup.lub.lu.se/record/<% entry.id %></a>
 </div>
@@ -419,6 +419,21 @@ Abstract:<br />
 <li><a href="<% uri_base %>/detail/<% params.id %>?style=mla">MLA</a></li>
 </ul>
 
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style ">
+<a href="http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4d5bc1db25c3489a" class="addthis_button_compact">Share</a>
+<a class="addthis_button_preferred_1"></a>
+<a class="addthis_button_preferred_2"></a>
+<a class="addthis_button_preferred_3"></a>
+<!-- <a class="addthis_button_preferred_4"></a> -->
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4d5bc1db25c3489a"></script>
+<!-- extra -->
+<a href="http://www.researchgate.net/go.Share.html?u=https://lup.lub.lu.se/record/<% entry.id %>&amp;t=<% entry.title.0 %>&amp;a=<% FOREACH author_entry IN entry.author %><% IF loop.first %><% author_entry.full %><% first_author = author_entry.full %><% ELSE %>;<% author_entry.full %><% END %><% END %>&amp;d=<% entry.publ_year %>"><img src="/images/researchgate.png" alt="" /></a>
+<g:plusone size="small" count="false"></g:plusone>
+<!-- /extra -->
+<!-- AddThis Button END -->
+</div>
+
 <div id="preloader" style="display:none;"><img src="/preloader_circle.gif" /></div>
 <div id="dcit">
 	
@@ -427,19 +442,8 @@ Abstract:<br />
 </div>
 
 </div>
+
 <div style="float:right; width:212px;">
-
-<!-- metrics -->
-
-<!--
-<script type="text/javascript" src="/metr_if.js"></script>
-<div id="metr_1">
-<script type="text/javascript">
-<span class='meld2'><img src="/ajax-loader.gif" alt="Citations" /></span>
-sndReqMet (1, <% entry.id -%> );
-</script>
-</div>
--->
 
 <!-- Sources -->
 
@@ -506,51 +510,6 @@ sndReqMet (1, <% entry.id -%> );
 </div>
 <% END %>
 <% END %>
-
-<h2 class="overline">Search this title in</h2>
-
-<p>
-<a href="http://scholar.google.com/scholar?q=allintitle%3A<% entry.title.0 %>"><img src="/icon_gs.png" alt="" class="textright" />Google Scholar</a><br />
-<a href="http://www.base-search.net/Search/Results?lookfor=tit%3A&quot;<% entry.title.0 %>&quot;&amp;lem=1&amp;type=all&amp;refid=pub"><img src="/icon_base.png" alt="" class="textright" />BASE</a><br />
-<a href="http://www.google.com/search?q=%22<% entry.title.0 %>%22"><img src="/icon_google.gif" alt="" class="textright" />Google</a><br />
-<% SWITCH entry.type %>
-<% CASE 'book' %>
-<% IF localuser %>
-<a href="http://katalog.ub.uni-bielefeld.de/cgi-bin/search.cgi?fsubmit=1&amp;kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=<% entry.title.0 %>&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;sprache=ENG&amp;art=f&amp;opt=&amp;pagesize=10&amp;sort=0&amp;vr=on"><img src="/icon_ub.png" alt="" class="textright" />Library Catalogue</a><br />
-<a href="http://www.digibib.net/opensearch?LOCATION=361&amp;SG1.SG.361:SGKatalogeBielefeld=on&amp;SG2.SG.361:SGKatalogeDeutschland=on&amp;SG3.SG.361:SGKatalogeInternational=on&amp;QUERY_azTI=<% entry.title.0 %>"><img src="/icon_digibib.png" alt="" class="textright" />Digibib</a>
-<% END %>
-<% IF NOT localuser %>
-<a href="http://kvk.ubka.uni-karlsruhe.de/hylib-bin/kvk/nph-kvk2.cgi?maske=kvk-last&amp;lang=de&amp;title=KIT-Bibliothek%3A+Karlsruher+Virtueller+Katalog+KVK+%3A+Ergebnisanzeige&amp;head=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-head-de-2010-11-08.html&amp;header=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-header-de-2010-11-08.html&amp;spacer=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-spacer-de-2010-11-08.html&amp;footer=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-footer-de-2010-11-08.html&amp;css=none&amp;input-charset=utf-8&amp;Timeout=120&amp;TI=<% entry.title.0 %>&amp;kataloge=SWB&amp;kataloge=BVB&amp;kataloge=NRW&amp;kataloge=HEBIS&amp;kataloge=HEBIS_RETRO&amp;kataloge=KOBV_SOLR&amp;kataloge=GBV&amp;kataloge=DDB&amp;kataloge=STABI_BERLIN&amp;kataloge=BIBOPAC&amp;kataloge=SWISSBIB&amp;kataloge=LOC_DIREKT&amp;kataloge=WORLDCAT&amp;kataloge=AMAZON_DE&amp;kataloge=AMAZON_US"><img src="/icon_kvk.png" alt="" class="textright" />KVK</a><br />
-<% END %>
-<% CASE 'book chapter' %>
-<% IF localuser %>
-<a href="http://katalog.ub.uni-bielefeld.de/cgi-bin/search.cgi?fsubmit=1&amp;kat1=freitext&amp;var1=&amp;op1=AND&amp;kat2=ti&amp;var2=<% FOREACH rel_entry IN entry.host %><% rel_entry.title %><% END %>&amp;op2=AND&amp;kat3=aup&amp;var3=&amp;sprache=ENG&amp;art=f&amp;opt=&amp;pagesize=10&amp;sort=0&amp;vr=on"><img src="/icon_ub.png" alt="" class="textright" />Library Catalogue</a><br />
-<a href="http://www.digibib.net/opensearch?LOCATION=361&amp;SG1.SG.361:SGKatalogeBielefeld=on&amp;SG2.SG.361:SGKatalogeDeutschland=on&amp;SG3.SG.361:SGKatalogeInternational=on&amp;QUERY_azTI=<% FOREACH rel_entry IN entry.host %><% rel_entry.title %><% END %>"><img src="/icon_digibib.png" alt="" class="textright" />Digibib</a>
-<% END %>
-<% IF NOT localuser %>
-<a href="http://kvk.ubka.uni-karlsruhe.de/hylib-bin/kvk/nph-kvk2.cgi?maske=kvk-last&amp;lang=de&amp;title=KIT-Bibliothek%3A+Karlsruher+Virtueller+Katalog+KVK+%3A+Ergebnisanzeige&amp;head=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-head-de-2010-11-08.html&amp;header=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-header-de-2010-11-08.html&amp;spacer=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-spacer-de-2010-11-08.html&amp;footer=http%3A%2F%2Fwww.ubka.uni-karlsruhe.de%2Fkvk%2Fkvk%2Fkvk-kit-footer-de-2010-11-08.html&amp;css=none&amp;input-charset=utf-8&amp;Timeout=120&amp;TI=<% FOREACH rel_entry IN entry.host %><% rel_entry.title %><% END %>&amp;kataloge=SWB&amp;kataloge=BVB&amp;kataloge=NRW&amp;kataloge=HEBIS&amp;kataloge=HEBIS_RETRO&amp;kataloge=KOBV_SOLR&amp;kataloge=GBV&amp;kataloge=DDB&amp;kataloge=STABI_BERLIN&amp;kataloge=BIBOPAC&amp;kataloge=SWISSBIB&amp;kataloge=LOC_DIREKT&amp;kataloge=WORLDCAT&amp;kataloge=AMAZON_DE&amp;kataloge=AMAZON_US"><img src="/icon_kvk.png" alt="" class="textright" />KVK</a>
-<% END %>
-<% END %>
-</p>
-
-<h2 class="overline">Bookmark / Share</h2>
-
-<p><a href="http://bup-dev.ub.uni-bielefeld.de/publication/<% entry.id %>"><img src="/icon_bookmark.png" alt="" class="textright" />Bookmark</a></p>
-
-<!-- AddThis Button BEGIN -->
-<div class="addthis_toolbox addthis_default_style ">
-<a href="http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4d5bc1db25c3489a" class="addthis_button_compact">Share</a>
-<a class="addthis_button_preferred_1"></a>
-<a class="addthis_button_preferred_2"></a>
-<a class="addthis_button_preferred_3"></a>
-<!-- <a class="addthis_button_preferred_4"></a> -->
-<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4d5bc1db25c3489a"></script>
-<!-- extra -->
-<a href="http://www.researchgate.net/go.Share.html?u=http%3A%2F%2Fpub.uni-bielefeld.de%2Fpublication%2F<% entry.id %>&amp;t=<% entry.title.0 %>&amp;a=<% FOREACH author_entry IN entry.author %><% IF loop.first %><% author_entry.full %><% first_author = author_entry.full %><% ELSE %>;<% author_entry.full %><% END %><% END %>&amp;d=<% entry.publ_year %>"><img src="/researchgate.png" alt="" /></a>
-<g:plusone size="small" count="false"></g:plusone>
-<!-- /extra -->
-<!-- AddThis Button END -->
-</div>
 
 </div>
 
