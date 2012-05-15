@@ -47,6 +47,10 @@ function ComputeLink(link_form) {
     result_str += ';limit=' + link_form.pagesize.value;
   }
 
+  if (link_form.onepage.checked) {
+    result_str += ';onepage=1';
+  }
+
   if (link_form.sort.value) {
     if (link_form.sort.value == 'yearasc') {
       result_str += ';sortdir=asc';
@@ -237,6 +241,7 @@ or later (yyyy-mm-dd)
 <option value=100>100</option>
 <option value=200>200</option>
 </select>
+<input type=checkbox name=onepage onchange="ComputeLink(this.form)"> No "show more" links
 </div>
 
 <div class="field">
