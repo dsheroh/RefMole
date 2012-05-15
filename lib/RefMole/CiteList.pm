@@ -147,8 +147,14 @@ sub get_publications {
     return {};
   }
 
-  $conditions .= "AND%20PublishingYear%3D%22$param->{publyear}%22"
-    if $param->{publyear};
+  if (my $datespec = $param->{publyear}) {
+    if ($datespec =~ /(\d*)-(\d*)/) {
+      $conditions .= " AND publishingYear >= $1" if $1;
+      $conditions .= " AND publishingYear <= $2" if $2;
+    } else {
+      $conditions .= "AND publishingYear = $datespec";
+    }
+  }
 
   $conditions .= "AND%20documentType%3D%22$param->{doctype}%22"
     if $param->{doctype};
