@@ -164,8 +164,8 @@ sub get_publications {
     $sort_dir = 1;
   }
 
-  my $query_url = config->{sru}{url}
-    . "&query=$conditions&sortKeys=publishingYear,,$sort_dir";
+  my $query_url = config->{sru}{url} . "&query=$conditions"
+    . "&sortKeys=publishingYear,,$sort_dir dateApproved,,$sort_dir";
 
   my $result = _get_records($query_url, $param);
 
