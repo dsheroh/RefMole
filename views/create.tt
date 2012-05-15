@@ -39,6 +39,10 @@ function ComputeLink(link_form) {
     result_str += ';publyear=' + link_form.publyear.value;
   }
 
+  if (link_form.dateappr.value) {
+    result_str += ';dateappr=' + link_form.dateappr.value;
+  }
+
   if (link_form.pagesize.value) {
     result_str += ';limit=' + link_form.pagesize.value;
   }
@@ -215,6 +219,12 @@ function fNewiFrameWindow (url) {
 <label for="id_publyear">Publication year</label>
 <input name="publyear" id="id_publyear" value="" onchange="ComputeLink(this.form)" />
 (e.g., 2009 or 2010-2012)
+</div>
+
+<div class="field">
+<label for="id_dateappr">Date approved</label>
+<input name="dateappr" id="id_dateappr" value="" onchange="ComputeLink(this.form)" />
+or later (yyyy-mm-dd)
 </div>
 
 <div class="field">

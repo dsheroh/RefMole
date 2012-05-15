@@ -156,6 +156,9 @@ sub get_publications {
     }
   }
 
+  $conditions .= qq( AND dateApproved >= "$param->{dateappr}")
+    if $param->{dateappr};
+
   $conditions .= "AND%20documentType%3D%22$param->{doctype}%22"
     if $param->{doctype};
 
