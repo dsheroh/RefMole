@@ -175,14 +175,17 @@ code, tt {
     font-family: 'Andale Mono', Monaco, 'Liberation Mono', 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', monospace;
 }
 
-#footer {
+.footer {
 clear: both;
 padding-top: 2em;
 text-align: center;
-padding-right: 160px;
 font-family: sans-serif;
-font-size: 10px;
+font-size: 60%;
 }
+.footer p {
+  margin: 0;
+}
+
 body {
         font-family:            Arial, Verdana, Geneva, Helvetica, sans-serif;
         font-size:              100%;
@@ -240,7 +243,6 @@ a:active {
 
 .button { color: #222; font-weight: bold; font-size:80%;border: 1px solid #ccc; background-image: url(/htdocs/button_back.gif); margin-left: 1px; border-width: 1px; padding-top: 2px; padding-bottom: 2px; border-color: #999000 #191919 #191919 #999000; padding-left: 2px; padding-right: 2px }
 
-.footer {font-size:70%}
 
 
 p.infoText { 
@@ -457,5 +459,26 @@ div.citation-list ul li {
   list-style-type: none;
   margin-bottom: 0.5em;
   margin-top: 0.5em;
+}
+
+form#creation-form .data-entry {
+  margin: 1em;
+  padding: 1em;
+  background-color: #f9f7f8;
+}
+
+form#creation-form .data-entry h3 {
+  margin-top: 0;
+}
+
+div#embedcodes {
+  margin: 1em;
+  padding: 1em;
+}
+
+label {
+  display: inline-block;
+  width: 10em;
+  text-align: right;
 }
 

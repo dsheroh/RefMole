@@ -5,7 +5,7 @@
 
 function show(section) {
   if (document.getElementById(section).style.display=='none') {
-   document.getElementById(section).style.display='inline';
+   document.getElementById(section).style.display='block';
   }
 }
 
@@ -18,8 +18,8 @@ function ComputeLink(link_form) {
   var result_str = "<% request.uri_base %>/cite?";
 
   if (link_form.searchid.value == "") {
-    alert('Please enter your LUCAT/STiL ID or a department, project, or research group ID.');
-    link_form.searchid.focus();
+//    alert('Please enter your LUCAT/STiL ID or a department, project, or research group ID.');
+//    link_form.searchid.focus();
     return false;
   }
 
@@ -146,30 +146,34 @@ function fNewiFrameWindow (url) {
 
 </script>
 
-<h1>Embed Your Publication List in Your Homepage</h1>
+<h1>Embed Your LUP Publication List in Your Homepage</h1>
 
 <ol class="instructions">
 <li>Enter your LUCAT/STiL ID or a department, project, or research group ID</li>
-<li>Choose citation style, document types etc. if desired and click &quot;Submit&quot;</li>
+<li>Choose citation style, document types, etc. if desired and click &quot;Submit&quot;</li>
 <li>You will see the codes for the different embedding methods</li>
 <li>Copy the code from the desired field.  By clicking on &quot;preview&quot; you can get a preview.</li>
-<li>Open your personal homepage in an editor and paste the code in the body of the page</li>
+<li>Open your personal homepage in an editor and paste the code into the body of the page</li>
 <li>Save the file and upload it to your webspace</li>
+<li>Problems or questions?  Contact publicera@lub.lu.se.
 </ol>
 
-<h3>Enter data</h3>
-
 <!-- TODO: Get this accept-charset switched over to UTF-8! -->
-<form action="/create" accept-charset="ISO-8859-1" name='form'>
+<form id='creation-form' action="/create" accept-charset="ISO-8859-1">
+
+<div class='data-entry'>
+
+<h3>Enter Data</h3>
 
 <div class="field">
+<label for="searchtype">Person / Unit</label>
 <select size=1 name=searchtype onchange="hide('embedcodes')">
 <option value=author selected=selected1>LUCAT or STiL ID</option>
 <option value=department>Department ID</option>
 <option value=project>Project ID</option>
 <option value=researchgroup>Research Group ID</option>
 </select>
-<input name="searchid" value="" onchange="ComputeLink(this.form)" />
+<input name="searchid" value="" onblur="ComputeLink(this.form)" />
 </div>
 
 <!-- TODO: Provide list of citation styles as data to the template -->
@@ -264,9 +268,6 @@ or later (yyyy-mm-dd)
 </div>
 -->
 
-<div class="field">
-<input type="button" value="Submit" onclick="ComputeLink(this.form)" class="Submit" />
-<input type="reset" value="Reset" onclick="window.location.reload()" />
 </div>
 
 <div id="embedcodes" style="display:none;">
@@ -292,5 +293,10 @@ or later (yyyy-mm-dd)
 
 </div>
 
-<input type="hidden" name="func" value="search" />
 </form>
+
+<div class=footer>
+<p>RefMole is a powerful feature for presenting references from LUP on any web page.</p>
+<p>RefMole will dig a tunnel to the stored data in LUP and bring the requested information to you on the fly.</p>
+<p>He's fast, he's cute, he's well-read.  He's RefMole.</p>
+</div>
