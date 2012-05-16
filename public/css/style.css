@@ -9,11 +9,6 @@ font-size: 13px;
 color: #333;
 }
 
-h1 {
-font-size: 28px;
-color: #000;
-}
-
 a  {color: #03c}
 a:hover {
 background-color: #03c;
@@ -243,19 +238,17 @@ a:active {
 
 .button { color: #222; font-weight: bold; font-size:80%;border: 1px solid #ccc; background-image: url(/htdocs/button_back.gif); margin-left: 1px; border-width: 1px; padding-top: 2px; padding-bottom: 2px; border-color: #999000 #191919 #191919 #999000; padding-left: 2px; padding-right: 2px }
 
-
-
 p.infoText { 
 font-size: 80%;
 }
 
 h1 {
-   font-size: 120%;
-   color:#996633;
-   padding-top: 10px;
-   padding-left: 0px;
-   padding-bottom: 0px;
-   padding-right: 10px;
+  font-size: 120%;
+  color: black;
+  padding-top: 10px;
+  padding-left: 0px;
+  padding-bottom: 0px;
+  padding-right: 10px;
 }        
     
 h2.windowHeading {
@@ -263,13 +256,9 @@ font-size: 120%;
 }
 
 .contentTD {
-   width: 100%;
-   padding-right: 10px;
+  width: 100%;
+  padding-right: 10px;
 }
-
-
-
-
 
 .formSection {
 width: 100%;
@@ -484,5 +473,14 @@ label {
 
 div.banner {
   text-align: center;
+}
+
+div.instructions {
+  margin-left: 1em;
+  padding-left: 1em;
+}
+
+div.instructions ol {
+  margin-left: -1em;
 }
 

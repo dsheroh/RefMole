@@ -150,9 +150,11 @@ function fNewiFrameWindow (url) {
 <img src='images/refmole_header.png'>
 </div>
 
+<div class="instructions">
+
 <h1>Embed Your LUP Publication List in Your Homepage</h1>
 
-<ol class="instructions">
+<ol>
 <li>Enter your LUCAT/STiL ID or a department, project, or research group ID</li>
 <li>Choose citation style, document types, etc. if desired and click &quot;Submit&quot;</li>
 <li>You will see the codes for the different embedding methods</li>
@@ -161,6 +163,8 @@ function fNewiFrameWindow (url) {
 <li>Save the file and upload it to your webspace</li>
 <li>Problems or questions?  Contact publicera@lub.lu.se.
 </ol>
+
+</div>
 
 <!-- TODO: Get this accept-charset switched over to UTF-8! -->
 <form id='creation-form' action="/create" accept-charset="ISO-8859-1">
