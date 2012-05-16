@@ -5,8 +5,6 @@
 	<% entry.citation %>
 	<a href="<% uri_base %>/detail/<% entry.recordid %>" title="Show complete bibliographic and access information" target="_blank">LUP</a>
 	<% FOREACH rel_entry IN entry.constituent %><% IF rel_entry.label.0 && !rel_entry.restricted_access %> | <a href="<% rel_entry.url.0 %>" title="<% rel_entry.label.0 %>" target="_blank">PDF</a><% END %><% END %>
-	<% FOREACH rel_entry IN entry.supplementaryMaterial %><% IF rel_entry.title %> | <a href="<% rel_entry.url %>" title="<% rel_entry.title %>" target="_blank">Supplementary Material</a><% END %><% END %>
-	<% FOREACH rel_entry IN entry.isPart %><% IF rel_entry.title %> | <a href="<% rel_entry.url %>" title="<% rel_entry.title %>" target="_blank">Related Material</a><% END %><% END %>
 	<% FOREACH rel_entry IN entry.host %>
 	<% IF rel_entry.doi.0 %> | <a href="http://dx.doi.org/<% rel_entry.doi.0 %>" title="<% rel_entry.doi.0 %>" target="_blank">DOI</a><% ELSE %><% IF rel_entry.url %> | <a href="<% rel_entry.url %>" title="<% rel_entry.url %>" target="_blank">URL</a><% END %><% END %>
 	<% IF rel_entry.medline.0 %> | <a href="http://www.ncbi.nlm.nih.gov/pubmed/<% rel_entry.medline.0 %>" target="_blank">PubMed</a> | <a href="http://ukpmc.ac.uk/abstract/MED/<% rel_entry.medline.0 %>">UK PMC</a><% END %>
