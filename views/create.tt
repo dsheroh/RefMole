@@ -146,6 +146,10 @@ function fNewiFrameWindow (url) {
 
 </script>
 
+<div class=banner>
+<img src='images/refmole_header.png'>
+</div>
+
 <h1>Embed Your LUP Publication List in Your Homepage</h1>
 
 <ol class="instructions">
