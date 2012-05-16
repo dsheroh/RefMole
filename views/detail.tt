@@ -12,7 +12,7 @@
 <% END %>
 
 <% FOREACH rel_entry IN entry.constituent %>
-<% IF rel_entry.label.0 %>
+<% IF rel_entry.label.0 && !rel_entry.restricted_access %>
 <% IF loop.first %>
 <div class="frontdoor">
 <div class="frontdoor_left">Download:</div>

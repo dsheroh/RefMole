@@ -328,6 +328,12 @@ sub _add_record_fields {
       }
     }
 
+    if ($related->{accessCondition}
+      && $related->{accessCondition}{type} eq 'restrictionOnAccess'
+      && $related->{accessCondition}{content} eq 'yes') {
+      $entry->{restricted_access} = 1;
+    }
+
     push @{$result{$related->{type}}}, $entry if $entry;
   }
 

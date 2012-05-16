@@ -4,7 +4,7 @@
   <li>
 	<% entry.citation %>
 	<a href="<% uri_base %>/detail/<% entry.recordid %>" title="Show complete bibliographic and access information" target="_blank">LUP</a>
-	<% FOREACH rel_entry IN entry.constituent %><% IF rel_entry.label.0 %> | <a href="<% rel_entry.url.0 %>" title="<% rel_entry.label.0 %>" target="_blank">PDF</a><% END %><% END %>
+	<% FOREACH rel_entry IN entry.constituent %><% IF rel_entry.label.0 && !rel_entry.restricted_access %> | <a href="<% rel_entry.url.0 %>" title="<% rel_entry.label.0 %>" target="_blank">PDF</a><% END %><% END %>
 	<% FOREACH rel_entry IN entry.supplementaryMaterial %><% IF rel_entry.title %> | <a href="<% rel_entry.url %>" title="<% rel_entry.title %>" target="_blank">Supplementary Material</a><% END %><% END %>
 	<% FOREACH rel_entry IN entry.isPart %><% IF rel_entry.title %> | <a href="<% rel_entry.url %>" title="<% rel_entry.title %>" target="_blank">Related Material</a><% END %><% END %>
 	<% FOREACH rel_entry IN entry.host %>
