@@ -328,10 +328,13 @@ sub _add_record_fields {
       }
     }
 
-    if ($related->{accessCondition}
-      && $related->{accessCondition}{type} eq 'restrictionOnAccess'
-      && $related->{accessCondition}{content} eq 'yes') {
-      $entry->{restricted_access} = 1;
+    if ($related->{accessCondition}) {
+      for my $cond (@{$related->{accessCondition}}) {
+        if ($cond->{type} eq 'restrictionOnAccess' && $cond->{content} eq 'yes')
+        {
+          $entry->{restricted_access} = 1;
+        }
+      }
     }
 
     push @{$result{$related->{type}}}, $entry if $entry;
@@ -345,12 +348,10 @@ sub _extract_mods {
 
   my $parser = XML::Simple->new;
 
-  my $xml = $parser->XMLin($mods_xml,
-    forcearray => [
-      'record', 'subject', 'relatedItem', 'detail', 'note', 'abstract',
-      'name', 'role', 'titleInfo', 'extent', 'identifier'
-    ]
-  );
+  my $xml = $parser->XMLin( $mods_xml, forcearray => [ qw(
+    record subject relatedItem detail note abstract name role titleInfo extent
+    identifier accessCondition
+  ) ] );
 
   my %result;
   $result{numrecs} = $xml->{numberOfRecords};
