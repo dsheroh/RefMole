@@ -96,7 +96,7 @@
 <% FOREACH rel_entry IN entry.supplementaryMaterial %>
 <% IF rel_entry.title %>
 <div class="margin1">
-<a href="<% rel_entry.url %>" title="<% rel_entry.title %>"><img src="/icon_weblink2.gif" alt="" class="textright" />Supplementary Material</a>
+<a href="<% rel_entry.url %>" title="<% rel_entry.title %>">Supplementary Material</a>
 </div>
 <% END %>
 <% END %>
@@ -104,7 +104,7 @@
 <% FOREACH rel_entry IN entry.isPart %>
 <% IF rel_entry.title %>
 <div class="margin1">
-<a href="<% rel_entry.url %>" title="<% rel_entry.title %>"><img src="/icon_weblink2.gif" alt="" class="textright" />Related Material</a>
+<a href="<% rel_entry.url %>" title="<% rel_entry.title %>">Related Material</a>
 </div>
 <% END %>
 <% END %>
