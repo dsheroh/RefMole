@@ -313,7 +313,7 @@ sub _add_record_fields {
       $entry->{pages} = $_->{content} if $_->{content};
       if ($_->{start}) {
         $entry->{prange} = $_->{start};
-        $entry->{prange} .= ' - ' . $_->{end} unless ref $_->{end};
+        $entry->{prange} .= ' - ' . $_->{end} if $_->{end} && !ref $_->{end};
       } else {
         $entry->{prange} = $_->{end} unless ref $_->{end};
       }
