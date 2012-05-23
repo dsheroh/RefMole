@@ -152,14 +152,14 @@ sub get_publications {
       $conditions .= " AND publishingYear >= $1" if $1;
       $conditions .= " AND publishingYear <= $2" if $2;
     } else {
-      $conditions .= "AND publishingYear = $datespec";
+      $conditions .= " AND publishingYear = $datespec";
     }
   }
 
   $conditions .= qq( AND dateApproved >= "$param->{dateappr}")
     if $param->{dateappr};
 
-  $conditions .= "AND%20documentType%3D%22$param->{doctype}%22"
+  $conditions .= " AND%20documentType%3D%22$param->{doctype}%22"
     if $param->{doctype};
 
   my $sort_dir = 0;
