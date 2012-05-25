@@ -3,18 +3,12 @@
 <%- author_entry.full %><% IF !loop.last %>; <% END %>
 <%- END %> <strong>(<% publ_year %>)</strong>. <% title.0 -%>
 <%- SWITCH type -%>
-<%- CASE 'book chapter' -%>
-In
-<%- CASE 'book' -%>
-In
-<%- CASE 'conference' -%>
-In
-<%- END -%>
+<%- CASE [ 'book chapter', 'conference' ] %> In <% END -%>
 <%- FOREACH editor_entry IN editor -%>
-<%- editor_entry.given %> <% editor_entry.family -%><%-   IF loop.last %> (Ed.).<% ELSE %>, <% END -%>
+<%- editor_entry.given %> <% editor_entry.family -%><%- IF loop.last %> (Ed.).<% ELSE %>, <% END -%>
 <%- END -%>
 <%- FOREACH rel_entry IN host -%>
-<em> <%- rel_entry.title -%>
+<em> <% rel_entry.title -%>
 <%- IF rel_entry.volume -%>
 ,<%- rel_entry.volume -%>,
 <%- END -%>
@@ -23,13 +17,13 @@ In
 <%- END -%>
 </em>
 <%- IF rel_entry.prange -%>
-, <%- rel_entry.prange -%>
+, <% rel_entry.prange -%>
 <%- END -%>
 <%- END -%>
 <%- IF place -%>
-. <%- place -%> 
+. <% place -%> 
 <%- END -%>
 <%- IF publisher -%>
-: <%- publisher -%> 
+: <% publisher -%> 
 <%- END -%>
 </div>
