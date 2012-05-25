@@ -26,16 +26,8 @@ get '/cite' => sub {
   if ((params->{ftyp} // '') eq 'js') {
     for my $cite (@{$citations->{records}}) {
       chomp $cite->{citation};
-
-      $cite->{title} =~ s/'/\\'/g;
-      $cite->{title} =~ s/"/\\"/g;
-
-      for my $rel (@{$cite->{relation}}) {
-        if ($rel->{title}) {
-          $rel->{title} =~ s/'/\\'/g;
-          $rel->{title} =~ s/"/\\"/g;
-        }
-      }
+      $cite->{citation} =~ s/'/\\'/g;
+      $cite->{citation} =~ s/"/\\"/g;
     }
 
     content_type 'application/javascript';
