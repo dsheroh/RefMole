@@ -38,21 +38,8 @@ sub apply_csl {
   my $csl = CSL->new(cfg => config);
   my $citations = $csl->process($publications->{style}, $publications);
 
-  my $i;
-  my %ref_map;
-  $ref_map{$_->{id}} = $i++ for @$citations;
-
-  for my $rec (@{$publications->{records}}) {
-    my $sort_nr = $ref_map{$rec->{recordid}};
-    next unless defined $sort_nr;
-
-    $rec->{sort_nr}  = $sort_nr;
-    $rec->{citation} = $citations->[$sort_nr]{citation};
-  }
-
-  @{$publications->{records}} =
-    sort { ($a->{sort_nr} || 0) <=> ($b->{sort_nr} || 0) }
-    @{$publications->{records}};
+  my %cite_map = map { $_->{id} => $_->{citation} } @$citations;
+  $_->{citation} = $cite_map{$_->{recordid}} for @{$publications->{records}};
 
   # Return nothing because $publications was modified in-place
   return;
@@ -385,6 +372,8 @@ sub _get_records {
     my $window = '';
     $window = "&startRecord=$start" if $start > 1;
     $window .= "&maximumRecords=$chunk_limit";
+
+    debug $query_url . $window;
 
     my $sru_response = _get_sru_result($query_url . $window, $ua);
     my $chunk = _extract_mods($sru_response);
