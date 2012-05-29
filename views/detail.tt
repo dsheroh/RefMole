@@ -470,7 +470,7 @@ Abstract:<br />
 <!-- <a class="addthis_button_preferred_4"></a> -->
 <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4d5bc1db25c3489a"></script>
 <!-- extra -->
-<a href="http://www.researchgate.net/go.Share.html?u=https://lup.lub.lu.se/record/<% entry.id %>&amp;t=<% entry.title.0 %>&amp;a=<% FOREACH author_entry IN entry.author %><% IF loop.first %><% author_entry.full %><% first_author = author_entry.full %><% ELSE %>;<% author_entry.full %><% END %><% END %>&amp;d=<% entry.publ_year %>"><img src="/images/researchgate.png" alt="" /></a>
+<a href="http://www.researchgate.net/go.Share.html?u=https://lup.lub.lu.se/record/<% entry.id %>&amp;t=<% entry.title.0 %>&amp;a=<% FOREACH author_entry IN entry.author %><% IF loop.first %><% author_entry.full %><% first_author = author_entry.full %><% ELSE %>;<% author_entry.full %><% END %><% END %>&amp;d=<% entry.publ_year %>"><img src="<% uri_base %>/images/researchgate.png" alt="" /></a>
 <g:plusone size="small" count="false"></g:plusone>
 <!-- /extra -->
 <!-- AddThis Button END -->
