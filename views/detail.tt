@@ -464,9 +464,9 @@ Abstract:<br />
 <!-- AddThis Button BEGIN -->
 <div class="addthis_toolbox addthis_default_style ">
 <a href="http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4d5bc1db25c3489a" class="addthis_button_compact">Share</a>
-<a class="addthis_button_preferred_1"></a>
-<a class="addthis_button_preferred_2"></a>
-<a class="addthis_button_preferred_3"></a>
+<a class="addthis_button_facebook"></a>
+<a class="addthis_button_twitter"></a>
+<a class="addthis_button_email"></a>
 <!-- <a class="addthis_button_preferred_4"></a> -->
 <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4d5bc1db25c3489a"></script>
 <!-- extra -->
