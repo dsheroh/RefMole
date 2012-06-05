@@ -95,7 +95,9 @@ sub get_publications {
   if ($param->{author}) {
     my $lucat = $param->{author};
     $conditions = qq{(author exact "$lucat" or (editor exact "$lucat" }
-      . qq{and (documentType exact "bookEditor or conferenceEditor")))};
+      . qq{and (documentType exact bookEditor }
+      .      qq{or documentType exact conferenceEditor }
+      .      qq{or documentType exact journalEditor)))};
 
 ### TODO: Enable following code after new attributes have been added to our
 ### ORMS db
