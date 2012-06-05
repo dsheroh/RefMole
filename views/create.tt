@@ -217,7 +217,7 @@ function fNewiFrameWindow (url) {
 <option value="conferenceEditor">Conference: Editor</option>
 <option value="conference">Conference Proceeding/Paper</option>
 <option value="dissertation">Dissertation</option>
-<option value="encyclopediaArticle">Encyclopedia Article</option>
+<option value="encyclopaediaEntry">Encyclopedia Article</option>
 <option value="journalArticle">Journal Article</option>
 <option value='licentiateThesis'>Licentiate Thesis</option>
 <option value='miscellaneous'>Miscellaneous</option>
