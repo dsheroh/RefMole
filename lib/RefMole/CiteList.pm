@@ -230,7 +230,8 @@ sub _add_record_fields {
     my $role = $entity->{role}[0]{roleTerm}{content};
     next unless $role;
 
-    $role = 'author' if $role eq 'reviewer';
+    $role = 'author'
+      if $role eq 'reviewer' || $role eq 'author: translated work';
 
     if (ref $entity->{namePart} eq 'ARRAY') {
       my $person;
