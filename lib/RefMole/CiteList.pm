@@ -229,6 +229,11 @@ sub _add_record_fields {
   }
 
   for my $entity (@{$mods->{name}}) {
+    if ($entity->{type} eq 'conference') {
+      $result{conference} = $entity->{namePart};
+      next;
+    }
+
     my $role = $entity->{role}[0]{roleTerm}{content};
     next unless $role;
 
@@ -250,6 +255,7 @@ sub _add_record_fields {
       }
       $person->{full} = trim($person->{family} . ', ' . $person->{given});
       push @{$result{$role}}, $person;
+      push @{$result{$role . 's'}}, $person->{full};
     } elsif ($role eq 'department') {
       push @{$result{affiliation}}, $entity->{namePart};
     } elsif ($role eq 'project') {
