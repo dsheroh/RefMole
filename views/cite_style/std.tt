@@ -1,10 +1,11 @@
 <div class="csl-entry">
 <%- authors.join('; ') -%>
+<%- IF editors.size AND type == 'conference publication' %><% editors.join('; ') %> (Ed<% IF editors.size > 1 %>s<% END # editors > 1 %>.). <% END # IF editors -%>
 <%- %> <strong>(<% publ_year %>)</strong>. <% title.0 -%>
 <%- IF type == 'dissertation' OR type == 'journalArticle' OR type == 'licentiateThesis' OR type == 'newspaperArticle' %>.<% END # IF type... -%>
 <%- SWITCH type -%>
 <%- CASE [ 'book chapter', 'conference', 'conferenceAbstract', 'workingPaper', 'report' ] %> In <% END # SWITCH type -%>
-<%- IF editors.size -%>. <%- editors.join('; ') -%> (Ed<%- IF editors.size > 1 -%>s<%- END # editors > 1-%>.). <% END # IF editors -%>
+<%- IF editors.size AND type != 'conference publication' -%>. <%- editors.join('; ') -%> (Ed<%- IF editors.size > 1 -%>s<%- END # editors > 1-%>.). <% END # IF editors -%>
 <%- FOREACH rel_entry IN host -%>
 <em> <% rel_entry.title -%>
 <%- IF rel_entry.volume -%>
