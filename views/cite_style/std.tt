@@ -1,28 +1,28 @@
 <div class="csl-entry">
 <%- FOREACH author_entry IN author -%>
-<%- author_entry.full %><% IF !loop.last %>; <% END %>
-<%- END %> <strong>(<% publ_year %>)</strong>. <% title.0 -%>
-<%- IF type == 'dissertation' OR type == 'journalArticle' OR type == 'licentiateThesis' OR type == 'newspaperArticle' %>.<% END -%>
+<%- author_entry.full %><% IF !loop.last %>; <% END # !loop.last %>
+<%- END # FOREACH author %> <strong>(<% publ_year %>)</strong>. <% title.0 -%>
+<%- IF type == 'dissertation' OR type == 'journalArticle' OR type == 'licentiateThesis' OR type == 'newspaperArticle' %>.<% END # IF type... -%>
 <%- SWITCH type -%>
-<%- CASE [ 'book chapter', 'conference', 'conferenceAbstract', 'workingPaper', 'report' ] %> In <% END -%>
+<%- CASE [ 'book chapter', 'conference', 'conferenceAbstract', 'workingPaper', 'report' ] %> In <% END # SWITCH type -%>
 <%- FOREACH editor_entry IN editor -%>
-<%- editor_entry.given %> <% editor_entry.family -%><%- IF loop.last %> (Ed.).<% ELSE %>, <% END -%>
-<%- END -%>
+<%- editor_entry.given %> <% editor_entry.family -%><%- IF loop.last %> (Ed.).<% ELSE # loop.last %>, <% END # loop.last -%>
+<%- END # FOREACH editor_entry -%>
 <%- FOREACH rel_entry IN host -%>
 <em> <% rel_entry.title -%>
 <%- IF rel_entry.volume -%>
-, <%- rel_entry.volume %><% IF type != 'dissertation' AND type != 'licentiateThesis' %>,<% END -%>
-<%- END -%>
-<%- IF rel_entry.issue %> (<% rel_entry.issue -%>)<%- END -%>
+, <%- rel_entry.volume %><% IF type != 'dissertation' AND type != 'licentiateThesis' %>,<% END # IF type -%>
+<%- END # IF rel_entry.volume -%>
+<%- IF rel_entry.issue %> (<% rel_entry.issue -%>)<%- END # IF rel_entry.issue -%>
 </em>
 <%- IF rel_entry.prange -%>
 , <% rel_entry.prange -%>
-<%- END -%>
-<%- END -%>
+<%- END # IF rel_entry.prange-%>
+<%- END # FOREACH rel_entry -%>
 <%- IF place -%>
 . <% place -%> 
-<%- END -%>
+<%- END # IF place -%>
 <%- IF publisher -%>
 : <% publisher -%> 
-<%- END -%>
+<%- END # IF publisher -%>
 </div>
