@@ -93,6 +93,7 @@ sub get_publications {
   my ($author_style, $author_sort_order, $hiddenlist);
 
   if ($param->{author}) {
+    $param->{author} =~ s/\s//g;
     my @authors = split ',', $param->{author};
 
     my $auth_str = join ' or ', map { qq{author exact "$_"} } @authors;
