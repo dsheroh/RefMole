@@ -93,11 +93,20 @@ sub get_publications {
   my ($author_style, $author_sort_order, $hiddenlist);
 
   if ($param->{author}) {
-    my $lucat = $param->{author};
-    $conditions = qq{(author exact "$lucat" or (editor exact "$lucat" }
-      . qq{and (documentType exact bookEditor }
-      .      qq{or documentType exact conferenceEditor }
-      .      qq{or documentType exact journalEditor)))};
+    my @authors;
+    if (ref $param->{author}) {
+      @authors = @{$param->{author}};
+    } else {
+      @authors = $param->{author};
+    }
+
+    my $auth_str = join ' or ', map { qq{author exact "$_"} } @authors;
+    my $edit_str = join ' or ', map { qq{editor exact "$_"} } @authors;
+
+    $conditions = "($auth_str or (($edit_str) "
+          . "and (documentType exact bookEditor "
+          . "or documentType exact conferenceEditor "
+          . "or documentType exact journalEditor)))";
 
 ### TODO: Enable following code after new attributes have been added to our
 ### ORMS db
