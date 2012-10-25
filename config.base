@@ -24,7 +24,7 @@ engines:
 sbcat_path: /usr/local/sbcat/
 
 sru:
-  url: http://pub.lub.lu.se/sru?version=1.1&operation=searchRetrieve
+  url: http://lup.lub.lu.se/sru?version=1.1&operation=searchRetrieve
   result_limit: 250
 
 csl_engine:
