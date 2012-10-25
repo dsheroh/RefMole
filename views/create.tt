@@ -51,6 +51,10 @@ function ComputeLink(link_form) {
     result_str += ';onepage=1';
   }
 
+  if (link_form.show_papers.checked) {
+    result_str += ';show_papers=1';
+  }
+
   if (link_form.sort.value) {
     if (link_form.sort.value == 'yearasc') {
       result_str += ';sortdir=asc';
@@ -230,6 +234,7 @@ Separate LUCAT/STiL IDs with commas to find multiple authors
 <option value="translation">Translation</option>
 <option value="workingPaper">Working Paper</option>
 </select>
+<input type=checkbox name=show_papers onchange="ComputeLink(this.form)"> Include student papers
 </div>
 
 <div class="field">

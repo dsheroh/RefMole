@@ -156,6 +156,9 @@ sub get_publications {
   $conditions .= " AND%20documentType%3D%22$param->{doctype}%22"
     if $param->{doctype};
 
+  $conditions .= qq" NOT documentType exact StudentPaper"
+    unless $param->{show_papers};
+
   my $sort_dir = 0;
   if (lc ($param->{sortdir} || $author_sort_order || '') eq 'asc') {
     $sort_dir = 1;
