@@ -271,6 +271,7 @@ Serbian
 <% LAST %>
 <% END %>
 <% IF loop.last %>
+<% IF entry.author_count > author_limit %><% extra_author_text %><% END %>
 </div>
 </div>
 <% END %>

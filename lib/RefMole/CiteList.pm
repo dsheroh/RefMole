@@ -62,6 +62,8 @@ sub format_citations {
   my $template = $style . '.tt';
   for my $rec (@{$publications->{records}}) {
     my $citation;
+    $rec->{author_limit} = config->{sru}{author_limit};
+    $rec->{extra_author_text} = config->{sru}{extra_author_text};
     $formatter->process($template, $rec, \$citation) or die $formatter->error;
     $rec->{citation} = $citation;
   }
@@ -272,6 +274,8 @@ sub _add_record_fields {
       push @{$result{researchgroup}}, $entity->{namePart};
     }
   }
+
+  $result{author_count} = $mods->{authorCount} if $mods->{authorCount};
 
   for my $subj (@{$mods->{subject}}) {
     next unless ref $subj->{topic} eq 'ARRAY';

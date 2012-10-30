@@ -58,6 +58,8 @@ get '/detail/:id' => sub {
 hook 'before_template_render' => sub {
   my $tokens = shift;
   $tokens->{uri_base} = request->base->path eq '/' ? '' : request->base->path;
+  $tokens->{author_limit} = config->{sru}{author_limit};
+  $tokens->{extra_author_text} = config->{sru}{extra_author_text};
 };
 
 1;
