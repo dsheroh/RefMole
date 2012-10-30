@@ -383,6 +383,8 @@ sub _get_records {
   my $chunk_limit = $page_size || config->{sru}{result_limit};
   my $total_hits;
 
+  $query_url .= '&authorLimit=' . config->{sru}{author_limit};
+
   my $result;
   my $remaining = -1;
   while ($remaining != 0) {

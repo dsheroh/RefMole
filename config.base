@@ -26,6 +26,8 @@ sbcat_path: /usr/local/sbcat/
 sru:
   url: http://lup.lub.lu.se/sru?version=1.1&operation=searchRetrieve
   result_limit: 250
+  author_limit: 4
+  extra_author_text: , et al.
 
 csl_engine:
   url: http://ubcsl.ub.uni-bielefeld.de/citenode.php
