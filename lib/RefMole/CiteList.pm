@@ -134,7 +134,10 @@ sub get_publications {
 =cut
 
   } elsif ($param->{department}) {
-    $conditions = "department exact $param->{department}";
+    $param->{department} =~ s/\s//g;
+    my @depts = split ',', $param->{department};
+
+    $conditions = join ' or ', map { qq{department exact $_} } @depts;
   } elsif ($param->{project}) {
     $conditions = qq(project exact "$param->{project}");
   } elsif ($param->{researchgroup}) {
