@@ -21,6 +21,8 @@ engines:
 #    start_tag: '[%'
 #    end_tag:   '%]'
 
+refmole_host: http://localhost:3000/
+
 sbcat_path: /usr/local/sbcat/
 
 sru:
