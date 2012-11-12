@@ -159,7 +159,8 @@ sub get_publications {
     if $param->{doctype};
 
   $conditions .= qq" NOT documentType exact StudentPaper"
-    unless $param->{show_papers} || lc $param->{doctype} eq 'studentpaper';
+    unless $param->{show_papers}
+      || ($param->{doctype} && lc $param->{doctype} eq 'studentpaper');
 
   my $sort_dir = 0;
   if (lc ($param->{sortdir} || $author_sort_order || '') eq 'asc') {
@@ -187,8 +188,8 @@ sub get_publications {
     }
   }
 
-  $result->{style} = lc $param->{style} || $author_style
-    || config->{csl_engine}{default_style};
+  $result->{style} = lc ($param->{style} || $author_style
+    || config->{csl_engine}{default_style});
 
   $result->{list_dept} = $param->{dept} if defined $param->{dept};
 
