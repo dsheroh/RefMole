@@ -105,46 +105,16 @@ sub get_publications {
           . "and (documentType exact bookEditor "
           . "or documentType exact conferenceEditor "
           . "or documentType exact journalEditor)))";
-
-### TODO: Enable following code after new attributes have been added to our
-### ORMS db
-
-=pod
-    my $luur = Orms->new($cfg->{ormsCfg});
-    my $o;
-    $o->{$_} = $luur->getObject($_) for qw( luAuthor luLdapId );
-    my ($luAuthorOId) = @{
-      $luur->getObjectsByAttributeValues(
-        type            => $o->{'luAuthor'},
-        attributeValues => {$o->{'luLdapId'} => $param->{author}}
-      )
-    };
-
-    if ($luAuthorOId) {
-      $author_style = lc $luur->getAttributeValue(
-        object  => $luAuthorOId,  attribute => 'citationStyle'
-      );
-      $author_sort_order = lc $luur->getAttributeValue(
-        object  => $luAuthorOId,  attribute => 'sortDirection'
-      );
-      $hiddenlist = $luur->getRelatedObjects(
-        object2  => $luAuthorOId, relation  => 'isHiddenFor'
-      );
-    }
-=cut
-
-  } elsif ($param->{department}) {
-    $param->{department} =~ s/\s//g;
-    my @depts = split ',', $param->{department};
-
-    $conditions = join ' or ', map { qq{department exact $_} } @depts;
-  } elsif ($param->{project}) {
-    $conditions = qq(project exact "$param->{project}");
-  } elsif ($param->{researchgroup}) {
-    $conditions = qq(researchGroup exact "$param->{researchgroup}");
   } else {
-    return {};
+    for (qw( department project researchgroup )) {
+      if ($param->{$_}) {
+        $conditions = _multi_organization_criteria($param, $_);
+        last;
+      }
+    }
   }
+
+  return {} unless $conditions;
 
   if (my $datespec = $param->{publyear}) {
     if ($datespec =~ /(\d*)-(\d*)/) {
@@ -441,6 +411,14 @@ sub _get_sru_result {
 
   my $req = HTTP::Request->new('GET', $query_url);
   return $ua->request($req)->content;
+}
+
+sub _multi_organization_criteria {
+  my ($param, $param_name) = @_;
+
+  $param->{$param_name} =~ s/\s//g;
+  my @values = split ',', $param->{$param_name};
+  return join ' or ', map { qq{$param_name exact $_} } @values;
 }
 
 sub _switch_author {
