@@ -186,7 +186,7 @@ function fNewiFrameWindow (url) {
 <option value=researchgroup>Research Group ID</option>
 </select>
 <input name="searchid" value="" onblur="ComputeLink(this.form)" />
-Separate LUCAT/STiL IDs with commas to find multiple authors
+Separate IDs with commas to find multiple persons/units
 </div>
 
 <!-- TODO: Provide list of citation styles as data to the template -->
