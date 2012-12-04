@@ -159,7 +159,7 @@ function fNewiFrameWindow (url) {
 <h1>Embed Your LUP Publication List in Your Homepage</h1>
 
 <ol>
-<li>Enter your LUCAT/STiL ID or a department, project, or research group ID</li>
+<li>Enter your LUCAT/STiL ID or a department, project, research group, or publication record ID</li>
 <li>Choose citation style, document types, etc. if desired and click &quot;Submit&quot;</li>
 <li>You will see the codes for the different embedding methods</li>
 <li>Copy the code from the desired field.  By clicking on &quot;preview&quot; you can get a preview.</li>
@@ -178,15 +178,16 @@ function fNewiFrameWindow (url) {
 <h3>Enter Data</h3>
 
 <div class="field">
-<label for="searchtype">Person / Unit</label>
+<label for="searchtype">ID Type</label>
 <select size=1 name=searchtype onchange="hide('embedcodes')">
-<option value=author selected=selected1>LUCAT or STiL ID</option>
+<option value=author selected=1>LUCAT or STiL ID</option>
 <option value=department>Department ID</option>
 <option value=project>Project ID</option>
 <option value=researchgroup>Research Group ID</option>
+<option value=record>Publication Record ID</option>
 </select>
-<input name="searchid" value="" onblur="ComputeLink(this.form)" />
-Separate IDs with commas to find multiple persons/units
+<input name="searchid" value="" onblur="ComputeLink(this.form)" /><br>
+<label></label>&nbsp;Separate IDs with commas to find multiple persons/units/records
 </div>
 
 <!-- TODO: Provide list of citation styles as data to the template -->
