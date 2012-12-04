@@ -106,7 +106,8 @@ sub get_publications {
           . "or documentType exact conferenceEditor "
           . "or documentType exact journalEditor)))";
   } else {
-    for (qw( department project researchgroup )) {
+    $param->{id} = $param->{record} if $param->{record};
+    for (qw( department project researchgroup id )) {
       if ($param->{$_}) {
         $conditions = _multi_organization_criteria($param, $_);
         last;
@@ -132,7 +133,7 @@ sub get_publications {
     if $param->{doctype};
 
   $conditions .= qq" NOT documentType exact StudentPaper"
-    unless $param->{show_papers}
+    unless $param->{show_papers} || $param->{id}
       || ($param->{doctype} && lc $param->{doctype} eq 'studentpaper');
 
   my $sort_dir = 0;
