@@ -43,6 +43,11 @@ get '/cite' => sub {
 get '/create' => sub {
   var page_title => 'Embed Your Publication List in Your Homepage';
 
+  if (my $rec_ids = params->{record}) {
+    $rec_ids =~ tr/0-9,//cd;
+    var record => $rec_ids;
+  }
+
   template 'create';
 };
 

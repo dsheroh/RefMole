@@ -18,8 +18,6 @@ function ComputeLink(link_form) {
   var result_str = "<% request.uri_base %>/cite?";
 
   if (link_form.searchid.value == "") {
-//    alert('Please enter your LUCAT/STiL ID or a department, project, or research group ID.');
-//    link_form.searchid.focus();
     return false;
   }
 
@@ -188,13 +186,13 @@ function fNewiFrameWindow (url) {
 <div class="field">
 <label for="searchtype">ID Type</label>
 <select size=1 name=searchtype onchange="hide('embedcodes')">
-<option value=author selected=1>LUCAT or STiL ID</option>
+<option value=author<% UNLESS vars.record %> selected=1<% END %>>LUCAT or STiL ID</option>
 <option value=department>Department ID</option>
 <option value=project>Project ID</option>
 <option value=researchgroup>Research Group ID</option>
-<option value=record>Publication Record ID</option>
+<option value=record<% IF vars.record %> selected=1<% END %>>Publication Record ID</option>
 </select>
-<input name="searchid" value="" onblur="ComputeLink(this.form)" /><br>
+<input name="searchid" value="<% vars.record %>" onblur="ComputeLink(this.form)" /><br>
 <label></label>&nbsp;Separate IDs with commas to find multiple persons/units/records
 </div>
 

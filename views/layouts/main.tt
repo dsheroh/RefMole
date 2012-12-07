@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="<% request.uri_base %>/css/style.css" />
 
 </head>
-<body>
+<body<% IF vars.record %> onLoad="ComputeLink(document.getElementById('creation-form'))"<% END %>>
 <% content %>
 <div class=footer>
   Powered by <a href='http://perl.org'>Perl</a> and <a href="http://perldancer.org/">Dancer</a> <% dancer_version %>
