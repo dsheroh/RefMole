@@ -136,6 +136,12 @@ sub get_publications {
     unless $param->{show_papers} || $param->{id}
       || ($param->{doctype} && lc $param->{doctype} eq 'studentpaper');
 
+  $conditions .= " AND qualityControlled exact $param->{qc}"
+    if defined $param->{qc};
+
+  $conditions .= " AND popularScience exact $param->{popsci}"
+    if defined $param->{popsci};
+
   my $sort_dir = 0;
   if (lc ($param->{sortdir} || $author_sort_order || '') eq 'asc') {
     $sort_dir = 1;

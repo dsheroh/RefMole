@@ -35,6 +35,14 @@ function ComputeLink(link_form) {
     result_str += ';doctype=' + link_form.doctype.value;
   }
 
+  if (link_form.qc.value) {
+    result_str += ';qc=' + link_form.qc.value;
+  }
+
+  if (link_form.popsci.value) {
+    result_str += ';popsci=' + link_form.popsci.value;
+  }
+
   if (link_form.publyear.value) {
     result_str += ';publyear=' + link_form.publyear.value;
   }
@@ -236,6 +244,24 @@ function fNewiFrameWindow (url) {
 <option value="workingPaper">Working Paper</option>
 </select>
 <input type=checkbox name=show_papers onchange="ComputeLink(this.form)"> Include student papers
+</div>
+
+<div class="field">
+<label for="qc">Quality-controlled</label>
+<select size="1" name="qc" id="qc" onchange="ComputeLink(this.form)">
+<option value="" selected="selected">Include All</option>
+<option value=1>Only Quality-Controlled</option>
+<option value=0>Exclude Quality-Controlled</option>
+</select>
+</div>
+
+<div class="field">
+<label for="popsci">Popular science</label>
+<select size="1" name="popsci" id="popsci" onchange="ComputeLink(this.form)">
+<option value="" selected="selected">Include All</option>
+<option value=1>Only Popular Science</option>
+<option value=0>Exclude Popular Science</option>
+</select>
 </div>
 
 <div class="field">
