@@ -2,4 +2,5 @@ logs/
 sessions/
 .*.swp
 *~
+refmole.local.yml
 
