@@ -1,6 +1,8 @@
 
 refmole_host: http://lup.lub.lu.se
 
+header_image: images/refmole_header.png
+
 sbcat_path: /usr/local/sbcat/
 
 sru:

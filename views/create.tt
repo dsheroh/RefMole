@@ -157,7 +157,7 @@ function fNewiFrameWindow (url) {
 </script>
 
 <div class=banner>
-<img src='images/refmole_header.png'>
+<img src='<% cfg.header_image %>'>
 </div>
 
 <div class="instructions">
