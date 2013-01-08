@@ -5,6 +5,8 @@ header_image: images/refmole_header.png
 
 sbcat_path: /usr/local/sbcat/
 
+statistics_url_base: http://lup.lub.lu.se/lupStat/record
+
 sru:
   url: http://lup.lub.lu.se/sru?version=1.1&operation=searchRetrieve
   result_limit: 250
