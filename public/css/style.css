@@ -475,8 +475,8 @@ div.banner {
   text-align: center;
 }
 
-div.instructions {
-  margin-left: 1em;
+div.instructions, div.detail-body {
+  margin: 1em;
   padding-left: 1em;
 }
 
