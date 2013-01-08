@@ -4,12 +4,14 @@ use strict;
 use warnings;
 use 5.010;
 
-use Dancer qw( config debug );
+use RefMole::Config 'cfg';
+
+use Dancer qw( debug );
 use POSIX qw( ceil );
 
 ### BEGIN ORMS LIFE-SUPPORT ###
-use lib config->{sbcat_path} . '/lib/extension';
-use lib config->{sbcat_path} . '/lib/default';
+use lib cfg->{sbcat_path} . '/lib/extension';
+use lib cfg->{sbcat_path} . '/lib/default';
 use luurCfg;
 use Orms;
 use Cwd;
@@ -17,7 +19,7 @@ my $cfg;
 BEGIN {
   $ENV{HOSTNAME} //= `hostname --fqdn`;
   my $original_path = getcwd;
-  chdir config->{sbcat_path};
+  chdir cfg->{sbcat_path};
   $cfg = luurCfg->new;
   chdir $original_path;
 }
@@ -35,7 +37,7 @@ my %internal_style = map { $_ => 1 } qw( std );
 sub apply_csl {
   my ($publications) = @_;
 
-  my $csl = CSL->new(cfg => config);
+  my $csl = CSL->new(cfg => cfg);
   my $citations = $csl->process($publications->{style}, $publications);
 
   my %cite_map = map { $_->{id} => $_->{citation} } @$citations;
@@ -62,8 +64,8 @@ sub format_citations {
   my $template = $style . '.tt';
   for my $rec (@{$publications->{records}}) {
     my $citation;
-    $rec->{author_limit} = config->{sru}{author_limit};
-    $rec->{extra_author_text} = config->{sru}{extra_author_text};
+    $rec->{author_limit} = cfg->{sru}{author_limit};
+    $rec->{extra_author_text} = cfg->{sru}{extra_author_text};
     $formatter->process($template, $rec, \$citation) or die $formatter->error;
     $rec->{citation} = $citation;
   }
@@ -78,12 +80,12 @@ sub get_detail {
   return unless $param->{id};
   $param->{limit} = 1;
 
-  my $query_url = config->{sru}{url}
+  my $query_url = cfg->{sru}{url}
     . "&query=id%20exact%20%22$param->{id}%22";
   my $result = _get_records($query_url, $param);
 
   $result->{records}[0]{id} = $param->{id};
-  $result->{style} = $param->{style} || config->{csl_engine}{default_style};
+  $result->{style} = $param->{style} || cfg->{csl_engine}{default_style};
 
   return $result;
 }
@@ -147,7 +149,7 @@ sub get_publications {
     $sort_dir = 1;
   }
 
-  my $query_url = config->{sru}{url} . "&query=$conditions"
+  my $query_url = cfg->{sru}{url} . "&query=$conditions"
     . "&sortKeys=publishingYear,,$sort_dir dateApproved,,$sort_dir";
 
   my $result = _get_records($query_url, $param);
@@ -169,7 +171,7 @@ sub get_publications {
   }
 
   $result->{style} = lc ($param->{style} || $author_style
-    || config->{csl_engine}{default_style});
+    || cfg->{csl_engine}{default_style});
 
   $result->{list_dept} = $param->{dept} if defined $param->{dept};
 
@@ -365,10 +367,10 @@ sub _get_records {
   my $page = $param->{page} || 1;
   my $page_size = $param->{limit};
   my $start = $page_size ? (($page - 1) * $page_size + 1) : 1;
-  my $chunk_limit = $page_size || config->{sru}{result_limit};
+  my $chunk_limit = $page_size || cfg->{sru}{result_limit};
   my $total_hits;
 
-  $query_url .= '&authorLimit=' . config->{sru}{author_limit};
+  $query_url .= '&authorLimit=' . cfg->{sru}{author_limit};
 
   my $result;
   my $remaining = -1;

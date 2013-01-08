@@ -1,4 +1,5 @@
 <a name="top"></a>
+<div class="detail-body">
 
 <h1 class="underline"><% entry.title.0 %></h1>
 
@@ -13,6 +14,7 @@
 
 <% FOREACH rel_entry IN entry.constituent %>
 <% IF rel_entry.label.0 && !rel_entry.restricted_access %>
+<% SET public = 1 %>
 <% IF loop.first %>
 <div class="frontdoor">
 <div class="frontdoor_left">Download:</div>
@@ -441,6 +443,7 @@ Abstract:<br />
 <div class="frontdoor_left">LUP-ID:</div>
 <div class="frontdoor_right">
 <% entry.id %> | Link: <a href="https://lup.lub.lu.se/record/<% entry.id %>">https://lup.lub.lu.se/record/<% entry.id %></a>
+<% IF public %> | <a href="<% cfg.statistics_url_base %>/<% entry.recordid %>">Statistics</a><% END %>
 </div>
 </div>
 
@@ -511,6 +514,7 @@ addthis_config.data_use_cookies = false;
 <p><img src="/icon_inspire.png" class="textright" alt="" />Inspire <a href="http://inspirebeta.net/record/<% rel_entry.inspire.0 %>"><% rel_entry.inspire.0 %></a></p>
 <% END %>
 
+</div>
 </div>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.js"></script>

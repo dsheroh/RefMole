@@ -57,6 +57,10 @@ function ComputeLink(link_form) {
     result_str += ';onepage=1';
   }
 
+  if (link_form.stats.checked) {
+    result_str += ';stats=1';
+  }
+
   if (link_form.show_papers.checked) {
     result_str += ';show_papers=1';
   }
@@ -157,7 +161,7 @@ function fNewiFrameWindow (url) {
 </script>
 
 <div class=banner>
-<img src='images/refmole_header.jpg'>
+<img src='<% cfg.header_image %>'>
 </div>
 
 <div class="instructions">
@@ -285,6 +289,7 @@ or later (yyyy-mm-dd)
 <option value=200>200</option>
 </select>
 <input type=checkbox name=onepage onchange="ComputeLink(this.form)"> No "show more" links
+<input type=checkbox name=stats onchange="ComputeLink(this.form)"> Include download statistics
 </div>
 
 <div class="field">

@@ -1,35 +1,17 @@
-# This is the main configuration file of your Dancer app
-# env-related settings should go to environments/$env.yml
-# all the settings in this file will be loaded at Dancer's startup.
 
-# Your application's name
-appname: RefMole
+refmole_host: http://lup.lub.lu.se
 
-# The default layout to use for your application (located in
-# views/layouts/main.tt)
-layout: "main"
-
-# when the charset is set to UTF-8 Dancer will handle for you
-# all the magic of encoding and decoding. You should not care
-# about unicode within your app when this setting is set (recommended).
-charset: "UTF-8"
-
-template: "template_toolkit"
-engines:
-  template_toolkit:
-    encoding:  'utf8'
-#    start_tag: '[%'
-#    end_tag:   '%]'
-
-refmole_host: http://localhost:3000
+header_image: images/refmole_header.png
 
 sbcat_path: /usr/local/sbcat/
+
+statistics_url_base: http://lup.lub.lu.se/lupStat/record
 
 sru:
   url: http://lup.lub.lu.se/sru?version=1.1&operation=searchRetrieve
   result_limit: 250
   author_limit: 4
-  extra_author_text: , et al.
+  extra_author_text: ", et al."
 
 csl_engine:
   url: http://ubcsl.ub.uni-bielefeld.de/citenode.php
@@ -57,3 +39,4 @@ csl_engine:
     Bi Dissertation: thesis
     Bi MasterThesis: thesis
     Bi PostdocThesis: thesis
+

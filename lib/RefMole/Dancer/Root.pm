@@ -1,8 +1,9 @@
-package RefMole::Web::Root;
+package RefMole::Dancer::Root;
 
 use Dancer ':syntax';
 
 use RefMole::CiteList;
+use RefMole::Config 'cfg';
 
 get '/' => sub {
   redirect '/create';
@@ -62,9 +63,10 @@ get '/detail/:id' => sub {
 
 hook 'before_template_render' => sub {
   my $tokens = shift;
+  $tokens->{cfg} = cfg;
   $tokens->{uri_base} = request->base->path eq '/' ? '' : request->base->path;
-  $tokens->{author_limit} = config->{sru}{author_limit};
-  $tokens->{extra_author_text} = config->{sru}{extra_author_text};
+  $tokens->{author_limit} = cfg->{sru}{author_limit};
+  $tokens->{extra_author_text} = cfg->{sru}{extra_author_text};
 };
 
 1;
