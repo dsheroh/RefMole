@@ -13,6 +13,7 @@
 
 <% FOREACH rel_entry IN entry.constituent %>
 <% IF rel_entry.label.0 && !rel_entry.restricted_access %>
+<% SET public = 1 %>
 <% IF loop.first %>
 <div class="frontdoor">
 <div class="frontdoor_left">Download:</div>
@@ -441,6 +442,7 @@ Abstract:<br />
 <div class="frontdoor_left">LUP-ID:</div>
 <div class="frontdoor_right">
 <% entry.id %> | Link: <a href="https://lup.lub.lu.se/record/<% entry.id %>">https://lup.lub.lu.se/record/<% entry.id %></a>
+<% IF public %> | <a href="<% cfg.statistics_url_base %>/<% entry.recordid %>">Statistics</a><% END %>
 </div>
 </div>
 
