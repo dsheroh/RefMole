@@ -11,7 +11,7 @@
 	<% IF rel_entry.arxiv.0 %> | <a href="http://arxiv.org/abs/<% rel_entry.arxiv.0 %>" target="_blank">arXiv</a><% END %>
 	<% IF rel_entry.inspire.0 %> | <a href="http://inspirebeta.net/record/<% rel_entry.inspire.0 %>" target="_blank">Inspire</a><% END %>
 	<% END %>
-        <% IF public && params.stats %> | <a href="<% cfg.statistics_url_base %>/<% entry.recordid %>">Statistics</a><% END %>
+        <% IF public && params.stats %> | <a href="<% cfg.statistics_url_base %>/<% entry.recordid %>">Statistics</a><% SET public = 0 %><% END %>
   </li>
 <% END %>
 </ul>
