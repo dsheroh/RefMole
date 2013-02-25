@@ -131,12 +131,17 @@ sub get_publications {
   $conditions .= qq( AND dateApproved >= "$param->{dateappr}")
     if $param->{dateappr};
 
-  $conditions .= " AND%20documentType%3D%22$param->{doctype}%22"
-    if $param->{doctype};
+  if ($param->{doctype}) {
+    if (ref($param->{doctype})) {
+      $conditions .=
+        ' AND (documentType ANY "' . join(' ', @{$param->{doctype}}) . '")';
+    } else {
+      $conditions .= qq( AND documentType="$param->{doctype}");
+    }
+  }
 
   $conditions .= qq" NOT documentType exact StudentPaper"
-    unless $param->{show_papers} || $param->{id}
-      || ($param->{doctype} && lc $param->{doctype} eq 'studentpaper');
+    unless $param->{show_papers} || $param->{id} || $param->{doctype};
 
   $conditions .= " AND qualityControlled exact $param->{qc}"
     if defined $param->{qc};
