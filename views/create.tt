@@ -1,6 +1,10 @@
 
 <a name="top"></a>
 
+<script type="text/javascript" src="<% uri_base %>/javascripts/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="<% uri_base %>/javascripts/jquery-ui-1.8.13.custom.min.js"></script>
+<script type="text/javascript" src="<% uri_base %>/javascripts/ui.dropdownchecklist-1.4-min.js"></script>
+
 <script type="text/javascript">
 
 function show(section) {
@@ -30,7 +34,9 @@ function ComputeLink(link_form) {
   }
 
   if (link_form.doctype.value) {
-    result_str += ';doctype=' + link_form.doctype.value;
+    $('#id_doctype > option:selected').each(function() {
+      result_str += ';doctype=' + $(this).val();
+    });
   }
 
   if (link_form.qc.value) {
@@ -219,11 +225,16 @@ function fNewiFrameWindow (url) {
 </select>
 </div>
 
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#id_doctype").dropdownchecklist({ emptyText: 'All Document Types' });
+})
+</script>
+
 <!-- TODO: Provide list as data to the template -->
 <div class="field">
 <label for="id_doctype">Document types</label>
-<select size="1" name="doctype" id="id_doctype" onchange="ComputeLink(this.form)">
-<option value="" selected="selected">All Document types</option>
+<select size=1 multiple name="doctype" id="id_doctype" onchange="ComputeLink(this.form)">
 <option value="book">Book</option>
 <option value="bookChapter">Book Chapter</option>
 <option value="bookEditor">Book: Editor</option>
