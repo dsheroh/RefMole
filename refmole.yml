@@ -1,4 +1,7 @@
 
+# If set, SRU URLs will be printed to STDERR before submitting them
+debug_sru: 0
+
 refmole_host: http://lup.lub.lu.se
 
 header_image: images/refmole_header.png
