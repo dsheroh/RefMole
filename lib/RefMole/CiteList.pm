@@ -106,6 +106,10 @@ sub get_publications {
           . "and (documentType exact bookEditor "
           . "or documentType exact conferenceEditor "
           . "or documentType exact journalEditor)))";
+  } elsif ($param->{supervisor}) {
+    $param->{supervisor} =~ s/\s//g;
+    $param->{supervisor} =~ s/,/ /g;
+    $conditions = '(supervisor any "' . $param->{supervisor} . '")';
   } else {
     $param->{id} = $param->{record} if $param->{record};
     for (qw( department project researchgroup id )) {
