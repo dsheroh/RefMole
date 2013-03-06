@@ -197,6 +197,7 @@ function fNewiFrameWindow (url) {
 <label for="searchtype">ID Type</label>
 <select size=1 name=searchtype onchange="hide('embedcodes')">
 <option value=author<% UNLESS vars.record %> selected=1<% END %>>LUCAT or STiL ID</option>
+<option value=supervisor>Supervisor LUCAT ID</option>
 <option value=department>Department ID</option>
 <option value=project>Project ID</option>
 <option value=researchgroup>Research Group ID</option>

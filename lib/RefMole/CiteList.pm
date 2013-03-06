@@ -6,7 +6,6 @@ use 5.010;
 
 use RefMole::Config 'cfg';
 
-use Dancer qw( debug );
 use POSIX qw( ceil );
 
 ### BEGIN ORMS LIFE-SUPPORT ###
@@ -107,6 +106,10 @@ sub get_publications {
           . "and (documentType exact bookEditor "
           . "or documentType exact conferenceEditor "
           . "or documentType exact journalEditor)))";
+  } elsif ($param->{supervisor}) {
+    $param->{supervisor} =~ s/\s//g;
+    $param->{supervisor} =~ s/,/ /g;
+    $conditions = '(supervisor any "' . $param->{supervisor} . '")';
   } else {
     $param->{id} = $param->{record} if $param->{record};
     for (qw( department project researchgroup id )) {
@@ -384,7 +387,7 @@ sub _get_records {
     $window = "&startRecord=$start" if $start > 1;
     $window .= "&maximumRecords=$chunk_limit";
 
-    debug $query_url . $window;
+    say STDERR $query_url . $window if cfg->{debug_sru};
 
     my $sru_response = _get_sru_result($query_url . $window, $ua);
     my $chunk = _extract_mods($sru_response);
