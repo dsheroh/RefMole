@@ -26,6 +26,7 @@ get '/cite' => sub {
 
   if ((params->{ftyp} // '') eq 'js') {
     for my $cite (@{$citations->{records}}) {
+      next unless $cite->{citation};
       chomp $cite->{citation};
       $cite->{citation} =~ s/'/\\'/g;
       $cite->{citation} =~ s/"/\\"/g;
