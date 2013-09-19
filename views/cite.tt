@@ -19,7 +19,7 @@
 <% IF params.max_page > 1 AND NOT params.onepage %>
 <% IF params.ftyp == 'preview' %>
   <p>
-  <i><a href="cite?<% vars.clean_params %>">See more citations</a></i>
+  <i><a href="cite?<% vars.clean_params %>">See more publications</a></i>
   </p>
 <% ELSE %>
   <p>

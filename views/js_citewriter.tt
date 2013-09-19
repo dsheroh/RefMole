@@ -12,7 +12,7 @@ document.write ('<li><%- entry.citation || entry.title -%><a href=\"<% cfg.refmo
 document.write ('</ul>');
 
 <% IF params.max_page > 1 AND NOT params.onepage %>
-  document.write('<p><i><a href="<% cfg.refmole_host %><% uri_base %>/cite?<% vars.clean_params %>">See more citations</a></i></p>');
+  document.write('<p><i><a href="<% cfg.refmole_host %><% uri_base %>/cite?<% vars.clean_params %>">See more publications</a></i></p>');
 <% END %>
 document.write('</div>');
 
