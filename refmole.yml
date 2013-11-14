@@ -17,7 +17,7 @@ sru:
   extra_author_text: ", et al."
 
 csl_engine:
-  url: http://ubcsl.ub.uni-bielefeld.de/citenode.php
+  url: http://csl.ub.uni-bielefeld.de/citenode2.php
   format: html
   default_style: std
   recs: 100

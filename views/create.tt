@@ -214,16 +214,11 @@ function fNewiFrameWindow (url) {
 <select size="1" name="style" id="id_style" onchange="ComputeLink(this.form)">
 <!-- Hide citation styles which the citeproc service fails to provide -->
 <option value="" selected="selected">Standard</option>
-<option value="ama">AMA</option>
+<option value="american-medical-association">AMA</option>
 <option value="apa">APA</option>
-<!-- <option value="aps">APS</option> -->
-<option value="apsa">APSA</option>
-<!-- <option value="bio1">BIO1</option> -->
-<!-- <option value="ewi">EWI</option> -->
+<option value="american-political-science-association">APSA</option>
 <option value="harvard1">Harvard</option>
-<!-- <option value="ieee">IEEE</option> -->
-<option value="mla">MLA</option>
-<!-- <option value="wels">WELS</option> -->
+<option value="modern-language-association">MLA</option>
 </select>
 </div>
 
