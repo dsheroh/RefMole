@@ -40,7 +40,13 @@ sub apply_csl {
   my $citations = $csl->process($publications->{style}, $publications);
 
   my %cite_map = map { $_->{id} => $_->{citation} } @$citations;
-  $_->{citation} = $cite_map{$_->{recordid}} for @{$publications->{records}};
+
+  for (@{$publications->{records}}) {
+    $_->{citation} = $cite_map{$_->{recordid}};
+    $_->{citation} = decode('iso-8859-1', $_->{citation})
+      unless utf8::decode($_->{citation});
+  }
+
 
   # Return nothing because $publications was modified in-place
   return;
