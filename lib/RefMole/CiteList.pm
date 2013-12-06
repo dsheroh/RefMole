@@ -36,17 +36,23 @@ my %internal_style = map { $_ => 1 } qw( std );
 sub apply_csl {
   my ($publications) = @_;
 
+  my $i = 0;
+  for (@{$publications->{records}}) {
+    $_->{_oid_save} = $_->{recordid};
+    $_->{recordid} = $i++;
+  }
+
   my $csl = CSL->new(cfg => cfg);
   my $citations = $csl->process($publications->{style}, $publications);
 
-  my %cite_map = map { $_->{id} => $_->{citation} } @$citations;
-
+  $i = 0;
   for (@{$publications->{records}}) {
-    $_->{citation} = $cite_map{$_->{recordid}};
-    $_->{citation} = decode('iso-8859-1', $_->{citation})
-      unless utf8::decode($_->{citation});
-  }
+    $_->{recordid} = $_->{_oid_save};
 
+    my $citation = $citations->[$i++]{citation};
+    $citation = decode('iso-8859-1', $citation) unless utf8::decode($citation);
+    $_->{citation} = $citation;
+  }
 
   # Return nothing because $publications was modified in-place
   return;
