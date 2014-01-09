@@ -3,4 +3,6 @@ sessions/
 .*.swp
 *~
 refmole.local.yml
+GitLog.pm
+public/jstest.html
 
