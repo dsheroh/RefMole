@@ -125,7 +125,10 @@ sub get_publications {
     $param->{supervisor} =~ s/,/ /g;
     $conditions = '(supervisor any "' . $param->{supervisor} . '")';
   } else {
-    $param->{id} = $param->{record} if $param->{record};
+    if ($param->{record}) {
+      $param->{id} = $param->{record};
+      $param->{id} =~ s/[^0-9,]//g
+    }
     for (qw( department project researchgroup issn id )) {
       if ($param->{$_}) {
         $conditions = _multi_organization_criteria($param, $_);
