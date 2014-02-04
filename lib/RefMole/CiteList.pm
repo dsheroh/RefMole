@@ -42,8 +42,11 @@ sub apply_csl {
     $_->{recordid} = $i++;
   }
 
+  my ($style, $locale) = split '--', $publications->{style}, 2;
+  $publications->{locale} = $locale if $locale;
+
   my $csl = CSL->new(cfg => cfg);
-  my $citations = $csl->process($publications->{style}, $publications);
+  my $citations = $csl->process($style, $publications);
 
   my %cite_map = map { $_->{id} => $_->{citation} } @$citations;
 
