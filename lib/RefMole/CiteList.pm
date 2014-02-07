@@ -126,6 +126,15 @@ sub get_publications {
     $param->{supervisor} =~ s/\s//g;
     $param->{supervisor} =~ s/,/ /g;
     $conditions = '(supervisor any "' . $param->{supervisor} . '")';
+  } elsif ($param->{favlist}) {
+    # Loads of redundancy here because of favlist not being a CQL query term;
+    # TODO: Refactor to DRY
+    my $query_url = cfg->{sru}{url} . '&favList=' . $param->{favlist}
+      . '&query=id exact 0';
+    my $result = _get_records($query_url, $param);
+    $result->{style} = lc ($param->{style} || cfg->{csl_engine}{default_style});
+
+    return $result;
   } else {
     if ($param->{record}) {
       $param->{id} = $param->{record};
