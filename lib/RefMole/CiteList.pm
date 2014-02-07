@@ -110,7 +110,6 @@ sub get_publications {
   my ($param) = @_;
 
   my $conditions;
-  my ($author_style, $author_sort_order, $hiddenlist);
 
   if ($param->{author}) {
     $param->{author} =~ s/\s//g;
@@ -173,7 +172,7 @@ sub get_publications {
     if defined $param->{popsci};
 
   my $sort_dir = 0;
-  if (lc ($param->{sortdir} || $author_sort_order || '') eq 'asc') {
+  if (lc ($param->{sortdir} || '') eq 'asc') {
     $sort_dir = 1;
   }
 
@@ -185,21 +184,9 @@ sub get_publications {
   if ($param->{author}) {
     $result->{norm_author} = _switch_author($param->{author});
     $result->{list_author} = $param->{author};
-
-    ### TODO: Compare results against "delete hidden publications" loop @
-    ### bup_sru.pl 568-584
-    if ($hiddenlist) {
-      my %hidden = map { $_ => 1 } @$hiddenlist;
-      for (reverse 0 .. $result->{numrecs}) {
-        if ($hidden{$result->{records}[$_]{recordid}}) {
-          splice(@{$result->{records}}, $_, 1);
-        }
-      }
-    }
   }
 
-  $result->{style} = lc ($param->{style} || $author_style
-    || cfg->{csl_engine}{default_style});
+  $result->{style} = lc ($param->{style} || cfg->{csl_engine}{default_style});
 
   $result->{list_dept} = $param->{dept} if defined $param->{dept};
 
