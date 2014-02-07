@@ -203,6 +203,7 @@ function fNewiFrameWindow (url) {
 <option value=researchgroup>Research Group ID</option>
 <option value=record<% IF vars.record %> selected=1<% END %>>Publication Record ID</option>
 <option value=issn>ISSN</option>
+<option value=favlist>Favorites List ID</option>
 </select>
 <input name="searchid" value="<% vars.record %>" onblur="ComputeLink(this.form)" /><br>
 <label></label>&nbsp;Separate IDs with commas to find multiple persons/units/records
