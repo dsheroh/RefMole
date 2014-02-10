@@ -48,6 +48,9 @@ get '/create' => sub {
   if (my $rec_ids = params->{record}) {
     $rec_ids =~ tr/0-9,//cd;
     var record => $rec_ids;
+  } elsif (my $favlist = params->{favlist}) {
+    $favlist =~ tr/0-9//cd;
+    var favlist => $favlist;
   }
 
   template 'create';

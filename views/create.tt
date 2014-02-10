@@ -203,9 +203,9 @@ function fNewiFrameWindow (url) {
 <option value=researchgroup>Research Group ID</option>
 <option value=record<% IF vars.record %> selected=1<% END %>>Publication Record ID</option>
 <option value=issn>ISSN</option>
-<option value=favlist>Favorites List ID</option>
+<option value=favlist<% IF vars.favlist %> selected=1<% END %>>Favorites List ID</option>
 </select>
-<input name="searchid" value="<% vars.record %>" onblur="ComputeLink(this.form)" /><br>
+<input name="searchid" value="<% vars.record || vars.favlist %>" onblur="ComputeLink(this.form)" /><br>
 <label></label>&nbsp;Separate IDs with commas to find multiple persons/units/records
 </div>
 
@@ -213,7 +213,6 @@ function fNewiFrameWindow (url) {
 <div class="field">
 <label for="id_style">Citation style</label>
 <select size="1" name="style" id="id_style" onchange="ComputeLink(this.form)">
-<!-- Hide citation styles which the citeproc service fails to provide -->
 <option value="" selected="selected">Standard</option>
 <option value="american-medical-association">AMA</option>
 <option value="apa">APA</option>
