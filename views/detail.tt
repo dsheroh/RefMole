@@ -484,11 +484,6 @@ addthis_config.data_use_cookies = false;
 <!-- AddThis Button END -->
 </div>
 
-<div id="preloader" style="display:none;"><img src="/preloader_circle.gif" /></div>
-<div id="dcit">
-	
-</div>
-
 </div>
 
 </div>
@@ -518,4 +513,3 @@ addthis_config.data_use_cookies = false;
 </div>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.js"></script>
-<script type="text/javascript" src="/js/tabs.js"></script>
