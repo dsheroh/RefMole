@@ -218,10 +218,8 @@ function fNewiFrameWindow (url) {
 <option value="apa">APA</option>
 <option value="american-political-science-association">APSA</option>
 <option value="harvard1">Harvard</option>
+<option value="law-eng">Law (English)</option>
 <option value="modern-language-association">MLA</option>
-<option value="oscola">OSCOLA</option>
-<option value="vancouver">Vancouver</option>
-<option value="vancouver--sv">Vancouver (SV)</option>
 </select>
 </div>
 

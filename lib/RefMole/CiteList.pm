@@ -31,7 +31,7 @@ use LWP::UserAgent;
 use Template;
 use XML::Simple;
 
-my %internal_style = map { $_ => 1 } qw( std );
+my %internal_style = map { $_ => 1 } qw( std law-eng law-swe );
 
 sub apply_csl {
   my ($publications) = @_;
@@ -76,18 +76,41 @@ sub format_citations {
     START_TAG    => '<%',
     END_TAG      => '%>',
     TRIM         => 1,
+    PLUGIN_BASE  => 'RefMole::TT::Plugin',
   );
   my $template = $style . '.tt';
   for my $rec (@{$publications->{records}}) {
+#    use Data::Printer; p $rec;
     my $citation;
     $rec->{author_limit} = cfg->{sru}{author_limit};
     $rec->{extra_author_text} = cfg->{sru}{extra_author_text};
+    $rec->{authors_fi} = gen_initials($rec->{author});
+    $rec->{authors_ff} = gen_initials($rec->{author}, ff => 1);
+    $rec->{editors_fi} = gen_initials($rec->{editor});
+    $rec->{editors_ff} = gen_initials($rec->{editor}, ff => 1);
     $formatter->process($template, $rec, \$citation) or die $formatter->error;
     $rec->{citation} = $citation;
   }
 
   # Return nothing because $publications was modified in-place
   return;
+}
+
+sub gen_initials {
+  my ($data, %param) = @_;
+
+  my @res;
+
+  for my $name_rec (@$data) {
+    my $fi = substr($name_rec->{given}, 0, 1);
+    if ($param{ff}) {
+      push @res, "$fi. " . $name_rec->{family};
+    } else {
+      push @res, $name_rec->{family} . ", $fi.";
+    }
+  }
+
+  return \@res;
 }
 
 sub get_detail {

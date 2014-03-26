@@ -14,10 +14,17 @@ layout: "main"
 # about unicode within your app when this setting is set (recommended).
 charset: "UTF-8"
 
-template: "template_toolkit"
+# ****************************************************************************
+# *** Note that local/non-CSL citation styles are processed using a        ***
+# *** separate TT instance, defined in RefMole::CiteList::format_citations ***
+# *** NOT the TT instance created by Dancer, so the following settings do  ***
+# *** not apply to them                                                    ***
+# ****************************************************************************
+template: template_toolkit
 engines:
   template_toolkit:
     encoding:  'utf8'
     start_tag: '<%'
     end_tag:   '%>'
+    PLUGIN_BASE: RefMole::TT::Plugin
 
