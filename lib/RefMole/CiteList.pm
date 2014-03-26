@@ -80,7 +80,6 @@ sub format_citations {
   );
   my $template = $style . '.tt';
   for my $rec (@{$publications->{records}}) {
-#    use Data::Printer; p $rec;
     my $citation;
     $rec->{author_limit} = cfg->{sru}{author_limit};
     $rec->{extra_author_text} = cfg->{sru}{extra_author_text};

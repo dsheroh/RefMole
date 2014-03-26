@@ -1,6 +1,5 @@
 <%- -%>
 
-<i><% type %></i><br>
 <div class="csl-entry">
 <%- SWITCH type -%>
 <%- CASE 'book chapter' -%>
