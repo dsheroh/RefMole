@@ -89,6 +89,8 @@ sub format_citations {
     $rec->{editors_ff} = gen_initials($rec->{editor}, ff => 1);
     $formatter->process($template, $rec, \$citation) or die $formatter->error;
     $rec->{citation} = $citation;
+
+    say STDERR $rec->{type};
   }
 
   # Return nothing because $publications was modified in-place

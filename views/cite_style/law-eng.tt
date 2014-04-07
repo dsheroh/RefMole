@@ -8,14 +8,17 @@
 <%- CASE 'article' -%>
 <%- INCLUDE authors_fi %>, <% title.0 %><% INCLUDE parent_title %><% INCLUDE volume %>, <% publ_year %><% INCLUDE page_range -%>
 
-<%- CASE [ 'book', 'licentiate thesis', 'thesis' ] -%>
+<%- CASE [ 'book', 'licentiate thesis' ] -%>
 <%- IF author_count %><% INCLUDE authors_fi %><% ELSE %><% INCLUDE editors_fi %><% END %>, <i><% title.0 %></i><% INCLUDE publisher %>, <% publ_year -%>
 
+<%- CASE 'thesis' -%>
+<%- IF author_count %><% INCLUDE authors_fi %><% ELSE %><% INCLUDE editors_fi %><% END %>, <i><% title.0 %></i>, (Diss.)<% INCLUDE publisher %>, <% publ_year -%>
+
 <%- CASE 'report' -%>
-<%- INCLUDE authors_fi %>, <i><% title.0 %></i><% INCLUDE pub_series %><% INCLUDE publisher %>, <% publ_year -%>
+<%- INCLUDE authors_fi %>, <% title.0 %><%- IF host.0.title %>, <i><% host.0.title %></i><% END %><% INCLUDE publisher %>, <% publ_year -%>
 
 <%- CASE [ 'conference abstract', 'conference paper' ] -%>
-<%- INCLUDE authors_fi %>, <i><% title.0 %></i><% INCLUDE pub_series %><% INCLUDE publisher %>, <% publ_year %><% INCLUDE page_range -%>
+<%- INCLUDE authors_fi %>, <% title.0 %><%- IF host.0.title %> In: <i><% host.0.title %></i><% END %><% INCLUDE publisher %>, <% publ_year %><% INCLUDE page_range -%>
 
 <%- CASE 'review' -%>
 <%- INCLUDE authors_fi %>, <% title.0 %><% INCLUDE parent_title %><% INCLUDE volume %>, <% publ_year %><% INCLUDE page_range -%>
