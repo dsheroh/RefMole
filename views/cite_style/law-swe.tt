@@ -1,0 +1,106 @@
+<%- -%>
+
+<div class="csl-entry">
+<%- SWITCH type -%>
+<%- CASE 'book chapter' -%>
+<%- INCLUDE authors_fi %>, <% title.0 %> I: <% INCLUDE editors_ff %> <i><% host.0.title %></i><% INCLUDE publisher %>, <% publ_year %><% INCLUDE page_range -%>
+
+<%- CASE 'article' -%>
+<%- INCLUDE authors_fi %>, <% title.0 %><% INCLUDE parent_title %><% INCLUDE volume %>, <% publ_year %><% INCLUDE page_range -%>
+
+<%- CASE [ 'book', 'licentiate thesis' ] -%>
+<%- IF author_count %><% INCLUDE authors_fi %><% ELSE %><% INCLUDE editors_fi %><% END %>, <i><% title.0 %></i><% INCLUDE publisher %>, <% publ_year -%>
+
+<%- CASE 'thesis' -%>
+<%- IF author_count %><% INCLUDE authors_fi %><% ELSE %><% INCLUDE editors_fi %><% END %>, <i><% title.0 %></i>, (Diss.)<% INCLUDE publisher %>, <% publ_year -%>
+
+<%- CASE 'report' -%>
+<%- INCLUDE authors_fi %>, <% title.0 %><%- IF host.0.title %>, <i><% host.0.title %></i><% END %><% INCLUDE publisher %>, <% publ_year -%>
+
+<%- CASE [ 'conference abstract', 'conference paper' ] -%>
+<%- INCLUDE authors_fi %>, <% title.0 %><%- IF host.0.title %> I: <i><% host.0.title %></i><% END %><% INCLUDE publisher %>, <% publ_year %><% INCLUDE page_range -%>
+
+<%- CASE 'review' -%>
+<%- INCLUDE authors_fi %>, <% title.0 %><% INCLUDE parent_title %><% INCLUDE volume %>, <% publ_year %><% INCLUDE page_range -%>
+
+<%- CASE 'working Paper' -%>
+<%- INCLUDE authors_fi %>, <% title.0 %><% INCLUDE parent_title %><% INCLUDE volume %><% INCLUDE publisher %>, <% publ_year -%>
+
+<%- CASE 'newspaper article' -%>
+<%- INCLUDE authors_fi %>, <% title.0 %><% INCLUDE parent_title %>, <% publ_year %><% INCLUDE page_range -%>
+
+<%- CASE 'encyclopaedia entry' -%>
+<%- INCLUDE authors_fi %>, <% title.0 %><% INCLUDE parent_title %><% INCLUDE publisher %><% INCLUDE volume %>, <% publ_year %><% INCLUDE page_range -%>
+
+<%- CASE 'miscellaneous' -%>
+<%- INCLUDE authors_fi %>, <i><% title.0 %></i><% INCLUDE publisher %>, <% publ_year -%>
+
+<%- CASE 'case study' -%>
+<%- INCLUDE authors_fi %>, <i><% title.0 %></i>, <% publ_year %><% INCLUDE page_range -%>
+
+<%- CASE DEFAULT # Fallthrough for unknown types -%>
+
+<%- INCLUDE authors_fi %>, <% -%>
+<%- IF editors.size AND type == 'book' %><% IF editors.size > 1 %><% editors_fi.slice(0,-2).join(', ') %> & <% editors_fi.-1 %> (eds)<% ELSE %><% editors_fi.0 %> (ed)<% END %>. <% END # IF editors -%>
+<%- %> <strong>(<% publ_year %>)</strong>. <% title.0 -%>
+<%- IF type == 'dissertation' OR type == 'journalArticle' OR type == 'licentiateThesis' OR type == 'newspaperArticle' %>.<% END # IF type... -%>
+<%- SWITCH type -%>
+<%- CASE [ 'book chapter', 'conference', 'conferenceAbstract', 'workingPaper', 'report' ] %> In <% END # SWITCH type -%>
+<%- IF editors.size AND type != 'book' %><% IF editors.size > 1 %><% editors_ff.slice(0,-2).join(', ') %> & <% editors_ff.-1 %> (eds)<% ELSE %><% editors_ff.0 %> (ed)<% END %>. <% END # IF editors -%>
+<%- FOREACH rel_entry IN host -%>
+<em> <% rel_entry.title -%>
+<%- IF rel_entry.volume -%>
+, <%- rel_entry.volume %><% IF type != 'dissertation' AND type != 'licentiateThesis' %>,<% END # IF type -%>
+<%- END # IF rel_entry.volume -%>
+<%- IF rel_entry.issue %> (<% rel_entry.issue -%>)<%- END # IF rel_entry.issue -%>
+</em>
+<%- IF rel_entry.prange -%>
+, <% rel_entry.prange -%>
+<%- END # IF rel_entry.prange -%>
+<%- IF type == 'conference' OR type == 'conferenceAbstract' %>. <% END # IF type... -%>
+<%- END # FOREACH rel_entry -%>
+<%- IF conference -%>
+. <% conference -%>
+<%- END # IF conference -%>
+<%- IF place -%>
+. <% place -%> 
+<%- END # IF place -%>
+<%- IF publisher -%>
+: <% publisher -%> 
+<%- END # IF publisher -%>
+<%- END # Fallthrough for unknown types -%>
+</div>
+
+<%- BLOCK authors_fi -%>
+<%- IF author_count %><%- IF author_count > 1 -%><%- authors_fi.slice(0,-2).join(', ') -%> & <%- authors_fi.-1 -%><%- ELSE -%><%- authors_fi.0 -%><%- END # IF author_count > 1 -%><%- IF author_count > author_limit %><% extra_author_text %><% END %><% END -%>
+<%- END -%>
+
+<%- BLOCK editors_fi -%>
+<%- IF editors.size %><%- IF editors.size > 1 %><%- editors_fi.slice(0,-2).join(', ') %> & <% editors_fi.-1 %> (red)<%- ELSE %><%- editors_fi.0 %> (red)<%- END %>. <% END %>
+<%- END -%>
+
+<%- BLOCK editors_ff -%>
+<%- IF editors.size %><%- IF editors.size > 1 %><%- editors_ff.slice(0,-2).join(', ') %> & <% editors_ff.-1 %> (red)<%- ELSE %><%- editors_ff.0 %> (red)<%- END %>. <% END %>
+<%- END -%>
+
+<%- BLOCK parent_title -%>
+<% IF host.0.title %>, <i><% host.0.title %></i><% END %>
+<%- END -%>
+
+<%- BLOCK publisher -%>
+<%- IF publisher %>, <% publisher %><% END %>
+<%- END -%>
+
+<%- BLOCK pub_series -%>
+<%- IF host.0.title %>, <% host.0.title %><% END %>
+<%- END -%>
+
+<%- BLOCK page_range -%>
+<%- IF host.0.prange -%>, s. <% host.0.prange -%><% END %>
+<%- END -%>
+
+<%- BLOCK volume -%>
+<%- IF host.0.volume -%>, Vol. <% host.0.volume -%><% END %>
+<%- IF host.0.issue -%>, Nr. <% host.0.issue -%><% END %>
+<%- END -%>
+
