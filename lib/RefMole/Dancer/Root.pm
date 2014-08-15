@@ -15,7 +15,8 @@ get '/cite' => sub {
   var page_title => 'Citation List';
 
   my $citations = RefMole::CiteList::get_publications(scalar params);
-  RefMole::CiteList::format_citations($citations) if $citations->{numrecs};
+  RefMole::CiteList::format_citations($citations, scalar params)
+    if $citations->{numrecs};
 
   if (params->{max_page} > 1) {
     my %params = params;
@@ -58,7 +59,7 @@ get '/create' => sub {
 
 get '/detail/:id' => sub {
   my $rec = RefMole::CiteList::get_detail(scalar params);
-  RefMole::CiteList::format_citations($rec) if $rec->{numrecs};
+  RefMole::CiteList::format_citations($rec, scalar params) if $rec->{numrecs};
 
   var page_title => $rec->{records}[0]{title}[0] || 'No record found';
 

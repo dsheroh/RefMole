@@ -64,7 +64,7 @@ sub apply_csl {
 }
 
 sub format_citations {
-  my ($publications) = @_;
+  my ($publications, $param) = @_;
 
   my $style = $publications->{style};
   return apply_csl(@_) unless $internal_style{$style};
@@ -81,7 +81,7 @@ sub format_citations {
   my $template = $style . '.tt';
   for my $rec (@{$publications->{records}}) {
     my $citation;
-    $rec->{author_limit} = cfg->{sru}{author_limit};
+    $rec->{author_limit} = $param->{author_limit} // cfg->{sru}{author_limit};
     $rec->{extra_author_text} = cfg->{sru}{extra_author_text};
     $rec->{authors_fi} = gen_initials($rec->{author});
     $rec->{authors_ff} = gen_initials($rec->{author}, ff => 1);
@@ -304,7 +304,9 @@ sub _add_record_fields {
     }
   }
 
-  $result{author_count} = $mods->{authorCount} if $mods->{authorCount};
+  # author_count will implicitly be 0 if author_limit is 0 (since there's no
+  # limit, SRU doesn't return a count)
+  $result{author_count} = $mods->{authorCount} || 0;
 
   for my $subj (@{$mods->{subject}}) {
     next unless ref $subj->{topic} eq 'ARRAY';
@@ -416,7 +418,8 @@ sub _get_records {
   my $chunk_limit = $page_size || cfg->{sru}{result_limit};
   my $total_hits;
 
-  $query_url .= '&authorLimit=' . cfg->{sru}{author_limit};
+  my $auth_limit = $param->{author_limit} // cfg->{sru}{author_limit};
+  $query_url .= '&authorLimit=' . $auth_limit if $auth_limit;
 
   my $result;
   my $remaining = -1;
