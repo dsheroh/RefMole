@@ -418,8 +418,11 @@ sub _get_records {
   my $chunk_limit = $page_size || cfg->{sru}{result_limit};
   my $total_hits;
 
-  my $auth_limit = $param->{author_limit} // cfg->{sru}{author_limit};
-  $query_url .= '&authorLimit=' . $auth_limit if $auth_limit;
+  # CSL styles implement their own limits on number of authors shown
+  if ($internal_style{$param->{style} || cfg->{csl_engine}{default_style}}) {
+    my $auth_limit = $param->{author_limit} // cfg->{sru}{author_limit};
+    $query_url .= '&authorLimit=' . $auth_limit if $auth_limit;
+  }
 
   my $result;
   my $remaining = -1;
