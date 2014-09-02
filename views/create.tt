@@ -39,6 +39,10 @@ function ComputeLink(link_form) {
     });
   }
 
+  if (link_form.inst.value) {
+    result_str += ';inst=' + link_form.inst.value;
+  }
+
   if (link_form.qc.value) {
     result_str += ';qc=' + link_form.qc.value;
   }
@@ -256,6 +260,16 @@ $(document).ready(function() {
 <option value="workingPaper">Working Paper</option>
 </select>
 <input type=checkbox name=show_papers onchange="ComputeLink(this.form)"> Include student papers
+</div>
+
+
+<div class="field">
+<label for="id_inst">LU/Non-LU Publications</label>
+<select size=1 name="inst" id="id_inst" onchange="ComputeLink(this.form)">
+<option value="">Both LU and Non-LU</option>
+<option value="lu">LU only</option>
+<option value="nonlu">Non-LU only</option>
+</select>
 </div>
 
 <div class="field">

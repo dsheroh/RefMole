@@ -202,6 +202,14 @@ sub get_publications {
   $conditions .= " AND popularScience exact $param->{popsci}"
     if defined $param->{popsci};
 
+  if ($param->{inst}) {
+    if ($param->{inst} eq 'lu') {
+      $conditions .= " AND nonLU <> 1";
+    } elsif ($param->{inst} eq 'nonlu') {
+      $conditions .= " AND nonLU exact 1";
+    }
+  }
+
   my $sort_dir = 0;
   if (lc ($param->{sortdir} || '') eq 'asc') {
     $sort_dir = 1;
