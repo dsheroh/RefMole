@@ -1,7 +1,8 @@
+<%- USE BBCodeTitleFilter -%>
 <a name="top"></a>
 <div class="detail-body">
 
-<h1 class="underline"><% entry.title.0 %></h1>
+<h1 class="underline"><% entry.title.0 | bbtitle %></h1>
 
 <% IF records.numrecs == 0 %>
 <h3>No record found!</h3>

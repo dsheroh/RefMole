@@ -1,48 +1,49 @@
+<%- USE BBCodeTitleFilter -%>
 <%- -%>
 
 <div class="csl-entry">
 <%- SWITCH type -%>
 <%- CASE 'book chapter' -%>
-<%- INCLUDE authors_fi %>, <% title.0 %> I: <% INCLUDE editors_ff %> <i><% host.0.title %></i><% INCLUDE publisher %>, <% publ_year %><% INCLUDE page_range -%>
+<%- INCLUDE authors_fi %>, <% title.0 | bbtitle %> I: <% INCLUDE editors_ff %> <i><% host.0.title %></i><% INCLUDE publisher %>, <% publ_year %><% INCLUDE page_range -%>
 
 <%- CASE 'article' -%>
-<%- INCLUDE authors_fi %>, <% title.0 %><% INCLUDE parent_title %><% INCLUDE volume %>, <% publ_year %><% INCLUDE page_range -%>
+<%- INCLUDE authors_fi %>, <% title.0 | bbtitle %><% INCLUDE parent_title %><% INCLUDE volume %>, <% publ_year %><% INCLUDE page_range -%>
 
 <%- CASE [ 'book', 'licentiate thesis' ] -%>
-<%- IF author_count %><% INCLUDE authors_fi %><% ELSE %><% INCLUDE editors_fi %><% END %>, <i><% title.0 %></i><% INCLUDE publisher %>, <% publ_year -%>
+<%- IF author_count %><% INCLUDE authors_fi %><% ELSE %><% INCLUDE editors_fi %><% END %>, <i><% title.0 | bbtitle %></i><% INCLUDE publisher %>, <% publ_year -%>
 
 <%- CASE 'thesis' -%>
-<%- IF author_count %><% INCLUDE authors_fi %><% ELSE %><% INCLUDE editors_fi %><% END %>, <i><% title.0 %></i>, (Diss.)<% INCLUDE publisher %>, <% publ_year -%>
+<%- IF author_count %><% INCLUDE authors_fi %><% ELSE %><% INCLUDE editors_fi %><% END %>, <i><% title.0 | bbtitle %></i>, (Diss.)<% INCLUDE publisher %>, <% publ_year -%>
 
 <%- CASE 'report' -%>
-<%- INCLUDE authors_fi %>, <% title.0 %><%- IF host.0.title %>, <i><% host.0.title %></i><% END %><% INCLUDE publisher %>, <% publ_year -%>
+<%- INCLUDE authors_fi %>, <% title.0 | bbtitle %><%- IF host.0.title %>, <i><% host.0.title %></i><% END %><% INCLUDE publisher %>, <% publ_year -%>
 
 <%- CASE [ 'conference abstract', 'conference paper' ] -%>
-<%- INCLUDE authors_fi %>, <% title.0 %><%- IF host.0.title %> I: <i><% host.0.title %></i><% END %><% INCLUDE publisher %>, <% publ_year %><% INCLUDE page_range -%>
+<%- INCLUDE authors_fi %>, <% title.0 | bbtitle %><%- IF host.0.title %> I: <i><% host.0.title %></i><% END %><% INCLUDE publisher %>, <% publ_year %><% INCLUDE page_range -%>
 
 <%- CASE 'review' -%>
-<%- INCLUDE authors_fi %>, <% title.0 %><% INCLUDE parent_title %><% INCLUDE volume %>, <% publ_year %><% INCLUDE page_range -%>
+<%- INCLUDE authors_fi %>, <% title.0 | bbtitle %><% INCLUDE parent_title %><% INCLUDE volume %>, <% publ_year %><% INCLUDE page_range -%>
 
 <%- CASE 'working Paper' -%>
-<%- INCLUDE authors_fi %>, <% title.0 %><% INCLUDE parent_title %><% INCLUDE volume %><% INCLUDE publisher %>, <% publ_year -%>
+<%- INCLUDE authors_fi %>, <% title.0 | bbtitle %><% INCLUDE parent_title %><% INCLUDE volume %><% INCLUDE publisher %>, <% publ_year -%>
 
 <%- CASE 'newspaper article' -%>
-<%- INCLUDE authors_fi %>, <% title.0 %><% INCLUDE parent_title %>, <% publ_year %><% INCLUDE page_range -%>
+<%- INCLUDE authors_fi %>, <% title.0 | bbtitle %><% INCLUDE parent_title %>, <% publ_year %><% INCLUDE page_range -%>
 
 <%- CASE 'encyclopaedia entry' -%>
-<%- INCLUDE authors_fi %>, <% title.0 %><% INCLUDE parent_title %><% INCLUDE publisher %><% INCLUDE volume %>, <% publ_year %><% INCLUDE page_range -%>
+<%- INCLUDE authors_fi %>, <% title.0 | bbtitle %><% INCLUDE parent_title %><% INCLUDE publisher %><% INCLUDE volume %>, <% publ_year %><% INCLUDE page_range -%>
 
 <%- CASE 'miscellaneous' -%>
-<%- INCLUDE authors_fi %>, <i><% title.0 %></i><% INCLUDE publisher %>, <% publ_year -%>
+<%- INCLUDE authors_fi %>, <i><% title.0 | bbtitle %></i><% INCLUDE publisher %>, <% publ_year -%>
 
 <%- CASE 'case study' -%>
-<%- INCLUDE authors_fi %>, <i><% title.0 %></i>, <% publ_year %><% INCLUDE page_range -%>
+<%- INCLUDE authors_fi %>, <i><% title.0 | bbtitle %></i>, <% publ_year %><% INCLUDE page_range -%>
 
 <%- CASE DEFAULT # Fallthrough for unknown types -%>
 
 <%- INCLUDE authors_fi %>, <% -%>
 <%- IF editors.size AND type == 'book' %><% IF editors.size > 1 %><% editors_fi.slice(0,-2).join(', ') %> & <% editors_fi.-1 %> (eds)<% ELSE %><% editors_fi.0 %> (ed)<% END %>. <% END # IF editors -%>
-<%- %> <strong>(<% publ_year %>)</strong>. <% title.0 -%>
+<%- %> <strong>(<% publ_year %>)</strong>. <% title.0 | bbtitle -%>
 <%- IF type == 'dissertation' OR type == 'journalArticle' OR type == 'licentiateThesis' OR type == 'newspaperArticle' %>.<% END # IF type... -%>
 <%- SWITCH type -%>
 <%- CASE [ 'book chapter', 'conference', 'conferenceAbstract', 'workingPaper', 'report' ] %> In <% END # SWITCH type -%>

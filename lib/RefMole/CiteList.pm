@@ -426,10 +426,13 @@ sub _get_records {
   my $chunk_limit = $page_size || cfg->{sru}{result_limit};
   my $total_hits;
 
-  # CSL styles implement their own limits on number of authors shown
   if ($internal_style{$param->{style} || cfg->{csl_engine}{default_style}}) {
+    # CSL styles implement their own limits on number of authors shown
     my $auth_limit = $param->{author_limit} // cfg->{sru}{author_limit};
     $query_url .= '&authorLimit=' . $auth_limit if $auth_limit;
+
+    # Internal styles handle BBCode titles
+    $query_url .= '&bbc_title=1';
   }
 
   my $result;

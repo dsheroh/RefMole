@@ -1,8 +1,9 @@
+<%- USE BBCodeTitleFilter -%>
 <div class="csl-entry">
 <%- authors.join('; ') -%>
 <%- IF author_count > author_limit %><% extra_author_text %><% END -%>
 <%- IF editors.size AND type == 'conference publication' %><% editors.join('; ') %> (Ed<% IF editors.size > 1 %>s<% END # editors > 1 %>.). <% END # IF editors -%>
-<%- %> <strong>(<% publ_year %>)</strong>. <% title.0 -%>
+<%- %> <strong>(<% publ_year %>)</strong>. <% title.0 | bbtitle -%>
 <%- IF type == 'dissertation' OR type == 'journalArticle' OR type == 'licentiateThesis' OR type == 'newspaperArticle' %>.<% END # IF type... -%>
 <%- SWITCH type -%>
 <%- CASE [ 'book chapter', 'conference', 'conferenceAbstract', 'workingPaper', 'report' ] %> In <% END # SWITCH type -%>
