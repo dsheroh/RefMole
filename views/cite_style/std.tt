@@ -26,7 +26,7 @@
 <%- IF place -%>
 . <% place -%> 
 <%- END # IF place -%>
-<%- IF publisher -%>
+<%- IF publisher AND type != 'journalArticle' AND type != 'review' -%>
 : <% publisher -%> 
 <%- END # IF publisher -%>
 </div>
