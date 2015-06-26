@@ -26,13 +26,6 @@ get '/cite' => sub {
   }
 
   if ((params->{ftyp} // '') eq 'js') {
-    for my $cite (@{$citations->{records}}) {
-      next unless $cite->{citation};
-      chomp $cite->{citation};
-      $cite->{citation} =~ s/'/\\'/g;
-      $cite->{citation} =~ s/"/\\"/g;
-    }
-
     content_type 'application/javascript';
     template 'js_citewriter',
       { records => $citations->{records}, citations => $citations },
