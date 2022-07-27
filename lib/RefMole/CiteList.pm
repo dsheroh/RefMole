@@ -55,7 +55,7 @@ sub apply_csl {
     my $citation = $cite_map{$_->{recordid}};
     $_->{recordid} = $_->{_oid_save};
 
-    $citation = decode('iso-8859-1', $citation) unless utf8::decode($citation);
+    $citation = decode('iso-8859-1', $citation) unless !$citation || utf8::decode($citation);
     $_->{citation} = $citation;
   }
 
@@ -300,7 +300,9 @@ sub _add_record_fields {
         $person->{family} = $name_part->{content}
           if $name_part->{type} eq 'family';
       }
-      $person->{full} = trim($person->{family} . ', ' . $person->{given});
+      $person->{full} = trim(($person->{family} && $person->{given}) 
+        ? $person->{family} . ', ' . $person->{given}
+        : $person->{family} || $person->{given});
       push @{$result{$role}}, $person;
       push @{$result{$role . 's'}}, $person->{full};
     } elsif ($role eq 'department') {
